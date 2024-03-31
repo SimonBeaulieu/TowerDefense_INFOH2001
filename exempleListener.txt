@@ -1,0 +1,70 @@
+interface AttackEventListener {
+	open fun onAttack(damage : Int);
+}
+
+Class Ennemy implements attackEventListener{
+	attribut....
+	method....
+
+	
+	override fun onAttack(damage : Int){
+		this.hitpoints = this.hitpoints - damage;
+		if this.hitpoints <= 0
+			this.isDead = true;
+	}
+}
+
+Class Tower {
+	open fun attack();
+}
+
+
+Class Cannon {
+	override fun attack(AttackEventListener target, AttackEventListener[] inBlastRadius){
+		Projectile p = Projectile(target, inBlastRadius, damage, tick_activation);
+		this.activeProjectile.add(p);
+	}
+		
+	advanceTick(){
+		foreach (Project p : this.activeProjectile){
+			p.advanceTick();
+			if p.isDead
+				this.activeProjectile.remove(p);
+		}
+	}
+
+}
+
+
+Class Map {
+	advanceTick() {
+		for each (Tower t in towers) {
+			// Ennemy dans ma portée
+			List<Ennemy> listE = this.ennemyInRange(t);
+			
+			// Ennemy le plus proche de la sortie est la cible
+			Ennemy target = this.ennemyClosetToExit(listE);
+
+			// Ennemy sur la même case/dans le blast radius
+			List<Ennemy> inBlastRadius = this.inBlastRadius(target);
+
+			t.attack(target, inBlastRadius);
+		}
+	}
+}
+
+Class Projectile {
+	AttackEventListener target;
+	AttackEventListener[] inBlastRadius;
+	damage : Int;
+	tickActviation : Int;
+
+	advanceTick() {
+		if tickActivation = 0
+			target.OnAttack(this.damage);
+			this.isDead = true;
+		else
+			tickActivation--;
+			move();
+	}
+}
