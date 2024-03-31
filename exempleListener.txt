@@ -21,13 +21,21 @@ Class Tower {
 
 Class Cannon {
 	override fun attack(AttackEventListener target, AttackEventListener[] inBlastRadius){
+		// Créer le missile qui attaque la cible, et ceux dans le blastRadius, dans un temps t=tickActivation (dans 5 tickp/e..)
 		Projectile p = Projectile(target, inBlastRadius, damage, tick_activation);
+
+		// Le storer dans notre liste de projectile pour cette tour cannon
 		this.activeProjectile.add(p);
 	}
 		
 	advanceTick(){
+		// Gérer notre tour cannon
+
 		foreach (Project p : this.activeProjectile){
+			// Avancer d'un tour le projectile
 			p.advanceTick();
+
+			// Retirer le projectile de la liste s'il a attaqué
 			if p.isDead
 				this.activeProjectile.remove(p);
 		}
@@ -48,6 +56,7 @@ Class Map {
 			// Ennemy sur la même case/dans le blast radius
 			List<Ennemy> inBlastRadius = this.inBlastRadius(target);
 
+			// Demandé tour t d'attaqué la cible target et ceux dans le blastRadius
 			t.attack(target, inBlastRadius);
 		}
 	}
@@ -60,9 +69,12 @@ Class Projectile {
 	tickActviation : Int;
 
 	advanceTick() {
+		// Si moment d'attaqué, appelé la fonction du listener
 		if tickActivation = 0
 			target.OnAttack(this.damage);
 			this.isDead = true;
+
+		// Sinon, réduire le compteur tickActivation
 		else
 			tickActivation--;
 			move();
