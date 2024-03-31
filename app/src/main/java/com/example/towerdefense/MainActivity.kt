@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.gridlayout.widget.GridLayout
 import android.widget.ImageView
+import com.example.towerdefense.model.Game
 import com.example.towerdefense.model.MapGame
 
 class MainActivity : AppCompatActivity() {
     private lateinit var gridLayoutMap : androidx.gridlayout.widget.GridLayout
+    private val game : Game = Game()
+
     private val mapGame : MapGame = MapGame()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,16 +22,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun initMapGrid() {
         gridLayoutMap = findViewById(R.id.gridLayoutMap)
-        gridLayoutMap.columnCount = mapGame.N_COLUMNS
-        gridLayoutMap.rowCount = mapGame.N_ROWS
+        gridLayoutMap.columnCount = mapGame.nColumns
+        gridLayoutMap.rowCount = mapGame.nRows
         drawMap()
     }
 
     private fun drawMap() {
-        for (c in 0 until mapGame.N_COLUMNS) {
-            for (r in 0 until mapGame.N_ROWS) {
+        for (c in 0 until mapGame.nColumns) {
+            for (r in 0 until mapGame.nRows) {
                 when (mapGame.mapGrid[c][r]) {
-                    mapGame.EMPTY_TILE, mapGame.TOWER_TILE -> {
+                    mapGame.emptyTile, mapGame.towerTile -> {
                         // Show grass
                         drawTile(c,r, R.drawable.grass)
                     }
@@ -49,8 +52,8 @@ class MainActivity : AppCompatActivity() {
         val params = GridLayout.LayoutParams()
         params.columnSpec = GridLayout.spec(c)
         params.rowSpec = GridLayout.spec(r)
-        params.width = mapGame.PX_PER_TILE
-        params.height = mapGame.PX_PER_TILE
+        params.width = mapGame.pxPerTile
+        params.height = mapGame.pxPerTile
 
         // Set layout parameters
         imageView.layoutParams = params
