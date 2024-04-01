@@ -2,41 +2,71 @@ package com.example.towerdefense
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.GridLayout
+import android.widget.Button
+import androidx.gridlayout.widget.GridLayout
 import android.widget.ImageView
-import com.example.towerdefense.Model.EMPTY_TILE
-import com.example.towerdefense.Model.MapGame
-import com.example.towerdefense.Model.N_COLUMNS
-import com.example.towerdefense.Model.N_ROWS
-import com.example.towerdefense.Model.TOWER_TILE
+import com.example.towerdefense.model.Game
+import com.example.towerdefense.model.GameMap
 
 class MainActivity : AppCompatActivity() {
-    lateinit var gridLayoutMap : GridLayout;
+    private lateinit var gridLayoutMap : androidx.gridlayout.widget.GridLayout
+    private lateinit var buttonStartWave : Button
 
-    val mapGame : MapGame = MapGame();
+    private val game : Game = Game()
+    private val mapGame : GameMap = GameMap()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        gridLayoutMap = findViewById(R.id.gridLayoutMap);
+        buttonStartWave.findViewById<Button>(R.id.buttonStartWave)
+
+        initMapGrid()
     }
 
-    fun drawMap(m : MapGame){
-        for (c in 0 until N_COLUMNS) {
-            for (r in 0 until N_ROWS) {
+    private fun initMapGrid() {
+        gridLayoutMap = findViewById(R.id.gridLayoutMap)
+        gridLayoutMap.columnCount = mapGame.nColumns
+        gridLayoutMap.rowCount = mapGame.nRows
+        drawMap()
+    }
 
+    private fun drawMap() {
+        for (c in 0 until mapGame.nColumns) {
+            for (r in 0 until mapGame.nRows) {
                 when (mapGame.mapGrid[c][r]) {
-                    EMPTY_TILE, TOWER_TILE -> {
-                        // Afficher tuile vide
-
+                    mapGame.emptyTile, mapGame.towerTile -> {
+                        // Show grass
+                        drawTile(c,r, R.drawable.grass)
                     }
                     else -> {
-                        // Afficher route
+                        // Show road
+                        drawTile(c,r, R.drawable.road)
                     }
                 }
             }
         }
+    }
+
+    private fun drawTile(c : Int, r: Int, resId:Int){
+        val imageView = ImageView(this)
+        imageView.setImageResource(resId)
+
+        // Specify layout parameters
+        val params = GridLayout.LayoutParams()
+        params.columnSpec = GridLayout.spec(c)
+        params.rowSpec = GridLayout.spec(r)
+        params.width = mapGame.pxPerTile
+        params.height = mapGame.pxPerTile
+
+        // Set layout parameters
+        imageView.layoutParams = params
+
+        // Add the TextView to the GridLayout
+        gridLayoutMap.addView(imageView)
+    }
+
+    fun onClickButtonStartWave() {
+        game.startWave()
     }
 }

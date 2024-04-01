@@ -1,5 +1,15 @@
 package com.example.towerdefense.model
 
-class Projectile(private val tower: Tower) {
+class Projectile : Body() {
+    //**************************************** Variables **************************************** //
 
+    //*************************************** Constructor *************************************** //
+
+
+    //************************************* Public methods ************************************** //
+    override fun advanceTick() {
+        // !!!SB: Implementer
+    }
+
+    //************************************* Private methods ************************************* //
 }
