@@ -1,6 +1,6 @@
 package com.example.towerdefense.model
 
-class Projectile : Body() {
+class Projectile(col: Int, row: Int) : Body(col, row) {
     //**************************************** Variables **************************************** //
 
     //*************************************** Constructor *************************************** //

@@ -2,24 +2,24 @@ package com.example.towerdefense.model
 
 class Game {
     //**************************************** Variables **************************************** //
-    private var currentWave = 0
-    private var tickDuration : Long = 500
-    private var money : Int = 1000
-    private var hitPoints : Int = 200
+    private var _currentWave = 0
+    private var _tickDuration : Long = 500
+    private var _money : Int = 1000
+    private var _hitPoints : Int = 200
 
-    private val gameManager: GameManager = GameManager()
-    private var gameTimer : GameTimer? = null
-    private val gameMap : GameMap = GameMap()
+    private val _gameManager: GameManager = GameManager()
+    private var _gameTimer : GameTimer? = null
+    private val _gameMap : GameMap = GameMap()
 
     //*************************************** Constructor *************************************** //
     init {
         initGameTimer()
-        MapViewer.linkMap(gameMap)
+        MapViewer.linkMap(_gameMap)
     }
 
     private fun initGameTimer() {
-        gameTimer = GameTimer(tickDuration)
-        gameTimer?.setTickListener { this.advanceTick() }
+        _gameTimer = GameTimer(_tickDuration)
+        _gameTimer?.setTickListener { this.advanceTick() }
     }
 
     //************************************* Public methods ************************************* //
@@ -27,25 +27,25 @@ class Game {
         // !!!SB: Appeler la fonction à partir d'eventHandler buttons. À compléter
 
         // !!!KC: Changer pour accéder au singleton (nWave)
-        if (currentWave < gameMap.nWave) {
-            gameManager.setPendingEnemies(MapViewer.getWaveEnemies(currentWave))
-            gameTimer?.start()
+        if (_currentWave < _gameMap.nWave) {
+            _gameManager.setPendingEnemies(MapViewer.getWaveEnemies(_currentWave))
+            _gameTimer?.start()
         }
     }
 
     fun pauseWave() {
         // !!!SB: Appeler la fonction à partir d'eventHandler buttons. À compléter
-        gameTimer?.stop()
+        _gameTimer?.stop()
     }
 
     fun resumeWave() {
         // !!!SB: Appeler la fonction à partir d'eventHandler buttons. À compléter
-        gameTimer?.start()
+        _gameTimer?.start()
     }
 
     fun endGame() {
         // !!!SB: Appeler la fonction à partir d'eventHandler buttons. À compléter
-        gameTimer?.stop()
+        _gameTimer?.stop()
     }
 
     fun addTower(col : Int, row : Int, towerType: Tiles) {
@@ -53,16 +53,16 @@ class Game {
         if (MapViewer.isEmptyTile(col, row)) {
             when (towerType) {
                 Tiles.ARCHER -> {
-                    gameManager.addTowerToList(Archer(col, row))
-                    gameMap.setTileContent(col, row, towerType.value)
+                    _gameManager.addTowerToList(Archer(col, row))
+                    _gameMap.setTileContent(col, row, towerType.value)
                 }
                 Tiles.CANNON -> {
-                    gameManager.addTowerToList(Cannon(col, row))
-                    gameMap.setTileContent(col, row, towerType.value)
+                    _gameManager.addTowerToList(Cannon(col, row))
+                    _gameMap.setTileContent(col, row, towerType.value)
                 }
                 Tiles.FLAMETHROWER -> {
-                    gameManager.addTowerToList(Flamethrower(col, row))
-                    gameMap.setTileContent(col, row, towerType.value)
+                    _gameManager.addTowerToList(Flamethrower(col, row))
+                    _gameMap.setTileContent(col, row, towerType.value)
                 }
                 else -> { }
             }
@@ -71,9 +71,9 @@ class Game {
 
     //************************************* Private methods ************************************* //
     private fun advanceTick() {
-        gameManager.advanceTick()
+        _gameManager.advanceTick()
 
-        money += gameManager.getMoneyToAdd()
-        hitPoints -= gameManager.getHitPointsToRemove()
+        _money += _gameManager.getMoneyToAdd()
+        _hitPoints -= _gameManager.getHitPointsToRemove()
     }
 }

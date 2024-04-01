@@ -19,24 +19,25 @@
 
         <androidx.gridlayout.widget.GridLayout
             android:id="@+id/gridLayoutMap"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="1935px"
+            android:layout_height="wrap_content"
             app:columnCount="8"
             app:rowCount="12"
             app:useDefaultMargins="false" />
 
         <LinearLayout
             android:id="@+id/layoutCharacters"
-            android:layout_width="match_parent"
+            android:layout_width="400px"
             android:layout_height="match_parent"
             android:orientation="vertical" >
 
-            <Button
-                android:id="@+id/buttonStartWave"
+            <ImageButton
+                android:id="@+id/archerButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="onClickButtonStartWave"
-                android:text="Start Wave" />
+                android:contentDescription="Archer"
+                android:onClick="onClickArcherButton"
+                app:srcCompat="@drawable/ic_launcher_foreground" />
         </LinearLayout>
 
     </LinearLayout>

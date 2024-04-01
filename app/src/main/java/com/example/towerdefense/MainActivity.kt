@@ -2,7 +2,9 @@ package com.example.towerdefense
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.gridlayout.widget.GridLayout
 import android.widget.ImageView
 import com.example.towerdefense.model.Game
@@ -12,24 +14,24 @@ import com.example.towerdefense.model.Tiles
 
 class MainActivity : AppCompatActivity() {
     private lateinit var gridLayoutMap : androidx.gridlayout.widget.GridLayout
-    private lateinit var buttonStartWave : Button
+    private lateinit var buttonArcher : ImageButton
 
     private val game : Game = Game()
-    private val mapGame : GameMap = GameMap()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        buttonStartWave.findViewById<Button>(R.id.buttonStartWave)
-
         initMapGrid()
+        buttonArcher = findViewById<ImageButton>(R.id.archerButton)
     }
+
 
     private fun initMapGrid() {
         gridLayoutMap = findViewById(R.id.gridLayoutMap)
         gridLayoutMap.columnCount = GameMap.N_COLUMNS
         gridLayoutMap.rowCount = GameMap.N_ROWS
+
         drawMap()
     }
 
@@ -65,7 +67,9 @@ class MainActivity : AppCompatActivity() {
         gridLayoutMap.addView(imageView)
     }
 
-    fun onClickButtonStartWave() {
-        game.startWave()
+    fun onClickArcherButton(view: View) {
+        // Test
+        game.addTower(2,2, Tiles.ARCHER)
+        drawTile(2,2, R.drawable.ic_launcher_foreground)
     }
 }
