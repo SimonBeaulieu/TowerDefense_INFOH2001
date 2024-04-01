@@ -2,23 +2,23 @@ package com.example.towerdefense.model
 
 object MapViewer {
     //*************************************** Variables ***************************************** //
-    private lateinit var mapLink : GameMap
-    private var isInitialised : Boolean = false
+    private lateinit var _mapLink : GameMap
+    private var _isInitialised : Boolean = false
 
     //*************************************** Constructor *************************************** //
 
 
     //************************************** Map Setter ***************************************** //
     fun linkMap(m : GameMap) {
-        if (!isInitialised) {
-            mapLink = m
-            isInitialised = true
+        if (!_isInitialised) {
+            _mapLink = m
+            _isInitialised = true
         }
     }
 
     //************************************* Map accessors  ************************************** //
     fun isEmptyTile(col: Int, row: Int) : Boolean {
-        if (isInitialised) {
+        if (_isInitialised) {
             return getTileContent(col, row) == Tiles.EMPTY.value
         } else {
             return false
@@ -26,7 +26,7 @@ object MapViewer {
     }
 
     fun isTowerTile(col: Int, row: Int) : Boolean {
-        if (isInitialised) {
+        if (_isInitialised) {
             return getTileContent(col, row) < Tiles.EMPTY.value
         } else {
             return false
@@ -34,19 +34,19 @@ object MapViewer {
     }
 
     fun getTileContent(col: Int, row: Int) : Int {
-        return mapLink.getTileContent(col, row)
+        return _mapLink.getTileContent(col, row)
     }
 
     fun getWaveEnemies(n: Int): List<Enemy>{
         var l : List<Enemy> = emptyList()
 
-        if (isInitialised) {
-            l =  mapLink.getWave(n).getEnemies().toList()
+        if (_isInitialised) {
+            l =  _mapLink.getWave(n).getEnemies().toList()
         }
         return l
     }
 
     fun getPathEncoding() : List<Int> {
-        return mapLink.getPathEncoding()
+        return _mapLink.getPathEncoding()
     }
 }

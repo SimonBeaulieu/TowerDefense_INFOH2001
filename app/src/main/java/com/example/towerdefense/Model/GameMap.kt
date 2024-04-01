@@ -23,15 +23,15 @@ class GameMap(val nWave:Int = 12) {
         }
     }
 
-    private val firstTile : Pair<Int, Int> = Pair(3,0)
+    private val _firstTile : Pair<Int, Int> = Pair(3,0)
 
-    private val grid  = MutableList(N_COLUMNS) { MutableList(N_ROWS) { Tiles.EMPTY.value } }
+    private val _grid  = MutableList(N_COLUMNS) { MutableList(N_ROWS) { Tiles.EMPTY.value } }
 
-    private val waves: MutableList<Wave> = mutableListOf()
+    private val _waves: MutableList<Wave> = mutableListOf()
 
     // Absolut path: 0 = right, 1 = up, 2 = left, 3 = down.
     // !!!SB: Rendre disponible dans constructeur
-    private val pathEncoding = listOf(
+    private val _pathEncoding = listOf(
         3,3,0,0,3,3,2,2,3,3,0,0,0,0,1,1,1,1,1,0,0,0,0,0,3,3,2,2,3,3,0,0,3,3
     )
 
@@ -42,36 +42,36 @@ class GameMap(val nWave:Int = 12) {
     }
 
     //************************************* Public methods ************************************** //
-    fun getWave(n:Int): Wave { return this.waves[n] }
+    fun getWave(n:Int): Wave { return this._waves[n] }
 
-    fun getPathEncoding() : List<Int> { return pathEncoding; }
+    fun getPathEncoding() : List<Int> { return _pathEncoding; }
 
-    fun getTileContent(col: Int, row: Int) : Int { return grid[col][row]; }
+    fun getTileContent(col: Int, row: Int) : Int { return _grid[col][row]; }
 
     fun setTileContent(col: Int, row: Int, value: Int) {
         if (isValidCol(col) && isValidRow(row) && value <= Tiles.EMPTY.value) {
-            grid[col][row] = value
+            _grid[col][row] = value
         }
     }
 
     //************************************* Private methods ************************************* //
     private fun initWaves() {
         for (i in 0 until nWave)
-            waves.add(Wave(i))
+            _waves.add(Wave(i))
     }
 
     private fun initGrid(){
-        var col = firstTile.first
-        var row = firstTile.second
+        var col = _firstTile.first
+        var row = _firstTile.second
 
-        grid[col][row] = 1
+        _grid[col][row] = 1
 
-        for (i in pathEncoding.indices) {
-            when (pathEncoding[i]){
-                0 -> grid[++col][row] = i + 2
-                1 -> grid[col][--row] = i + 2
-                2 -> grid[--col][row] = i + 2
-                3 -> grid[col][++row] = i + 2
+        for (i in _pathEncoding.indices) {
+            when (_pathEncoding[i]){
+                0 -> _grid[++col][row] = i + 2
+                1 -> _grid[col][--row] = i + 2
+                2 -> _grid[--col][row] = i + 2
+                3 -> _grid[col][++row] = i + 2
             }
         }
     }
