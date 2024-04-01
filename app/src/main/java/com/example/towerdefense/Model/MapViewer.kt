@@ -19,7 +19,7 @@ object MapViewer {
     //************************************* Map accessors  ************************************** //
     fun isEmptyTile(col: Int, row: Int) : Boolean {
         if (isInitialised) {
-            return getTileContent(col, row) == GameMap.EMPTY_TILE
+            return getTileContent(col, row) == Tiles.EMPTY.value
         } else {
             return false
         }
@@ -27,7 +27,7 @@ object MapViewer {
 
     fun isTowerTile(col: Int, row: Int) : Boolean {
         if (isInitialised) {
-            return getTileContent(col, row) == GameMap.TOWER_TILE
+            return getTileContent(col, row) < Tiles.EMPTY.value
         } else {
             return false
         }

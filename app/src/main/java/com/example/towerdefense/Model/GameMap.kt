@@ -7,8 +7,6 @@ class GameMap(val nWave:Int = 12) {
         const val N_ROWS: Int = 8
         const val N_COLUMNS: Int = 16
 
-        const val EMPTY_TILE = 0
-        const val TOWER_TILE = -1
         const val PX_PER_TILE = 120
 
         fun gridToPixel(col: Int, row: Int): Pair<Int, Int>{
@@ -27,7 +25,7 @@ class GameMap(val nWave:Int = 12) {
 
     private val firstTile : Pair<Int, Int> = Pair(3,0)
 
-    private val grid  = MutableList(N_COLUMNS) { MutableList(N_ROWS) { EMPTY_TILE } }
+    private val grid  = MutableList(N_COLUMNS) { MutableList(N_ROWS) { Tiles.EMPTY.value } }
 
     private val waves: MutableList<Wave> = mutableListOf()
 
@@ -51,7 +49,7 @@ class GameMap(val nWave:Int = 12) {
     fun getTileContent(col: Int, row: Int) : Int { return grid[col][row]; }
 
     fun setTileContent(col: Int, row: Int, value: Int) {
-        if (isValidCol(col) && isValidRow(row) && value <= EMPTY_TILE) {
+        if (isValidCol(col) && isValidRow(row) && value <= Tiles.EMPTY.value) {
             grid[col][row] = value
         }
     }
@@ -70,7 +68,7 @@ class GameMap(val nWave:Int = 12) {
 
         for (i in pathEncoding.indices) {
             when (pathEncoding[i]){
-                0 -> grid[++col][row]    = i + 2
+                0 -> grid[++col][row] = i + 2
                 1 -> grid[col][--row] = i + 2
                 2 -> grid[--col][row] = i + 2
                 3 -> grid[col][++row] = i + 2
