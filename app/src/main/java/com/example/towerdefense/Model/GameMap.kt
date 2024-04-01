@@ -44,9 +44,17 @@ class GameMap(val nWave:Int = 12) {
     }
 
     //************************************* Public methods ************************************** //
-    fun getWaves():MutableList<Wave>{ return this.waves }
+    fun getWave(n:Int): Wave { return this.waves[n] }
+
+    fun getPathEncoding() : List<Int> { return pathEncoding; }
 
     fun getTileContent(col: Int, row: Int) : Int { return grid[col][row]; }
+
+    fun setTileContent(col: Int, row: Int, value: Int) {
+        if (isValidCol(col) && isValidRow(row) && value <= EMPTY_TILE) {
+            grid[col][row] = value
+        }
+    }
 
     //************************************* Private methods ************************************* //
     private fun initWaves() {
@@ -68,5 +76,13 @@ class GameMap(val nWave:Int = 12) {
                 3 -> grid[col][++row] = i + 2
             }
         }
+    }
+
+    private fun isValidRow(row: Int) : Boolean {
+        return row in 0..<N_ROWS
+    }
+
+    private fun isValidCol(col: Int) : Boolean {
+        return col in 0..<N_COLUMNS
     }
 }
