@@ -48,6 +48,13 @@ class Game {
         gameTimer?.stop()
     }
 
+    fun addTower(col : Int, row : Int, t: Tower) {
+        if (MapViewer.getTileContent(col, row) == GameMap.EMPTY_TILE){
+            gameManager.addTowerToList(t);
+            gameMap.setTileContent(col, row, GameMap.TOWER_TILE)
+        }
+    }
+
     //************************************* Private methods ************************************* //
     private fun advanceTick() {
         gameManager.advanceTick()

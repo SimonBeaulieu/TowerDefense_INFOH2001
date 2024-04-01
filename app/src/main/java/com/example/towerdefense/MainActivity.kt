@@ -35,15 +35,12 @@ class MainActivity : AppCompatActivity() {
     private fun drawMap() {
         for (c in 0 until GameMap.N_COLUMNS) {
             for (r in 0 until GameMap.N_ROWS) {
-                when (MapViewer.getTileContent(c,r)) {
-                    GameMap.EMPTY_TILE, GameMap.TOWER_TILE -> {
-                        // Show grass
-                        drawTile(c,r, R.drawable.grass)
-                    }
-                    else -> {
-                        // Show road
-                        drawTile(c,r, R.drawable.road)
-                    }
+                if (MapViewer.getTileContent(c,r) <= GameMap.EMPTY_TILE) {
+                    // Show grass
+                    drawTile(c,r, R.drawable.grass)
+                } else {
+                    // Show road
+                    drawTile(c,r, R.drawable.road)
                 }
             }
         }

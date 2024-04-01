@@ -33,6 +33,8 @@ class GameManager {
 
     fun setPendingEnemies(l : List<Enemy>) { this.pendingEnemies = l.toMutableList() }
 
+    fun addTowerToList(t: Tower) { this.towers.add(t); }
+
     //************************************* Private methods ************************************* //
     /**
      * Advance 1 turn for every towers

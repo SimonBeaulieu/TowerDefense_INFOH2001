@@ -37,13 +37,16 @@ object MapViewer {
         return mapLink.getTileContent(col, row)
     }
 
-    fun getWaveEnemies(nWave: Int): MutableList<Enemy>{
-        var l = mutableListOf<Enemy>()
+    fun getWaveEnemies(n: Int): List<Enemy>{
+        var l : List<Enemy> = emptyList()
 
         if (isInitialised) {
-            l =  mapLink.getWaves()[nWave].getWaveEnemies()
+            l =  mapLink.getWave(n).getEnemies().toList()
         }
-
         return l
+    }
+
+    fun getPathEncoding() : List<Int> {
+        return mapLink.getPathEncoding()
     }
 }
