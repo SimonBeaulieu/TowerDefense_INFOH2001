@@ -7,9 +7,6 @@ class Soldier(col:Int, row: Int) : Enemy(col, row) {
     //*************************************** Constructor *************************************** //
 
     //************************************* Public methods ************************************* //
-    override fun onAttack(damage: Int) {
-        //!!!KL
-    }
     override fun advanceTick() {
         // !!!SB: Implementer
     }
