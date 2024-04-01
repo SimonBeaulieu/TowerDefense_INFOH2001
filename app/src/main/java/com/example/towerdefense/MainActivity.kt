@@ -6,6 +6,7 @@ import android.widget.Button
 import androidx.gridlayout.widget.GridLayout
 import android.widget.ImageView
 import com.example.towerdefense.model.Game
+import com.example.towerdefense.model.MapViewer
 import com.example.towerdefense.model.GameMap
 
 class MainActivity : AppCompatActivity() {
@@ -26,16 +27,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun initMapGrid() {
         gridLayoutMap = findViewById(R.id.gridLayoutMap)
-        gridLayoutMap.columnCount = mapGame.nColumns
-        gridLayoutMap.rowCount = mapGame.nRows
+        gridLayoutMap.columnCount = GameMap.N_COLUMNS
+        gridLayoutMap.rowCount = GameMap.N_ROWS
         drawMap()
     }
 
     private fun drawMap() {
-        for (c in 0 until mapGame.nColumns) {
-            for (r in 0 until mapGame.nRows) {
-                when (mapGame.mapGrid[c][r]) {
-                    mapGame.emptyTile, mapGame.towerTile -> {
+        for (c in 0 until GameMap.N_COLUMNS) {
+            for (r in 0 until GameMap.N_ROWS) {
+                when (MapViewer.getTileContent(c,r)) {
+                    GameMap.EMPTY_TILE, GameMap.TOWER_TILE -> {
                         // Show grass
                         drawTile(c,r, R.drawable.grass)
                     }
@@ -56,8 +57,8 @@ class MainActivity : AppCompatActivity() {
         val params = GridLayout.LayoutParams()
         params.columnSpec = GridLayout.spec(c)
         params.rowSpec = GridLayout.spec(r)
-        params.width = mapGame.pxPerTile
-        params.height = mapGame.pxPerTile
+        params.width = GameMap.PX_PER_TILE
+        params.height = GameMap.PX_PER_TILE
 
         // Set layout parameters
         imageView.layoutParams = params

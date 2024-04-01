@@ -7,14 +7,14 @@ class Game {
     private var money : Int = 1000
     private var hitPoints : Int = 200
 
-
     private val gameManager: GameManager = GameManager()
     private var gameTimer : GameTimer? = null
-
+    private val gameMap : GameMap = GameMap()
 
     //*************************************** Constructor *************************************** //
     init {
         initGameTimer()
+        MapViewer.linkMap(gameMap)
     }
 
     private fun initGameTimer() {
@@ -27,8 +27,8 @@ class Game {
         // !!!SB: Appeler la fonction à partir d'eventHandler buttons. À compléter
 
         //!!!KC: Changer pour accéder au singleton (nWave)
-        if (currentWave < GameMap.getMap().nWave) {
-            gameManager.setPendingEnemies(GameMap.getWaveEnemies(currentWave))
+        if (currentWave < gameMap.nWave) {
+            gameManager.setPendingEnemies(MapViewer.getWaveEnemies(currentWave))
             gameTimer?.start()
         }
     }

@@ -10,8 +10,6 @@ class GameManager {
     private var activeEnemies : MutableList<Enemy> = mutableListOf()
     private var pendingEnemies : MutableList<Enemy> = mutableListOf()
 
-    private val gameMap : GameMap = GameMap()
-
     //*************************************** Constructor *************************************** //
 
 
