@@ -1,6 +1,6 @@
 package com.example.towerdefense.model
 
-abstract class Body {
+abstract class Body(col : Int, row : Int) {
     //**************************************** Variables **************************************** //
     // !!!SB: Attention au valeurs "hard codé", c'est correct ne pas en mettre aussi de limite
     var posX: Int = 0

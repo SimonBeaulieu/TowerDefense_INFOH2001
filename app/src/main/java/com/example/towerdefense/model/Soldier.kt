@@ -1,6 +1,6 @@
 package com.example.towerdefense.model
 
-class Soldier:Enemy() {
+class Soldier(col:Int, row: Int) : Enemy(col, row) {
 
     //**************************************** Variables **************************************** //
 

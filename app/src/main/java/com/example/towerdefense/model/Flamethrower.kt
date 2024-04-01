@@ -1,6 +1,6 @@
 package com.example.towerdefense.model
 
-class Flamethrower:Tower() {
+class Flamethrower(col: Int, row: Int) : Tower(col, row) {
     //**************************************** Variables **************************************** //
 
     //*************************************** Constructor *************************************** //

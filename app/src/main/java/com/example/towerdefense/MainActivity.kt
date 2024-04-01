@@ -8,6 +8,7 @@ import android.widget.ImageView
 import com.example.towerdefense.model.Game
 import com.example.towerdefense.model.MapViewer
 import com.example.towerdefense.model.GameMap
+import com.example.towerdefense.model.Tiles
 
 class MainActivity : AppCompatActivity() {
     private lateinit var gridLayoutMap : androidx.gridlayout.widget.GridLayout
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     private fun drawMap() {
         for (c in 0 until GameMap.N_COLUMNS) {
             for (r in 0 until GameMap.N_ROWS) {
-                if (MapViewer.getTileContent(c,r) <= GameMap.EMPTY_TILE) {
+                if (MapViewer.getTileContent(c,r) <= Tiles.EMPTY.value) {
                     // Show grass
                     drawTile(c,r, R.drawable.grass)
                 } else {

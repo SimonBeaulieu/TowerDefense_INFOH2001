@@ -1,6 +1,6 @@
 package com.example.towerdefense.model
 
-abstract class Enemy : Body(), AttackEventListener {
+abstract class Enemy(col: Int, row: Int) : Body(col, row), AttackEventListener {
     //**************************************** Variables **************************************** //
     private var hitPoints : Int = 0
     private var loot : Int = 0

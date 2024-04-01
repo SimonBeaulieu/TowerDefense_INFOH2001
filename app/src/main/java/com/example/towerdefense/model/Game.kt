@@ -26,7 +26,7 @@ class Game {
     fun startWave() {
         // !!!SB: Appeler la fonction à partir d'eventHandler buttons. À compléter
 
-        //!!!KC: Changer pour accéder au singleton (nWave)
+        // !!!KC: Changer pour accéder au singleton (nWave)
         if (currentWave < gameMap.nWave) {
             gameManager.setPendingEnemies(MapViewer.getWaveEnemies(currentWave))
             gameTimer?.start()
@@ -48,10 +48,24 @@ class Game {
         gameTimer?.stop()
     }
 
-    fun addTower(col : Int, row : Int, t: Tower) {
-        if (MapViewer.getTileContent(col, row) == GameMap.EMPTY_TILE){
-            gameManager.addTowerToList(t);
-            gameMap.setTileContent(col, row, GameMap.TOWER_TILE)
+    fun addTower(col : Int, row : Int, towerType: Tiles) {
+        // !!!SB: Ajouté à partir du main
+        if (MapViewer.isEmptyTile(col, row)) {
+            when (towerType) {
+                Tiles.ARCHER -> {
+                    gameManager.addTowerToList(Archer(col, row))
+                    gameMap.setTileContent(col, row, towerType.value)
+                }
+                Tiles.CANNON -> {
+                    gameManager.addTowerToList(Cannon(col, row))
+                    gameMap.setTileContent(col, row, towerType.value)
+                }
+                Tiles.FLAMETHROWER -> {
+                    gameManager.addTowerToList(Flamethrower(col, row))
+                    gameMap.setTileContent(col, row, towerType.value)
+                }
+                else -> { }
+            }
         }
     }
 

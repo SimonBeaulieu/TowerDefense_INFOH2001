@@ -1,6 +1,6 @@
 package com.example.towerdefense.model
 
-class Archer : Tower() {
+class Archer(col: Int, row: Int) : Tower(col, row) {
     //**************************************** Variables **************************************** //
 
     //*************************************** Constructor *************************************** //

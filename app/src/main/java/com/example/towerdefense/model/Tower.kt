@@ -1,5 +1,5 @@
 package com.example.towerdefense.model
-abstract class Tower : Body() {
+abstract class Tower(col: Int, row: Int) : Body(col, row) {
     //**************************************** Variables **************************************** //
 
     //*************************************** Constructor *************************************** //
