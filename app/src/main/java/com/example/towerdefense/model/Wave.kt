@@ -3,7 +3,7 @@ package com.example.towerdefense.model
 class Wave(nWave:Int = 0) {
     //**************************************** Variables **************************************** //
     private var completionReward = 0
-    private val waveEnemies : MutableList<Enemy> = mutableListOf()
+    private val enemies : MutableList<Enemy> = mutableListOf()
 
     //*************************************** Constructor *************************************** //
     init {
@@ -13,7 +13,7 @@ class Wave(nWave:Int = 0) {
     }
 
     //************************************* Public methods ************************************* //
-    fun getWaveEnemies() : MutableList<Enemy> { return this.waveEnemies; }
+    fun getEnemies() : List<Enemy> { return this.enemies.toList(); }
 
     fun getCompletionReward() : Int { return this.completionReward; }
 

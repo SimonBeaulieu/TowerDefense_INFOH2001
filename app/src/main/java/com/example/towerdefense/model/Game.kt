@@ -43,7 +43,7 @@ class Game {
         gameTimer?.start()
     }
 
-    fun endWave() {
+    fun endGame() {
         // !!!SB: Appeler la fonction à partir d'eventHandler buttons. À compléter
         gameTimer?.stop()
     }

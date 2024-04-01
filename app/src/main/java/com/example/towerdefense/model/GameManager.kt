@@ -31,7 +31,7 @@ class GameManager {
 
     fun getHitPointsToRemove() : Int { return this.hitPointsToRemove }
 
-    fun setPendingEnemies(l : MutableList<Enemy>) { this.pendingEnemies = l }
+    fun setPendingEnemies(l : List<Enemy>) { this.pendingEnemies = l.toMutableList() }
 
     //************************************* Private methods ************************************* //
     /**
