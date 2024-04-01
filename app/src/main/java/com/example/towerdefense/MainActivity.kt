@@ -2,20 +2,24 @@ package com.example.towerdefense
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import androidx.gridlayout.widget.GridLayout
 import android.widget.ImageView
 import com.example.towerdefense.model.Game
-import com.example.towerdefense.model.MapGame
+import com.example.towerdefense.model.GameMap
 
 class MainActivity : AppCompatActivity() {
     private lateinit var gridLayoutMap : androidx.gridlayout.widget.GridLayout
-    private val game : Game = Game()
+    private lateinit var buttonStartWave : Button
 
-    private val mapGame : MapGame = MapGame()
+    private val game : Game = Game()
+    private val mapGame : GameMap = GameMap()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        buttonStartWave.findViewById<Button>(R.id.buttonStartWave)
 
         initMapGrid()
     }
@@ -60,5 +64,9 @@ class MainActivity : AppCompatActivity() {
 
         // Add the TextView to the GridLayout
         gridLayoutMap.addView(imageView)
+    }
+
+    fun onClickButtonStartWave() {
+        game.startWave()
     }
 }

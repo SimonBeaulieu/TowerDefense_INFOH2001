@@ -2,7 +2,7 @@ package com.example.towerdefense.model
 
 import kotlin.math.roundToInt
 
-class MapGame {
+class GameMap {
     //**************************************** Variables **************************************** //
     val nRows: Int = 8
     val nColumns: Int = 16

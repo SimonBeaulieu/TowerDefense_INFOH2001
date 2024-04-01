@@ -1,13 +1,13 @@
 package com.example.towerdefense.model
 
-class Wave {
+class Wave(nWave:Int = 0) {
     //**************************************** Variables **************************************** //
-    private var bonusMoney = 0
+    private var completionReward = 0
     private val waveEnemies : MutableList<Enemy> = mutableListOf()
 
     //*************************************** Constructor *************************************** //
-    fun initWave(n : Int) {
-        this.bonusMoney = n * 300
+    init {
+        this.completionReward = nWave * 50 + 300
 
         // !!!SB Remplir la liste d'ennemy selon n
     }
@@ -15,7 +15,7 @@ class Wave {
     //************************************* Public methods ************************************* //
     fun getWaveEnemies() : MutableList<Enemy> { return this.waveEnemies; }
 
-    fun getBonusMoney() : Int { return this.bonusMoney; }
+    fun getCompletionReward() : Int { return this.completionReward; }
 
     //************************************* Private methods ************************************* //
 

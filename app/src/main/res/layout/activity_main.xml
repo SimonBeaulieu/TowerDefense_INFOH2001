@@ -29,7 +29,15 @@
             android:id="@+id/layoutCharacters"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" />
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/buttonStartWave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onClickButtonStartWave"
+                android:text="Start Wave" />
+        </LinearLayout>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

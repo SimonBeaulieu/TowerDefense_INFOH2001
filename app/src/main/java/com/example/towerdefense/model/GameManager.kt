@@ -1,6 +1,6 @@
 package com.example.towerdefense.model
 
-class Map {
+class GameManager {
 
     //**************************************** Variables **************************************** //
     private var moneyToAdd : Int = 0
@@ -9,6 +9,8 @@ class Map {
     private val towers : MutableList<Tower> = mutableListOf()
     private var activeEnemies : MutableList<Enemy> = mutableListOf()
     private var pendingEnemies : MutableList<Enemy> = mutableListOf()
+
+    private val gameMap : GameMap = GameMap()
 
     //*************************************** Constructor *************************************** //
 
@@ -31,7 +33,7 @@ class Map {
 
     fun getHitPointsToRemove() : Int { return this.hitPointsToRemove }
 
-    fun setEnemyList(l : MutableList<Enemy>) { this.pendingEnemies = l}
+    fun setPendingEnemies(l : MutableList<Enemy>) { this.pendingEnemies = l }
 
     //************************************* Private methods ************************************* //
     /**
