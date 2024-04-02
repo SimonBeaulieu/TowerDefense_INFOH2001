@@ -1,8 +1,8 @@
 package com.example.towerdefense
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.gridlayout.widget.GridLayout
@@ -13,25 +13,28 @@ import com.example.towerdefense.model.GameMap
 import com.example.towerdefense.model.Tiles
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var gridLayoutMap : androidx.gridlayout.widget.GridLayout
+    private lateinit var gridLayoutMap : GridLayout
+    private lateinit var buttonStartWave : Button
     private lateinit var buttonArcher : ImageButton
+    private var selectedTower : ImageButton? = null
 
     private val game : Game = Game()
+    private val mapGame : GameMap = GameMap()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        initMapGrid()
-        buttonArcher = findViewById<ImageButton>(R.id.archerButton)
-    }
+        buttonStartWave.findViewById<Button>(R.id.buttonStartWave)
+        buttonArcher = findViewById<ImageButton>(R.id.buttonArcher)
 
+        initMapGrid()
+    }
 
     private fun initMapGrid() {
         gridLayoutMap = findViewById(R.id.gridLayoutMap)
         gridLayoutMap.columnCount = GameMap.N_COLUMNS
         gridLayoutMap.rowCount = GameMap.N_ROWS
-
         drawMap()
     }
 
@@ -67,9 +70,18 @@ class MainActivity : AppCompatActivity() {
         gridLayoutMap.addView(imageView)
     }
 
-    fun onClickArcherButton(view: View) {
-        // Test
-        game.addTower(2,2, Tiles.ARCHER)
-        drawTile(2,2, R.drawable.ic_launcher_foreground)
+    fun onClickButtonStartWave() {
+        game.startWave()
+    }
+    fun onClickButtonArcher() {
+        if (selectedTower == buttonArcher) {
+            buttonArcher.setBackgroundColor(Color.TRANSPARENT)
+            selectedTower = null
+        } else {
+            this.buttonArcher.setBackgroundColor(Color.GREEN)
+            selectedTower = buttonArcher
+            game.addTower(2, 2, Tiles.ARCHER)
+            drawTile(2, 2, R.drawable.ic_launcher_foreground)
+        }
     }
 }

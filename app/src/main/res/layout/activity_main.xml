@@ -19,8 +19,8 @@
 
         <androidx.gridlayout.widget.GridLayout
             android:id="@+id/gridLayoutMap"
-            android:layout_width="1935px"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:columnCount="8"
             app:rowCount="12"
             app:useDefaultMargins="false" />
@@ -32,12 +32,19 @@
             android:orientation="vertical" >
 
             <ImageButton
-                android:id="@+id/archerButton"
+                android:id="@+id/buttonArcher"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:contentDescription="Archer"
-                android:onClick="onClickArcherButton"
-                app:srcCompat="@drawable/ic_launcher_foreground" />
+                android:onClick="onClickButtonArcher"
+                android:src="@android:drawable/btn_star" />
+
+            <Button
+                android:id="@+id/buttonStartWave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onClickButtonStartWave"
+                android:text="Start Wave" />
         </LinearLayout>
 
     </LinearLayout>
