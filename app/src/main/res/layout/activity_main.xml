@@ -22,6 +22,7 @@
             android:id="@+id/gridLayoutMap"
             android:layout_width="1935px"
             android:layout_height="wrap_content"
+            android:onClick="onClickGridLayoutMap"
             app:columnCount="8"
             app:rowCount="12"
             app:useDefaultMargins="false" />
@@ -32,12 +33,18 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Button" />
+
             <ImageButton
-                android:id="@+id/archerButton"
+                android:id="@+id/buttonArcher"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:contentDescription="Archer"
-                android:onClick="onClickArcherButton"
+                android:onClick="onClickButtonArcher"
                 app:srcCompat="@drawable/ic_launcher_foreground" />
 
             <ImageButton
