@@ -1,8 +1,10 @@
 package com.example.towerdefense
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.gridlayout.widget.GridLayout
 import android.widget.ImageView
 import com.example.towerdefense.model.Game
@@ -12,6 +14,8 @@ import com.example.towerdefense.model.GameMap
 class MainActivity : AppCompatActivity() {
     private lateinit var gridLayoutMap : androidx.gridlayout.widget.GridLayout
     private lateinit var buttonStartWave : Button
+    private lateinit var buttonArcherTower : ImageButton
+    private var selectedTower : ImageButton? = null
 
     private val game : Game = Game()
     private val mapGame : GameMap = GameMap()
@@ -21,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         buttonStartWave.findViewById<Button>(R.id.buttonStartWave)
+        buttonArcherTower.findViewById<ImageButton>(R.id.buttonArcher)
 
         initMapGrid()
     }
@@ -69,5 +74,16 @@ class MainActivity : AppCompatActivity() {
 
     fun onClickButtonStartWave() {
         game.startWave()
+    }
+    fun onClickButtonArcher(){
+        if (selectedTower == buttonArcherTower) {
+            buttonArcherTower.setBackgroundColor(Color.TRANSPARENT)
+            selectedTower = null
+        }
+        else{
+            this.buttonArcherTower.setBackgroundColor(Color.GREEN)
+            selectedTower = buttonArcherTower
+        }
+
     }
 }
