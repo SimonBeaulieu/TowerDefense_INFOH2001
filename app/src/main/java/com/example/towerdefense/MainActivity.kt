@@ -1,9 +1,9 @@
 package com.example.towerdefense
 
-import android.graphics.Color
+//import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
+import android.view.View
 import android.widget.ImageButton
 import androidx.gridlayout.widget.GridLayout
 import android.widget.ImageView
@@ -13,22 +13,24 @@ import com.example.towerdefense.model.GameMap
 import com.example.towerdefense.model.Tiles
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var gridLayoutMap : GridLayout
-    private lateinit var buttonStartWave : Button
+    private lateinit var gridLayoutMap : androidx.gridlayout.widget.GridLayout
+    //private lateinit var buttonStartWave : Button
     private lateinit var buttonArcher : ImageButton
-    private var selectedTower : ImageButton? = null
+    private lateinit var buttonRemove : ImageButton
+    //private var selectedTower : ImageButton? = null
 
     private val game : Game = Game()
-    private val mapGame : GameMap = GameMap()
+    //private val mapGame : GameMap = GameMap()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        buttonStartWave.findViewById<Button>(R.id.buttonStartWave)
-        buttonArcher = findViewById<ImageButton>(R.id.buttonArcher)
-
+        //buttonStartWave.findViewById<Button>(R.id.buttonStartWave)
         initMapGrid()
+        buttonArcher = findViewById<ImageButton>(R.id.archerButton)
+        buttonRemove = findViewById<ImageButton>(R.id.removeButton)
+
     }
 
     private fun initMapGrid() {
@@ -70,18 +72,27 @@ class MainActivity : AppCompatActivity() {
         gridLayoutMap.addView(imageView)
     }
 
-    fun onClickButtonStartWave() {
-        game.startWave()
+//    fun onClickButtonStartWave() {
+//        game.startWave()
+//    }
+    fun onClickArcherButton(view: View) {
+//        if (selectedTower == buttonArcher) {
+//            buttonArcher.setBackgroundColor(Color.TRANSPARENT)
+//            selectedTower = null
+//        } else {
+//            this.buttonArcher.setBackgroundColor(Color.GREEN)
+//            selectedTower = buttonArcher
+
+//        }
+
+        game.addTower(2, 2, Tiles.ARCHER)
+        drawTile(2, 2, R.drawable.ic_launcher_foreground)
+
+
     }
-    fun onClickButtonArcher() {
-        if (selectedTower == buttonArcher) {
-            buttonArcher.setBackgroundColor(Color.TRANSPARENT)
-            selectedTower = null
-        } else {
-            this.buttonArcher.setBackgroundColor(Color.GREEN)
-            selectedTower = buttonArcher
-            game.addTower(2, 2, Tiles.ARCHER)
-            drawTile(2, 2, R.drawable.ic_launcher_foreground)
-        }
+
+    fun onClickRemoveButton(view: View){
+        game.addTower(2, 2, Tiles.EMPTY)
+        drawTile(2, 2, R.drawable.grass)
     }
 }

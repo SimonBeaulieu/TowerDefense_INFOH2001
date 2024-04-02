@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:onClick="onClickRemoveButton"
     android:orientation="horizontal"
     tools:context=".MainActivity">
 
@@ -19,8 +20,8 @@
 
         <androidx.gridlayout.widget.GridLayout
             android:id="@+id/gridLayoutMap"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="1935px"
+            android:layout_height="wrap_content"
             app:columnCount="8"
             app:rowCount="12"
             app:useDefaultMargins="false" />
@@ -29,22 +30,30 @@
             android:id="@+id/layoutCharacters"
             android:layout_width="400px"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/buttonArcher"
+                android:id="@+id/archerButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:contentDescription="Archer"
-                android:onClick="onClickButtonArcher"
-                android:src="@android:drawable/btn_star" />
+                android:onClick="onClickArcherButton"
+                app:srcCompat="@drawable/ic_launcher_foreground" />
 
-            <Button
-                android:id="@+id/buttonStartWave"
+            <ImageButton
+                android:id="@+id/removeButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="onClickButtonStartWave"
-                android:text="Start Wave" />
+                android:onClick="onClickRemoveButton"
+                android:src="@android:drawable/btn_star" />
+
+
+            <!--            <Button-->
+            <!--                android:id="@+id/buttonStartWave"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:onClick="onClickButtonStartWave"-->
+            <!--                android:text="Start Wave" />-->
         </LinearLayout>
 
     </LinearLayout>
