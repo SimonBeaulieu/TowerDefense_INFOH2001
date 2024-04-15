@@ -18,7 +18,7 @@ import com.example.towerdefense.model.Tiles
 class MainActivity : AppCompatActivity() {
     private lateinit var gridLayoutMap : androidx.gridlayout.widget.GridLayout
     private lateinit var buttonStartWave : Button
-    private lateinit var button : Button
+    private lateinit var buttonPos : Button
     private lateinit var buttonArcher : ImageButton
     private lateinit var buttonRemove : ImageButton
     private var selectedTower : ImageButton? = null
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         initMapGrid()
         buttonArcher = findViewById<ImageButton>(R.id.buttonArcher)
         buttonRemove = findViewById<ImageButton>(R.id.removeButton)
-        button = findViewById<Button>(R.id.button)
+        buttonPos = findViewById<Button>(R.id.buttonPos)
         //gridLayoutMap.setOnTouchListener {}
 
     }
@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
                 val y = event.y.toInt()
 
                 val pos: Pair<Int, Int> = GameMap.pixelToGrid(x,y)
-                button.text = "(${pos.first},${pos.second})"
+                buttonPos.text = "(${pos.first},${pos.second})"
                 when (selectedTower){
                     buttonArcher -> placeTower(pos.first, pos.second, Tiles.ARCHER)
                 }
