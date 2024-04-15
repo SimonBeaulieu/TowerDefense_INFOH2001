@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:onClick="onClickRemoveButton"
     android:orientation="horizontal"
     tools:context=".MainActivity">
 
@@ -33,12 +32,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/buttonPos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Button" />
-
             <ImageButton
                 android:id="@+id/buttonArcher"
                 android:layout_width="match_parent"
@@ -47,20 +40,12 @@
                 android:onClick="onClickButtonArcher"
                 app:srcCompat="@drawable/ic_launcher_foreground" />
 
-            <ImageButton
-                android:id="@+id/removeButton"
+            <Button
+                android:id="@+id/buttonStartWave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="onClickRemoveButton"
-                android:src="@android:drawable/btn_star" />
-
-
-            <!--            <Button-->
-            <!--                android:id="@+id/buttonStartWave"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:onClick="onClickButtonStartWave"-->
-            <!--                android:text="Start Wave" />-->
+                android:onClick="onClickButtonStartWave"
+                android:text="Start Wave" />
         </LinearLayout>
 
     </LinearLayout>

@@ -17,28 +17,27 @@ import com.example.towerdefense.model.Tiles
 
 class MainActivity : AppCompatActivity() {
     private lateinit var gridLayoutMap : androidx.gridlayout.widget.GridLayout
+
     private lateinit var buttonStartWave : Button
-    private lateinit var buttonPos : Button
+
     private lateinit var buttonArcher : ImageButton
-    private lateinit var buttonRemove : ImageButton
     private var selectedTower : ImageButton? = null
 
     private val game : Game = Game()
-    private val mapGame : GameMap = GameMap()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //buttonStartWave.findViewById<Button>(R.id.buttonStartWave)
         initMapGrid()
-        buttonArcher = findViewById<ImageButton>(R.id.buttonArcher)
-        buttonRemove = findViewById<ImageButton>(R.id.removeButton)
-        buttonPos = findViewById<Button>(R.id.buttonPos)
-        //gridLayoutMap.setOnTouchListener {}
-
+        initButtons()
     }
 
+    private fun initButtons() {
+        buttonStartWave = findViewById(R.id.buttonStartWave)
+        buttonArcher = findViewById(R.id.buttonArcher)
+
+    }
     private fun initMapGrid() {
         gridLayoutMap = findViewById(R.id.gridLayoutMap)
         gridLayoutMap.columnCount = GameMap.N_COLUMNS
@@ -78,23 +77,6 @@ class MainActivity : AppCompatActivity() {
         gridLayoutMap.addView(imageView)
     }
 
-    fun onClickButtonStartWave() {
-        game.startWave()
-    }
-    fun onClickButtonArcher(view: View) {
-        if (selectedTower == buttonArcher) {
-            buttonArcher.setBackgroundColor(Color.TRANSPARENT)
-            selectedTower = null
-        } else {
-            this.buttonArcher.setBackgroundColor(Color.GREEN)
-            selectedTower = buttonArcher
-        }
-
-
-
-
-    }
-
     private fun placeTower(c: Int, r: Int, towerType: Tiles){
         game.addTower(c, r, towerType)
 
@@ -102,30 +84,46 @@ class MainActivity : AppCompatActivity() {
         drawTile(c, r, R.drawable.ic_launcher_foreground)
     }
 
+    private fun toggleTowerButton(imageButton: ImageButton) {
+        if (selectedTower == imageButton) {
+            imageButton.setBackgroundColor(Color.TRANSPARENT)
+            selectedTower = null
+        } else {
+            imageButton.setBackgroundColor(Color.GREEN)
+            selectedTower = imageButton
+        }
+    }
+
+    private fun isTowerSelected(imageButton: ImageButton) : Boolean {
+        return imageButton == selectedTower
+    }
+
+    fun onClickButtonStartWave() {
+        game.startWave()
+    }
+
+    fun onClickButtonArcher(view: View) {
+        toggleTowerButton(buttonArcher)
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     fun onClickGridLayoutMap(view: View){
-        gridLayoutMap.setOnTouchListener{ v, event ->
+        gridLayoutMap.setOnTouchListener{_, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 // Get X and Y coordinates of the touch event
                 val x = event.x.toInt()
                 val y = event.y.toInt()
-
                 val pos: Pair<Int, Int> = GameMap.pixelToGrid(x,y)
-                buttonPos.text = "(${pos.first},${pos.second})"
-                when (selectedTower){
-                    buttonArcher -> placeTower(pos.first, pos.second, Tiles.ARCHER)
+
+                when (selectedTower) {
+                    buttonArcher -> {
+                        placeTower(pos.first, pos.second, Tiles.ARCHER)
+                        toggleTowerButton(buttonArcher)
+                    }
                 }
             }
-
             // Return false to indicate that we haven't consumed the touch event,
             false
-
         }
     }
-
-    fun onClickRemoveButton(view: View){
-        game.addTower(2, 2, Tiles.EMPTY)
-        drawTile(2, 2, R.drawable.grass)
-    }
-
 }
