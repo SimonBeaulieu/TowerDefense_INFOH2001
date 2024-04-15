@@ -83,4 +83,6 @@ class GameMap(val nWave:Int = 12) {
     private fun isValidCol(col: Int) : Boolean {
         return col in 0..<N_COLUMNS
     }
+
+
 }
