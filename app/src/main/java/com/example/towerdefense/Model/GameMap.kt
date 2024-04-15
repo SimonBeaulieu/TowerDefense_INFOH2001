@@ -21,6 +21,14 @@ class GameMap(val nWave:Int = 12) {
             val row = (py.floorDiv(PX_PER_TILE))
             return Pair(col,row)
         }
+
+        fun isValidRow(row: Int) : Boolean {
+            return row in 0..<N_ROWS
+        }
+
+        fun isValidCol(col: Int) : Boolean {
+            return col in 0..<N_COLUMNS
+        }
     }
 
     private val _firstTile : Pair<Int, Int> = Pair(3,0)
@@ -74,13 +82,5 @@ class GameMap(val nWave:Int = 12) {
                 3 -> _grid[col][++row] = i + 2
             }
         }
-    }
-
-    private fun isValidRow(row: Int) : Boolean {
-        return row in 0..<N_ROWS
-    }
-
-    private fun isValidCol(col: Int) : Boolean {
-        return col in 0..<N_COLUMNS
     }
 }
