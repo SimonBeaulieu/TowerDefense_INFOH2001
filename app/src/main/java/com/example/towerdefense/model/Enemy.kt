@@ -44,6 +44,13 @@ abstract class Enemy(col: Int, row: Int) : Body(col, row), AttackEventListener {
 
     //************************************* Private methods ************************************* //
     protected fun move() {
+        val nextTile = getNextTile()
+
+        gridX = nextTile.first
+        gridY = nextTile.second
+    }
+
+    private fun getNextTile(): Pair<Int,Int> {
         var tileValue : Int
         var maxTileValue = 0
 
@@ -65,7 +72,6 @@ abstract class Enemy(col: Int, row: Int) : Body(col, row), AttackEventListener {
             }
         }
 
-        gridX = nextX
-        gridY = nextY
+        return Pair(nextX, nextY)
     }
 }
