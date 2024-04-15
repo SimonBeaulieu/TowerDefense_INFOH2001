@@ -33,6 +33,14 @@ object MapViewer {
         }
     }
 
+    fun isRoad(col: Int, row: Int) : Boolean {
+        if (_isInitialised) {
+            return getTileContent(col, row) > Tiles.EMPTY.value
+        } else {
+            return false
+        }
+    }
+
     fun getTileContent(col: Int, row: Int) : Int {
         return _mapLink.getTileContent(col, row)
     }

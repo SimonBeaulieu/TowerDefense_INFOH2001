@@ -8,7 +8,7 @@ class Soldier(col:Int, row: Int) : Enemy(col, row) {
 
     //************************************* Public methods ************************************* //
     override fun advanceTick() {
-        // !!!SB: Implementer
+        super.advanceTick()
     }
 
     //************************************* Private methods ************************************* //
