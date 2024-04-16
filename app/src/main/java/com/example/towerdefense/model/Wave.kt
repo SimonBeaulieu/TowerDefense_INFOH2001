@@ -1,21 +1,27 @@
 package com.example.towerdefense.model
 
-class Wave(nWave:Int = 0) {
+import kotlin.math.pow
+import kotlin.math.round
+
+class Wave(waveNum:Int = 0) {
     //**************************************** Variables **************************************** //
-    private var _completionReward = 0
-    private val _enemies : MutableList<Enemy> = mutableListOf()
+    private var mCompletionReward = 0
+    private val mEnemies : MutableList<Enemy> = mutableListOf()
 
     //*************************************** Constructor *************************************** //
     init {
-        this._completionReward = nWave * 50 + 300
+        val nEnemies : Int = round(10 * 50.0.pow((waveNum - 1) / 10.0)).toInt()
+        mCompletionReward = waveNum * 50 + 300
 
-        // !!!SB Remplir la liste d'ennemy selon n
+        for (i in 0 until nEnemies) {
+            mEnemies.add(Soldier(-1,-1, i))
+        }
     }
 
     //************************************* Public methods ************************************* //
-    fun getEnemies() : List<Enemy> { return this._enemies.toList(); }
+    fun getEnemies() : List<Enemy> { return this.mEnemies.toList(); }
 
-    fun getCompletionReward() : Int { return this._completionReward; }
+    fun getCompletionReward() : Int { return this.mCompletionReward; }
 
     //************************************* Private methods ************************************* //
 

@@ -1,6 +1,6 @@
 package com.example.towerdefense.model
 
-class Boss(col:Int, row: Int) : Enemy(col, row) {
+class Boss(col:Int, row: Int, spawnTick: Int) : Enemy(col, row, spawnTick) {
     //**************************************** Variables **************************************** //
 
     //*************************************** Constructor *************************************** //

@@ -2,13 +2,13 @@ package com.example.towerdefense.model
 
 abstract class Body(col : Int, row : Int) {
     //**************************************** Variables **************************************** //
-    protected var gridX: Int = col
+    var mGridX: Int = col
         set(value) {
             if (GameMap.isValidCol(value)) {
                 field = value
             }
         }
-    protected var gridY: Int = row
+    var mGridY: Int = row
         set(value) {
             if (GameMap.isValidRow(value)) {
                 field = value
@@ -20,6 +20,7 @@ abstract class Body(col : Int, row : Int) {
 
     //************************************* Public methods ************************************* //
     abstract fun advanceTick()
+
 
     //************************************* Private methods ************************************* //
 }

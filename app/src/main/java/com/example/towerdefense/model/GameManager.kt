@@ -3,12 +3,12 @@ package com.example.towerdefense.model
 class GameManager {
 
     //**************************************** Variables **************************************** //
-    private var _moneyToAdd : Int = 0
-    private var _hitPointsToRemove : Int = 0
+    private var mMoneyToAdd : Int = 0
+    private var mHitPointsToRemove : Int = 0
 
-    private val _towers : MutableList<Tower> = mutableListOf()
-    private var _activeEnemies : MutableList<Enemy> = mutableListOf()
-    private var _pendingEnemies : MutableList<Enemy> = mutableListOf()
+    private val mTowers : MutableList<Tower> = mutableListOf()
+    private var mActiveEnemies : MutableList<Enemy> = mutableListOf()
+    private var mPendingEnemies : MutableList<Enemy> = mutableListOf()
 
     //*************************************** Constructor *************************************** //
 
@@ -19,28 +19,32 @@ class GameManager {
      * check is if they got killed during this turn.
      */
     fun advanceTick() {
-        _moneyToAdd = 0
-        _hitPointsToRemove = 0
+        mMoneyToAdd = 0
+        mHitPointsToRemove = 0
 
         advanceTowers()
         advanceActiveEnemies()
         advancePendingEnemies()
     }
 
-    fun getMoneyToAdd() : Int { return this._moneyToAdd }
+    fun getMoneyToAdd() : Int { return this.mMoneyToAdd }
 
-    fun getHitPointsToRemove() : Int { return this._hitPointsToRemove }
+    fun getHitPointsToRemove() : Int { return this.mHitPointsToRemove }
 
-    fun setPendingEnemies(l : List<Enemy>) { this._pendingEnemies = l.toMutableList() }
+    fun setPendingEnemies(l : List<Enemy>) { this.mPendingEnemies = l.toMutableList() }
 
-    fun addTowerToList(t: Tower) { this._towers.add(t); }
+    fun addTowerToList(t: Tower) { this.mTowers.add(t) }
+
+    fun getTowers() : List<Tower> { return this.mTowers }
+
+    fun getActiveEnemies() : List<Enemy> { return this.mActiveEnemies }
 
     //************************************* Private methods ************************************* //
     /**
      * Advance 1 turn for every towers
      */
     private fun advanceTowers() {
-        val towerIterator = _towers.iterator()
+        val towerIterator = mTowers.iterator()
         var t : Tower
 
         while (towerIterator.hasNext()){
@@ -55,18 +59,18 @@ class GameManager {
      * Must be removed if is dead or has reached the end. Otherwise advance a turn
      */
     private fun advanceActiveEnemies() {
-        val enemyIterator = _activeEnemies.iterator()
+        val enemyIterator = mActiveEnemies.iterator()
         var e : Enemy
 
         while (enemyIterator.hasNext()){
             e = enemyIterator.next()
 
             if (e.getIsDead()) {
-                _moneyToAdd += e.getLoot()
+                mMoneyToAdd += e.getLoot()
                 enemyIterator.remove()
 
             } else if (e.hasReachedEnd()) {
-                _hitPointsToRemove += e.getHitPoints()
+                mHitPointsToRemove += e.getHitPoints()
                 enemyIterator.remove()
 
             } else {
@@ -82,14 +86,18 @@ class GameManager {
      * Otherwise, decrement spawn tick of 1
      */
     private fun advancePendingEnemies() {
-        val enemyIterator = _pendingEnemies.iterator()
+        val enemyIterator = mPendingEnemies.iterator()
         var e : Enemy
 
         while (enemyIterator.hasNext()) {
             e = enemyIterator.next()
 
             if (e.getSpawnTick() == 0) {
-                _activeEnemies.add(e)
+                val t = MapViewer.getFirstTile()
+                e.mGridX = t.first
+                e.mGridY = t.second
+
+                mActiveEnemies.add(e)
                 enemyIterator.remove()
 
             } else {

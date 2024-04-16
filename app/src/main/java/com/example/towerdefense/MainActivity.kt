@@ -4,19 +4,30 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.ImageButton
 import androidx.gridlayout.widget.GridLayout
 import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.children
+import com.example.towerdefense.model.Archer
 import com.example.towerdefense.model.Game
 import com.example.towerdefense.model.MapViewer
 import com.example.towerdefense.model.GameMap
+import com.example.towerdefense.model.Soldier
 import com.example.towerdefense.model.Tiles
 
 class MainActivity : AppCompatActivity() {
+    private val handler = Handler(Looper.getMainLooper())
+
     private lateinit var gridLayoutMap : androidx.gridlayout.widget.GridLayout
+    private lateinit var layoutBodies : FrameLayout
 
     private lateinit var buttonStartWave : Button
 
@@ -29,8 +40,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        initMapGrid()
+        initGrids()
         initButtons()
+        layoutBodies = findViewById(R.id.layoutBodies)
+
+        drawingThread()
     }
 
     private fun initButtons() {
@@ -38,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         buttonArcher = findViewById(R.id.buttonArcher)
 
     }
-    private fun initMapGrid() {
+    private fun initGrids() {
         gridLayoutMap = findViewById(R.id.gridLayoutMap)
         gridLayoutMap.columnCount = GameMap.N_COLUMNS
         gridLayoutMap.rowCount = GameMap.N_ROWS
@@ -50,16 +64,16 @@ class MainActivity : AppCompatActivity() {
             for (r in 0 until GameMap.N_ROWS) {
                 if (MapViewer.getTileContent(c,r) <= Tiles.EMPTY.value) {
                     // Show grass
-                    drawTile(c,r, R.drawable.grass)
+                    drawTileMap(c,r, R.drawable.grass)
                 } else {
                     // Show road
-                    drawTile(c,r, R.drawable.road)
+                    drawTileMap(c,r, R.drawable.road)
                 }
             }
         }
     }
 
-    private fun drawTile(c : Int, r: Int, resId:Int){
+    private fun drawTileMap(c : Int, r: Int, resId:Int){
         val imageView = ImageView(this)
         imageView.setImageResource(resId)
 
@@ -77,11 +91,21 @@ class MainActivity : AppCompatActivity() {
         gridLayoutMap.addView(imageView)
     }
 
-    private fun placeTower(c: Int, r: Int, towerType: Tiles){
-        game.addTower(c, r, towerType)
+    private fun drawBody(c : Int, r: Int, resId: Int) {
+        val imageView = ImageView(this)
+        imageView.setImageResource(resId)
 
-        //!!!KC : À ajouter: Gérer l'image selon le towerType sélectionné
-        drawTile(c, r, R.drawable.ic_launcher_foreground)
+        // Specify layout parameters
+        val p = GameMap.gridToPixel(c,r)
+        val params = FrameLayout.LayoutParams(GameMap.PX_PER_TILE, GameMap.PX_PER_TILE)
+        params.leftMargin = p.first
+        params.topMargin = p.second
+
+        // Set layout parameters
+        imageView.layoutParams = params
+
+        // Add the TextView to the GridLayout
+        layoutBodies.addView(imageView)
     }
 
     private fun toggleTowerButton(imageButton: ImageButton) {
@@ -98,7 +122,7 @@ class MainActivity : AppCompatActivity() {
         return imageButton == selectedTower
     }
 
-    fun onClickButtonStartWave() {
+    fun onClickStartWave(view: View) {
         game.startWave()
     }
 
@@ -117,7 +141,7 @@ class MainActivity : AppCompatActivity() {
 
                 when (selectedTower) {
                     buttonArcher -> {
-                        placeTower(pos.first, pos.second, Tiles.ARCHER)
+                        game.addTower(pos.first, pos.second, Tiles.ARCHER)
                         toggleTowerButton(buttonArcher)
                     }
                 }
@@ -125,5 +149,27 @@ class MainActivity : AppCompatActivity() {
             // Return false to indicate that we haven't consumed the touch event,
             false
         }
+    }
+
+    private fun drawingThread() {
+        Thread {
+            var image = 0
+
+            while (true) {
+                handler.post {
+                    layoutBodies.removeAllViews()
+
+                    for (b in game.getDrawableBodies()) {
+                        if (b is Archer) {
+                            image = R.drawable.archer
+                        } else if (b is Soldier) {
+                            image = R.drawable.soldier
+                        }
+                        drawBody(b.mGridX, b.mGridY, image)
+                    }
+                }
+                Thread.sleep(50)
+            }
+        }.start()
     }
 }

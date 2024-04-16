@@ -4,32 +4,34 @@ import kotlin.concurrent.timerTask
 
 class GameTimer(private val tickInterval:Long = 1000) {
     //**************************************** Variables **************************************** //
-    private var _timer: Timer? = null
-    private var _isRunning = false
-    private var _tickListener: (() -> Unit)? = null
+    private var mTimer: Timer? = null
+    private var mIsRunning = false
+    private var mTickListener: (() -> Unit)? = null
 
     //*************************************** Constructor *************************************** //
 
     //************************************* Public methods ************************************** //
     fun start() {
-        if (!_isRunning) {
-            _timer = Timer()
+        if (!mIsRunning) {
+            mTimer = Timer()
 
-            _timer?.scheduleAtFixedRate(timerTask {
-                _tickListener?.invoke()
+            mTimer?.scheduleAtFixedRate(timerTask {
+                mTickListener?.invoke()
             }, 0, tickInterval)
-            _isRunning = true
+            mIsRunning = true
         }
     }
 
     fun stop() {
-        _timer?.cancel()
-        _isRunning = false
+        mTimer?.cancel()
+        mIsRunning = false
     }
 
     fun setTickListener(listener: () -> Unit){
-        _tickListener = listener
+        mTickListener = listener
     }
+
+    fun isRunning() : Boolean { return mIsRunning }
 
     //************************************* Private methods ************************************* //
 

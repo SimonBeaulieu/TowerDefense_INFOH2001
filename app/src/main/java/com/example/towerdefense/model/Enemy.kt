@@ -1,40 +1,40 @@
 package com.example.towerdefense.model
 
-abstract class Enemy(col: Int, row: Int) : Body(col, row), AttackEventListener {
+abstract class Enemy(col: Int, row: Int, spawnTick: Int) : Body(col, row), AttackEventListener {
     //**************************************** Variables **************************************** //
-    protected var _hitPoints: Int = 0
-    protected var _loot: Int = 0
+    protected var mHitPoints: Int = 0
+    protected var mLoot: Int = 0
 
-    protected var _spawnTick: Int = 0
-    protected var _isDead: Boolean = false
-    protected var _reachedEnd: Boolean = false
+    protected var mSpawnTick: Int = spawnTick
+    protected var mIsDead: Boolean = false
+    protected var mReachedEnd: Boolean = false
 
     //*************************************** Constructor *************************************** //
 
     //************************************* Public methods ************************************* //
     fun getHitPoints(): Int {
-        return _hitPoints; }
+        return mHitPoints; }
 
     fun getLoot(): Int {
-        return _loot; }
+        return mLoot; }
 
     fun getIsDead(): Boolean {
-        return _isDead; }
+        return mIsDead; }
 
     fun hasReachedEnd(): Boolean {
-        return _reachedEnd; }
+        return mReachedEnd; }
 
     fun getSpawnTick(): Int {
-        return _spawnTick; }
+        return mSpawnTick; }
 
     fun decrementSpawnTick() {
-        _spawnTick--; }
+        mSpawnTick--; }
 
     override fun onAttack(damage: Int) {
-        _hitPoints -= damage
+        mHitPoints -= damage
 
-        if (_hitPoints <= 0) {
-            _isDead = true
+        if (mHitPoints <= 0) {
+            mIsDead = true
         }
     }
 
@@ -46,32 +46,34 @@ abstract class Enemy(col: Int, row: Int) : Body(col, row), AttackEventListener {
     protected fun move() {
         val nextTile = getNextTile()
 
-        gridX = nextTile.first
-        gridY = nextTile.second
+        mGridX = nextTile.first
+        mGridY = nextTile.second
     }
 
     private fun getNextTile(): Pair<Int,Int> {
         var tileValue : Int
         var maxTileValue = 0
 
-        var nextX = 0
-        var nextY = 0
+        var nextX = mGridX
+        var nextY = mGridY
 
         // Haut, gauche, bas, droite
         val neighbors4 = listOf(0 to -1, -1 to 0, 0 to 1, 1 to 0)
 
         for ((dx, dy) in neighbors4) {
-            if (MapViewer.isRoad(gridX+dx, gridY+dy)) {
-                tileValue = MapViewer.getTileContent(gridX+dx, gridY+dy)
+            if (GameMap.isValidCol(mGridX + dx) && GameMap.isValidRow(mGridY + dy)) {
+                if (MapViewer.isRoad(mGridX + dx, mGridY + dy)) {
+                    tileValue = MapViewer.getTileContent(mGridX + dx, mGridY + dy)
 
-                if (tileValue > maxTileValue) {
-                    maxTileValue = tileValue
-                    nextX = dx
-                    nextY = dy
+                    if (tileValue > maxTileValue) {
+                        maxTileValue = tileValue
+                        nextX = dx
+                        nextY = dy
+                    }
                 }
             }
         }
 
-        return Pair(nextX, nextY)
+        return Pair(mGridX + nextX, mGridY + nextY)
     }
 }
