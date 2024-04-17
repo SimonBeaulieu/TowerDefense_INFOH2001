@@ -8,18 +8,16 @@ import android.os.Handler
 import android.os.Looper
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import androidx.gridlayout.widget.GridLayout
 import android.widget.ImageView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.children
 import com.example.towerdefense.model.Archer
 import com.example.towerdefense.model.Game
-import com.example.towerdefense.model.MapViewer
-import com.example.towerdefense.model.GameMap
+import com.example.towerdefense.model.GameMapUtils
+import com.example.towerdefense.model.GameMapViewer
+import com.example.towerdefense.model.References
 import com.example.towerdefense.model.Soldier
 import com.example.towerdefense.model.Tiles
 
@@ -35,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     private var selectedTower : ImageButton? = null
 
     private val game : Game = Game()
+    private val mGameMapView = References.getRef(GameMapViewer::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,15 +53,15 @@ class MainActivity : AppCompatActivity() {
     }
     private fun initGrids() {
         gridLayoutMap = findViewById(R.id.gridLayoutMap)
-        gridLayoutMap.columnCount = GameMap.N_COLUMNS
-        gridLayoutMap.rowCount = GameMap.N_ROWS
+        gridLayoutMap.columnCount = GameMapUtils.N_COLUMNS
+        gridLayoutMap.rowCount = GameMapUtils.N_ROWS
         drawMap()
     }
 
     private fun drawMap() {
-        for (c in 0 until GameMap.N_COLUMNS) {
-            for (r in 0 until GameMap.N_ROWS) {
-                if (MapViewer.getTileContent(c,r) <= Tiles.EMPTY.value) {
+        for (c in 0 until GameMapUtils.N_COLUMNS) {
+            for (r in 0 until GameMapUtils.N_ROWS) {
+                if (mGameMapView.getTileContent(c,r) <= Tiles.EMPTY.value) {
                     // Show grass
                     drawTileMap(c,r, R.drawable.grass)
                 } else {
@@ -81,8 +80,8 @@ class MainActivity : AppCompatActivity() {
         val params = GridLayout.LayoutParams()
         params.columnSpec = GridLayout.spec(c)
         params.rowSpec = GridLayout.spec(r)
-        params.width = GameMap.PX_PER_TILE
-        params.height = GameMap.PX_PER_TILE
+        params.width = GameMapUtils.PX_PER_TILE
+        params.height = GameMapUtils.PX_PER_TILE
 
         // Set layout parameters
         imageView.layoutParams = params
@@ -91,15 +90,14 @@ class MainActivity : AppCompatActivity() {
         gridLayoutMap.addView(imageView)
     }
 
-    private fun drawBody(c : Int, r: Int, resId: Int) {
+    private fun drawBody(px : Int, py: Int, resId: Int) {
         val imageView = ImageView(this)
         imageView.setImageResource(resId)
 
         // Specify layout parameters
-        val p = GameMap.gridToPixel(c,r)
-        val params = FrameLayout.LayoutParams(GameMap.PX_PER_TILE, GameMap.PX_PER_TILE)
-        params.leftMargin = p.first
-        params.topMargin = p.second
+        val params = FrameLayout.LayoutParams(GameMapUtils.PX_PER_TILE, GameMapUtils.PX_PER_TILE)
+        params.leftMargin = px
+        params.topMargin = py
 
         // Set layout parameters
         imageView.layoutParams = params
@@ -137,7 +135,7 @@ class MainActivity : AppCompatActivity() {
                 // Get X and Y coordinates of the touch event
                 val x = event.x.toInt()
                 val y = event.y.toInt()
-                val pos: Pair<Int, Int> = GameMap.pixelToGrid(x,y)
+                val pos: Pair<Int, Int> = GameMapUtils.pixelToGrid(x,y)
 
                 when (selectedTower) {
                     buttonArcher -> {
@@ -154,6 +152,7 @@ class MainActivity : AppCompatActivity() {
     private fun drawingThread() {
         Thread {
             var image = 0
+            game.startDisplayOnly()
 
             while (true) {
                 handler.post {
@@ -165,7 +164,7 @@ class MainActivity : AppCompatActivity() {
                         } else if (b is Soldier) {
                             image = R.drawable.soldier
                         }
-                        drawBody(b.mGridX, b.mGridY, image)
+                        drawBody(b.getRealX(), b.getRealY(), image)
                     }
                 }
                 Thread.sleep(50)

@@ -10,6 +10,8 @@ class GameManager {
     private var mActiveEnemies : MutableList<Enemy> = mutableListOf()
     private var mPendingEnemies : MutableList<Enemy> = mutableListOf()
 
+    private val mGameMapView = References.getRef(GameMapViewer::class.java)
+
     //*************************************** Constructor *************************************** //
 
 
@@ -18,13 +20,27 @@ class GameManager {
      * Note: order of listAdvance is important. Towers before Enemies. First thing Enemies will
      * check is if they got killed during this turn.
      */
-    fun advanceTick() {
+    fun advanceMainTick() {
         mMoneyToAdd = 0
         mHitPointsToRemove = 0
 
         advanceTowers()
         advanceActiveEnemies()
         advancePendingEnemies()
+    }
+
+    fun advanceDisplayTick() {
+        val l: MutableList<Body> = mutableListOf()
+        l.addAll(mTowers)
+        l.addAll(mActiveEnemies)
+
+        val it = l.iterator()
+        var b : Body
+
+        while (it.hasNext()){
+            b = it.next()
+            b.advanceDisplayTick()
+        }
     }
 
     fun getMoneyToAdd() : Int { return this.mMoneyToAdd }
@@ -49,7 +65,7 @@ class GameManager {
 
         while (towerIterator.hasNext()){
             t = towerIterator.next()
-            t.advanceTick()
+            t.advanceMainTick()
         }
     }
 
@@ -74,7 +90,7 @@ class GameManager {
                 enemyIterator.remove()
 
             } else {
-                e.advanceTick()
+                e.advanceMainTick()
             }
         }
     }
@@ -93,9 +109,9 @@ class GameManager {
             e = enemyIterator.next()
 
             if (e.getSpawnTick() == 0) {
-                val t = MapViewer.getFirstTile()
-                e.mGridX = t.first
-                e.mGridY = t.second
+                val t = mGameMapView.getFirstTile()
+                e.setGridX(t.first)
+                e.setGridY(t.second)
 
                 mActiveEnemies.add(e)
                 enemyIterator.remove()

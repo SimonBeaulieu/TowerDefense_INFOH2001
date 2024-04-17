@@ -6,8 +6,13 @@ class Archer(col: Int, row: Int) : Tower(col, row) {
     //*************************************** Constructor *************************************** //
 
     //************************************* Public methods ************************************** //
-    override fun advanceTick() {
+    override fun advanceMainTick() {
         // !!!SB: Implementer
+    }
+
+    override fun advanceDisplayTick() {
+        // !!!SB: Implementer
+        super.advanceDisplayTick()
     }
 
     //************************************* Private methods ************************************* //

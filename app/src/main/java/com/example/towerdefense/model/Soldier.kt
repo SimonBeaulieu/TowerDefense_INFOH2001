@@ -7,8 +7,13 @@ class Soldier(col:Int, row: Int, spawnTick: Int) : Enemy(col, row, spawnTick) {
     //*************************************** Constructor *************************************** //
 
     //************************************* Public methods ************************************* //
-    override fun advanceTick() {
-        super.advanceTick()
+    override fun advanceMainTick() {
+        super.advanceMainTick()
+    }
+
+    override fun advanceDisplayTick() {
+        // !!!SB: Implementer
+        super.advanceDisplayTick()
     }
 
     //************************************* Private methods ************************************* //

@@ -7,7 +7,11 @@ class Projectile(col: Int, row: Int) : Body(col, row) {
 
 
     //************************************* Public methods ************************************** //
-    override fun advanceTick() {
+    override fun advanceMainTick() {
+        // !!!SB: Implementer
+    }
+
+    override fun advanceDisplayTick() {
         // !!!SB: Implementer
     }
 

@@ -38,32 +38,57 @@ abstract class Enemy(col: Int, row: Int, spawnTick: Int) : Body(col, row), Attac
         }
     }
 
-    override fun advanceTick() {
-        move()
+    override fun advanceMainTick() {
+        moveGrid()
+    }
+
+    override fun advanceDisplayTick() {
+        moveReal()
     }
 
     //************************************* Private methods ************************************* //
-    protected fun move() {
+    protected fun moveGrid() {
+        val move = getNextTile()
+
+        setGridX(getGridX() + move.first)
+        setGridY(getGridY() + move.second)
+
+        //moveReal()
+    }
+
+    protected fun moveReal() {
+        val d = getNextPos()
+
+        val offsX = (d.first * GameMapUtils.PX_PER_TILE).toInt()
+        val offsY = (d.second * GameMapUtils.PX_PER_TILE).toInt()
+
+        setRealX((GameMapUtils.gridToPixel(getGridX()) + offsX))
+        setRealY((GameMapUtils.gridToPixel(getGridY()) + offsY))
+    }
+
+    private fun getNextPos() : Pair<Double, Double> {
         val nextTile = getNextTile()
 
-        mGridX = nextTile.first
-        mGridY = nextTile.second
+        val dx = ((mGameTimerView.getTickFraction()-0.5) * nextTile.first)
+        val dy = ((mGameTimerView.getTickFraction()-0.5) * nextTile.second)
+
+        return Pair(dx, dy)
     }
 
     private fun getNextTile(): Pair<Int,Int> {
         var tileValue : Int
         var maxTileValue = 0
 
-        var nextX = mGridX
-        var nextY = mGridY
+        var nextX = getGridX()
+        var nextY = getGridY()
 
         // Haut, gauche, bas, droite
         val neighbors4 = listOf(0 to -1, -1 to 0, 0 to 1, 1 to 0)
 
         for ((dx, dy) in neighbors4) {
-            if (GameMap.isValidCol(mGridX + dx) && GameMap.isValidRow(mGridY + dy)) {
-                if (MapViewer.isRoad(mGridX + dx, mGridY + dy)) {
-                    tileValue = MapViewer.getTileContent(mGridX + dx, mGridY + dy)
+            if (GameMapUtils.isValidCol(getGridX() + dx) && GameMapUtils.isValidRow(getGridY() + dy)) {
+                if (mGameMapView.isRoadTile(getGridX() + dx, getGridY() + dy)) {
+                    tileValue = mGameMapView.getTileContent(getGridX() + dx, getGridY() + dy)
 
                     if (tileValue > maxTileValue) {
                         maxTileValue = tileValue
@@ -74,6 +99,6 @@ abstract class Enemy(col: Int, row: Int, spawnTick: Int) : Body(col, row), Attac
             }
         }
 
-        return Pair(mGridX + nextX, mGridY + nextY)
+        return Pair(nextX, nextY)
     }
 }

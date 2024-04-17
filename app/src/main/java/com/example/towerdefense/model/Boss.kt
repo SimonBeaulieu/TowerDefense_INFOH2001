@@ -7,8 +7,13 @@ class Boss(col:Int, row: Int, spawnTick: Int) : Enemy(col, row, spawnTick) {
 
     //************************************* Public methods ************************************** //
 
-    override fun advanceTick() {
+    override fun advanceMainTick() {
         // !!!SB: Implementer
+    }
+
+    override fun advanceDisplayTick() {
+        // !!!SB: Implementer
+        super.advanceDisplayTick()
     }
 
     //************************************* Private methods ************************************* //

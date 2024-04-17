@@ -1,10 +1,12 @@
 package com.example.towerdefense.model
 
 enum class Tiles(val value:Int) {
-    EMPTY(0),
-    ARCHER(-1),
-    CANNON(-2),
-    FLAMETHROWER(-3);
+    INVALID(0),
+    EMPTY(-1),
+    ARCHER(-2),
+    CANNON(-3),
+    FLAMETHROWER(-4);
+
     companion object {
         fun fromInt(value: Int): Tiles {
             return when (value) {
