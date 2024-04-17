@@ -9,6 +9,9 @@ abstract class Enemy(col: Int, row: Int, spawnTick: Int) : Body(col, row), Attac
     protected var mIsDead: Boolean = false
     protected var mReachedEnd: Boolean = false
 
+    private var mPreviousDirection : Pair<Int,Int> = Pair(0,1)
+    private var mNextDirection : Pair<Int,Int> = Pair(0,1)
+
     //*************************************** Constructor *************************************** //
 
     //************************************* Public methods ************************************* //
@@ -47,17 +50,24 @@ abstract class Enemy(col: Int, row: Int, spawnTick: Int) : Body(col, row), Attac
     }
 
     //************************************* Private methods ************************************* //
+    /**
+     * Set the new gridX and gridY position.
+     * Should be called each game tick (mainTick)
+     */
     protected fun moveGrid() {
-        val move = getNextTile()
-
-        setGridX(getGridX() + move.first)
-        setGridY(getGridY() + move.second)
-
+        mPreviousDirection = mNextDirection
+        setGridX(getGridX() + mNextDirection.first)
+        setGridY(getGridY() + mNextDirection.second)
+        mNextDirection = getDirection()
         //moveReal()
     }
 
+    /**
+     * Set the new realX and realY position.
+     * Should be called each display tick (displayTick)
+     */
     protected fun moveReal() {
-        val d = getNextPos()
+        val d = getRealDirection()
 
         val offsX = (d.first * GameMapUtils.PX_PER_TILE).toInt()
         val offsY = (d.second * GameMapUtils.PX_PER_TILE).toInt()
@@ -66,16 +76,38 @@ abstract class Enemy(col: Int, row: Int, spawnTick: Int) : Body(col, row), Attac
         setRealY((GameMapUtils.gridToPixel(getGridY()) + offsY))
     }
 
-    private fun getNextPos() : Pair<Double, Double> {
-        val nextTile = getNextTile()
+    /**
+     * Gives the direction of the next movement (real position)
+     *
+     * return: Pair<realDx, realDy>
+     *     where realDx = [-0.5, 0.5]
+     *           realDy = [-0.5, 0.5]
+     */
+    private fun getRealDirection() : Pair<Double, Double> {
+        var realDx = 0.0
+        var realDy = 0.0
 
-        val dx = ((mGameTimerView.getTickFraction()-0.5) * nextTile.first)
-        val dy = ((mGameTimerView.getTickFraction()-0.5) * nextTile.second)
+        if (mGameTimerView.isFirstHalf()) {
+            // [0 à 0.5] * [0 ou 1] = [-0.5 à 0]
+            realDx = ((mGameTimerView.getTickFraction()-0.5) * mPreviousDirection.first)
+            realDy = ((mGameTimerView.getTickFraction()-0.5) * mPreviousDirection.second)
+        } else {
+            // [0.5 à 1] * [0 ou 1] = [0 à 0.5]
+            realDx = ((mGameTimerView.getTickFraction()-0.5) * mNextDirection.first)
+            realDy = ((mGameTimerView.getTickFraction()-0.5) * mNextDirection.second)
+        }
 
-        return Pair(dx, dy)
+        return Pair(realDx, realDy)
     }
 
-    private fun getNextTile(): Pair<Int,Int> {
+    /**
+     * Gives the direction of the next movement (grid position)
+     *
+     * return: Pair<dx, dy>
+     *     where dx = -1, 0 or 1
+     *           dy = -1, 0 or 1
+     */
+    private fun getDirection(): Pair<Int,Int> {
         var tileValue : Int
         var maxTileValue = 0
 
@@ -99,6 +131,8 @@ abstract class Enemy(col: Int, row: Int, spawnTick: Int) : Body(col, row), Attac
             }
         }
 
+        // if current tile > nextTile = fin de la trajectoire
+        // appeler équivalent de isDead pour isDone genre
         return Pair(nextX, nextY)
     }
 }

@@ -11,6 +11,8 @@ abstract class Body(col : Int = 0, row : Int = 0) {
     private var mGridX: Int = col
     private var mGridY: Int = row
 
+
+
     //*************************************** Constructor *************************************** //
 
 

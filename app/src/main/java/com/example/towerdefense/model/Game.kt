@@ -3,7 +3,7 @@ package com.example.towerdefense.model
 class Game {
     //**************************************** Variables **************************************** //
     private var mCurrentWave = 0
-    private var mMainTickDuration : Long = 500
+    private var mDisplayTickDuration : Long = 50
     private var mMoney : Int = 1000
     private var mHitPoints : Int = 200
 
@@ -36,7 +36,7 @@ class Game {
     }
 
     private fun initGameTimer() {
-        mGameTimer = GameTimer(mMainTickDuration)
+        mGameTimer = GameTimer(mDisplayTickDuration)
 
         mGameTimer?.setMainTickListener { advanceTick() }
         mGameTimer?.setDisplayTickListener { advanceDisplayTick() }

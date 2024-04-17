@@ -27,9 +27,7 @@ class GameTimer(private val displayTickInterval:Long = 50) : GameTimerViewer {
                 mMainTickListener?.invoke()
                 mTickCount = 0
             }
-
             mDisplayTickListener?.invoke()
-
         }, 0, displayTickInterval)
     }
 
@@ -54,6 +52,11 @@ class GameTimer(private val displayTickInterval:Long = 50) : GameTimerViewer {
     override fun getTickFraction() : Double {
         return mTickCount/mTickRatio.toDouble()
     }
+
+    override fun isFirstHalf(): Boolean {
+        return mTickCount/mTickRatio.toDouble() < 0.5
+    }
+
 
     //************************************* Private methods ************************************* //
 
