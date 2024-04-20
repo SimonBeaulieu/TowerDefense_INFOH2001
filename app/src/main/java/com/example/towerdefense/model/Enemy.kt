@@ -1,6 +1,6 @@
 package com.example.towerdefense.model
 
-abstract class Enemy(col: Int, row: Int, spawnTick: Int) : Body(col, row), AttackEventListener {
+abstract class Enemy(col: Int, row: Int, spawnTick: Int) : Body(col, row), AttackListener {
     //**************************************** Variables **************************************** //
     protected var mHitPoints: Int = 0
     protected var mLoot: Int = 0
