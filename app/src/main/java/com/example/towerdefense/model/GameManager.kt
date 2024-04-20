@@ -65,6 +65,7 @@ class GameManager {
 
         while (towerIterator.hasNext()){
             t = towerIterator.next()
+            t.findTargets(mActiveEnemies.toList() as List<AttackListener>)
             t.advanceMainTick()
         }
     }
