@@ -15,5 +15,10 @@ class Flamethrower(col: Int, row: Int) : Tower(col, row) {
         super.advanceDisplayTick()
     }
 
+    override fun findEnemiesInBlastRadius(enemies: List<AttackListener>) {
+        TODO("Not yet implemented")
+    }
+
+
     //************************************* Private methods ************************************* //
 }

@@ -33,6 +33,14 @@ abstract class Enemy(col: Int, row: Int, spawnTick: Int) : Body(col, row), Attac
     fun decrementSpawnTick() {
         mSpawnTick--; }
 
+    override fun getPosX() : Int {
+        return super.getRealX()
+    }
+
+    override fun getPosY() : Int{
+        return super.getRealY()
+    }
+
     override fun onAttack(damage: Int) {
         mHitPoints -= damage
 
