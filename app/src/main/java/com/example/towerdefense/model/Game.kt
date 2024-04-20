@@ -104,7 +104,7 @@ class Game {
     fun getDrawableBodies() : List<Body> {
         val r : MutableList<Body> = mGameManager.getTowers().toMutableList()
         r.addAll(mGameManager.getActiveEnemies())
-        
+
         return r.toList()
     }
 
@@ -130,5 +130,13 @@ class Game {
         mWaveNum++
         mCurrentWave = mGameMap.getWave(mWaveNum)
         mGameManager.setPendingEnemies(mCurrentWave.getEnemies())
+    }
+
+    fun getHitPoints(): Int {
+        return mHitPoints
+    }
+
+    fun getMoney(): Int {
+        return mMoney
     }
 }
