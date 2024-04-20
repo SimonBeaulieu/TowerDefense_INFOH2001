@@ -112,6 +112,11 @@ class Game {
     private fun advanceTick() {
         mGameManager.advanceMainTick()
 
+        if (mCurrentWave.mInProgress && mGameManager.getWaveEnded()) {
+            mCurrentWave.mInProgress = false
+            mCurrentWave = mGameMap.getWave(mWaveNum++)
+        }
+
         mMoney += mGameManager.getMoneyToAdd()
         mHitPoints -= mGameManager.getHitPointsToRemove()
     }

@@ -63,6 +63,8 @@ class GameManager {
 
     fun getActiveEnemies() : List<Enemy> { return this.mActiveEnemies }
 
+    fun getWaveEnded() : Boolean { return mWaveEnded }
+
     //************************************* Private methods ************************************* //
     /**
      * Advance 1 turn for every towers
