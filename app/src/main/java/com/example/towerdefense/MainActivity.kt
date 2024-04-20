@@ -13,10 +13,10 @@ import android.widget.FrameLayout
 import android.widget.ImageButton
 import androidx.gridlayout.widget.GridLayout
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.towerdefense.model.Archer
 import com.example.towerdefense.model.Body
-import com.example.towerdefense.model.Enemy
 import com.example.towerdefense.model.Game
 import com.example.towerdefense.model.GameMapUtils
 import com.example.towerdefense.model.GameMapViewer
@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var gridLayoutMap : androidx.gridlayout.widget.GridLayout
     private lateinit var layoutBodies : FrameLayout
+    private lateinit var layoutCharacters : LinearLayout
 
     private lateinit var textHitPoints : TextView
     private lateinit var textMoney : TextView
@@ -46,12 +47,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        initGrid()
-        initStats()
-        initButtons()
         layoutBodies = findViewById(R.id.layoutBodies)
+        layoutCharacters = findViewById(R.id.layoutCharacters)
+        initButtons()
+        initStats()
+
+        setTilesDimensions()
+
+        initGrid()
 
         drawingThread()
+    }
+
+    private fun setTilesDimensions() {
+        val screenWidth = resources.displayMetrics.widthPixels - layoutCharacters.layoutParams.width
+        val screenHeight = resources.displayMetrics.heightPixels
+
+        val cellWidth = screenWidth / GameMapUtils.N_COLUMNS
+        val cellHeight = screenHeight / GameMapUtils.N_ROWS
+
+        GameMapUtils.PX_PER_TILE = minOf(cellWidth, cellHeight)
     }
 
     private fun initButtons() {

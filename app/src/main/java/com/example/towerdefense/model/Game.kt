@@ -79,7 +79,6 @@ class Game {
         mCurrentWave.mInProgress = false
     }
 
-
     fun addTower(col : Int, row : Int, towerType: Tiles) {
         // !!!SB: Ajouté à partir du main
         if (mGameMap.isEmptyTile(col, row)) {

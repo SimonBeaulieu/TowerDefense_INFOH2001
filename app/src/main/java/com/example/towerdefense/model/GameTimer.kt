@@ -54,7 +54,6 @@ class GameTimer(private val displayTickInterval:Long = 50) : GameTimerViewer {
 
 
     //************************************* Private methods ************************************* //
-
     private fun updateDisplay() {
         if (enableDisplay) {
             mDisplayTickListener?.invoke()
