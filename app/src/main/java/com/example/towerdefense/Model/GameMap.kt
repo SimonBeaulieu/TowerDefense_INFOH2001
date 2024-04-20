@@ -39,14 +39,11 @@ class GameMap(val nWave:Int = 12) : GameMapViewer {
         }
     }
 
-    override fun getWaveEnemies(n: Int): List<Enemy> {
-        return getWave(n).getEnemies().toList()
-    }
-
     override fun getPathEncoding() : List<Int> { return mPathEncoding.toList() }
 
     override fun getFirstTile() : Pair<Int, Int> { return mFirstTile.copy() }
 
+    fun getWave(n:Int): Wave { return this.mWaves[n] }
 
     fun setTileContent(col: Int, row: Int, value: Int) {
         if (GameMapUtils.isValidCol(col) && GameMapUtils.isValidRow(row) && value <= Tiles.EMPTY.value) {
@@ -60,7 +57,6 @@ class GameMap(val nWave:Int = 12) : GameMapViewer {
     }
 
     //************************************* Private methods ************************************* //
-
     private fun initGrid(){
         var col = mFirstTile.first
         var row = mFirstTile.second
@@ -68,7 +64,7 @@ class GameMap(val nWave:Int = 12) : GameMapViewer {
         mGrid[col][row] = 1
 
         for (i in mPathEncoding.indices) {
-            when (mPathEncoding[i]){
+            when (mPathEncoding[i]) {
                 0 -> mGrid[++col][row] = i + 2
                 1 -> mGrid[col][--row] = i + 2
                 2 -> mGrid[--col][row] = i + 2
@@ -76,6 +72,4 @@ class GameMap(val nWave:Int = 12) : GameMapViewer {
             }
         }
     }
-
-    private fun getWave(n:Int): Wave { return this.mWaves[n] }
 }
