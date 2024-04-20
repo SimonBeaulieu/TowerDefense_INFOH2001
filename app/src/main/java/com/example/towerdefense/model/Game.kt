@@ -113,6 +113,7 @@ class Game {
         mGameManager.advanceMainTick()
 
         if (mCurrentWave.mInProgress && mGameManager.getWaveEnded()) {
+            mMoney += mCurrentWave.getCompletionReward()
             mCurrentWave.mInProgress = false
             mCurrentWave = mGameMap.getWave(mWaveNum++)
         }
