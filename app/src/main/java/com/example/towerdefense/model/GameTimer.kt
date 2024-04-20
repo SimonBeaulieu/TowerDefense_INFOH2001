@@ -7,7 +7,9 @@ class GameTimer(private val displayTickInterval:Long = 50) : GameTimerViewer {
     private val mTickRatio = 10
     private var mTickCount = 0
 
-    private var mIsRunning = false
+    //private var mIsRunning = false
+    var enableDisplay = false
+    var enableTicks = false
 
     private var mTimer: Timer? = null
 
@@ -17,26 +19,21 @@ class GameTimer(private val displayTickInterval:Long = 50) : GameTimerViewer {
     //*************************************** Constructor *************************************** //
 
     //************************************* Public methods ************************************** //
+    /**
+     * Should only be called onced, at initialisation, after the listener
+     * are setted.
+     *
+     * Use enableDisplay and enableTicks to stop/start these functionnalities
+     */
     fun start() {
+        // Creation of timer
         mTimer = Timer()
 
+        // Executed code when timer period elapse
         mTimer?.scheduleAtFixedRate(timerTask {
-            mTickCount += 1
-
-            if (mTickCount >= mTickRatio && mIsRunning) {
-                mMainTickListener?.invoke()
-                mTickCount = 0
-            }
-            mDisplayTickListener?.invoke()
+            mechanics()
+            display()
         }, 0, displayTickInterval)
-    }
-
-    fun startMain() {
-        mIsRunning = true
-    }
-
-    fun stopMain() {
-        mIsRunning = false
     }
 
     fun setMainTickListener(listener: () -> Unit){
@@ -46,8 +43,6 @@ class GameTimer(private val displayTickInterval:Long = 50) : GameTimerViewer {
     fun setDisplayTickListener(listener: () -> Unit){
         mDisplayTickListener = listener
     }
-
-    fun isRunning() : Boolean { return mIsRunning }
 
     override fun getTickFraction() : Double {
         return mTickCount/mTickRatio.toDouble()
@@ -60,4 +55,20 @@ class GameTimer(private val displayTickInterval:Long = 50) : GameTimerViewer {
 
     //************************************* Private methods ************************************* //
 
+    private fun display() {
+        if (enableDisplay) {
+            mDisplayTickListener?.invoke()
+        }
+    }
+
+    private fun mechanics() {
+        if (enableTicks) {
+            mTickCount += 1
+
+            if (mTickCount >= mTickRatio) {
+                mMainTickListener?.invoke()
+                mTickCount = 0
+            }
+        }
+    }
 }

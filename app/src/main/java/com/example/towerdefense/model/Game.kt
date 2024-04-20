@@ -23,6 +23,9 @@ class Game {
         // Create objects who requires references
         mGameMap.initWaves()
         mGameManager = GameManager()
+
+        // Start timer (enableTicks are set to false)
+        mGameTimer?.start()
     }
 
     private fun initReferences() {
@@ -38,34 +41,37 @@ class Game {
     private fun initGameTimer() {
         mGameTimer = GameTimer(mDisplayTickDuration)
 
-        mGameTimer?.setMainTickListener { advanceTick() }
-        mGameTimer?.setDisplayTickListener { advanceDisplayTick() }
+        mGameTimer?.setMainTickListener { this.advanceTick() }
+        mGameTimer?.setDisplayTickListener { this.advanceDisplayTick() }
+
+        mGameTimer?.enableDisplay = true
     }
 
     //************************************* Public methods ************************************* //
     fun startWave() {
-        if (mGameTimer?.isRunning() == false) {
-            if (mCurrentWave < mGameMap.nWave) {
-                mGameManager.setPendingEnemies(mGameMap.getWaveEnemies(mCurrentWave))
-                mGameTimer?.startMain()
-            }
+        if (mCurrentWave < mGameMap.nWave) {
+            mGameManager.setPendingEnemies(mGameMap.getWaveEnemies(mCurrentWave))
+
+            mGameTimer?.enableTicks = true
+            mGameTimer?.enableDisplay = true
         }
     }
 
     fun pauseWave() {
-        // !!!SB: Appeler la fonction à partir d'eventHandler buttons. À compléter
-        mGameTimer?.stopMain()
+        mGameTimer?.enableTicks = false
+        mGameTimer?.enableDisplay = true
     }
 
     fun resumeWave() {
-        // !!!SB: Appeler la fonction à partir d'eventHandler buttons. À compléter
-        mGameTimer?.start()
+        mGameTimer?.enableTicks = true
+        mGameTimer?.enableDisplay = true
     }
 
     fun endGame() {
-        // !!!SB: Appeler la fonction à partir d'eventHandler buttons. À compléter
-        mGameTimer?.stopMain()
+        mGameTimer?.enableTicks = false
+        mGameTimer?.enableDisplay = false
     }
+
 
     fun addTower(col : Int, row : Int, towerType: Tiles) {
         // !!!SB: Ajouté à partir du main
@@ -93,11 +99,6 @@ class Game {
         r.addAll(mGameManager.getActiveEnemies())
         
         return r.toList()
-    }
-
-    fun startDisplayOnly() {
-        mGameTimer?.stopMain()
-        mGameTimer?.start()
     }
 
     //************************************* Private methods ************************************* //

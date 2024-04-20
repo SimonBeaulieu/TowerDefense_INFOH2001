@@ -4,7 +4,7 @@ class GameMapUtils {
     companion object {
         const val N_ROWS: Int = 8
         const val N_COLUMNS: Int = 16
-        const val PX_PER_TILE = 120
+        const val PX_PER_TILE = 80
 
         fun gridToPixel(gridPos:Int): Int {
             return gridPos * PX_PER_TILE

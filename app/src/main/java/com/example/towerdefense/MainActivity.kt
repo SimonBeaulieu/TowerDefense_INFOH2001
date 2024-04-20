@@ -152,7 +152,6 @@ class MainActivity : AppCompatActivity() {
     private fun drawingThread() {
         Thread {
             var image = 0
-            game.startDisplayOnly()
 
             while (true) {
                 handler.post {
