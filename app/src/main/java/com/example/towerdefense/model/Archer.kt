@@ -5,6 +5,10 @@ class Archer(col: Int, row: Int) : Tower(col, row) {
 
     //*************************************** Constructor *************************************** //
 
+    init{
+        mCost=500
+    }
+
     //************************************* Public methods ************************************** //
     override fun advanceMainTick() {
         // !!!SB: Implementer

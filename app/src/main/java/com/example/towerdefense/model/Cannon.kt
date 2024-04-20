@@ -5,6 +5,10 @@ class Cannon(col: Int, row: Int) : Tower(col, row) {
 
     //*************************************** Constructor *************************************** //
 
+    init{
+        mCost=800
+    }
+
     //************************************* Public methods ************************************** //
     override fun advanceMainTick() {
         // !!!SB: Implementer
