@@ -112,4 +112,9 @@ class Game {
     private fun advanceDisplayTick() {
         mGameManager.advanceDisplayTick()
     }
+
+    fun getHitPoints() : Int { return mHitPoints}
+
+    fun getMoney() : Int { return mMoney}
+
 }

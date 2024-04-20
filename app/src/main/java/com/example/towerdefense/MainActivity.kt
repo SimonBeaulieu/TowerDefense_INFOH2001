@@ -13,6 +13,7 @@ import android.widget.FrameLayout
 import android.widget.ImageButton
 import androidx.gridlayout.widget.GridLayout
 import android.widget.ImageView
+import android.widget.TextView
 import com.example.towerdefense.model.Archer
 import com.example.towerdefense.model.Game
 import com.example.towerdefense.model.GameMapUtils
@@ -27,6 +28,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var gridLayoutMap : androidx.gridlayout.widget.GridLayout
     private lateinit var layoutBodies : FrameLayout
 
+    private lateinit var textHitPoints : TextView
+    private lateinit var textMoney : TextView
+
     private lateinit var buttonStartWave : Button
 
     private lateinit var buttonArcher : ImageButton
@@ -40,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         initGrid()
+        initStats()
         initButtons()
         layoutBodies = findViewById(R.id.layoutBodies)
 
@@ -49,8 +54,20 @@ class MainActivity : AppCompatActivity() {
     private fun initButtons() {
         buttonStartWave = findViewById(R.id.buttonStartWave)
         buttonArcher = findViewById(R.id.buttonArcher)
-
     }
+
+    private fun initStats(){
+        textHitPoints = findViewById(R.id.textViewHitPoints)
+        textMoney = findViewById(R.id.textViewMoney)
+
+        updateStats()
+    }
+
+    private fun updateStats(){
+        textHitPoints.text=game.getHitPoints().toString()
+        textMoney.text=game.getMoney().toString()
+    }
+
     private fun initGrid() {
         gridLayoutMap = findViewById(R.id.gridLayoutMap)
         gridLayoutMap.columnCount = GameMapUtils.N_COLUMNS
@@ -156,6 +173,7 @@ class MainActivity : AppCompatActivity() {
             while (true) {
                 handler.post {
                     layoutBodies.removeAllViews()
+                    updateStats()
 
                     for (b in game.getDrawableBodies()) {
                         if (b is Archer) {
