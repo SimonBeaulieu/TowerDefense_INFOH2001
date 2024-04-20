@@ -1,5 +1,5 @@
 package com.example.towerdefense.model
 
-interface AttackEventListener {
+interface AttackListener {
     fun onAttack(damage: Int)
 }
