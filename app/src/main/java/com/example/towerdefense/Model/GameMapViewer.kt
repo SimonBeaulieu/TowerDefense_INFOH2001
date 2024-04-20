@@ -10,8 +10,6 @@ interface GameMapViewer {
 
     fun getTileContent(col: Int, row: Int) : Int
 
-    fun getWaveEnemies(n: Int): List<Enemy>
-
     fun getPathEncoding() : List<Int>
 
     fun getFirstTile() : Pair<Int, Int>

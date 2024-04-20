@@ -2,7 +2,9 @@ package com.example.towerdefense.model
 
 class Game {
     //**************************************** Variables **************************************** //
-    private var mCurrentWave = 0
+    private var mCurrentWave : Wave
+    private var mWaveNum = 1
+
     private var mDisplayTickDuration : Long = 50
     private var mMoney : Int = 1000
     private var mHitPoints : Int = 200
@@ -23,6 +25,7 @@ class Game {
         // Create objects who requires references
         mGameMap.initWaves()
         mGameManager = GameManager()
+        mCurrentWave = mGameMap.getWave(mWaveNum)
 
         // Start timer (enableTicks are set to false)
         mGameTimer?.start()
@@ -49,11 +52,13 @@ class Game {
 
     //************************************* Public methods ************************************* //
     fun startWave() {
-        if (mCurrentWave < mGameMap.nWave) {
-            mGameManager.setPendingEnemies(mGameMap.getWaveEnemies(mCurrentWave))
+        if (mWaveNum < mGameMap.nWave && !mCurrentWave.mInProgress) {
+            setNextWaveEnemies()
 
             mGameTimer?.enableTicks = true
             mGameTimer?.enableDisplay = true
+
+            mCurrentWave.mInProgress = true
         }
     }
 
@@ -70,6 +75,8 @@ class Game {
     fun endGame() {
         mGameTimer?.enableTicks = false
         mGameTimer?.enableDisplay = false
+
+        mCurrentWave.mInProgress = false
     }
 
 
@@ -111,5 +118,11 @@ class Game {
 
     private fun advanceDisplayTick() {
         mGameManager.advanceDisplayTick()
+    }
+
+    private fun setNextWaveEnemies() {
+        mWaveNum++
+        mCurrentWave = mGameMap.getWave(mWaveNum)
+        mGameManager.setPendingEnemies(mCurrentWave.getEnemies())
     }
 }

@@ -8,9 +8,11 @@ class Wave(waveNum:Int = 0) {
     private var mCompletionReward = 0
     private val mEnemies : MutableList<Enemy> = mutableListOf()
 
+    var mInProgress : Boolean = false
+
     //*************************************** Constructor *************************************** //
     init {
-        val nEnemies : Int = round(10 * 50.0.pow((waveNum - 1) / 10.0)).toInt()
+        val nEnemies : Int = round(10 * 50.0.pow((waveNum - 1)/10.0)).toInt()
         mCompletionReward = waveNum * 50 + 300
 
         for (i in 0 until nEnemies) {

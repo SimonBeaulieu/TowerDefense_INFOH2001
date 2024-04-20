@@ -5,6 +5,7 @@ class GameManager {
     //**************************************** Variables **************************************** //
     private var mMoneyToAdd : Int = 0
     private var mHitPointsToRemove : Int = 0
+    private var mWaveEnded : Boolean = true
 
     private val mTowers : MutableList<Tower> = mutableListOf()
     private var mActiveEnemies : MutableList<Enemy> = mutableListOf()
@@ -27,6 +28,10 @@ class GameManager {
         advanceTowers()
         advanceActiveEnemies()
         advancePendingEnemies()
+
+        if (mActiveEnemies.isEmpty() && mPendingEnemies.isEmpty() && !mWaveEnded) {
+            mWaveEnded = true
+        }
     }
 
     fun advanceDisplayTick() {
@@ -47,7 +52,10 @@ class GameManager {
 
     fun getHitPointsToRemove() : Int { return this.mHitPointsToRemove }
 
-    fun setPendingEnemies(l : List<Enemy>) { this.mPendingEnemies = l.toMutableList() }
+    fun setPendingEnemies(l : List<Enemy>) {
+        this.mPendingEnemies = l.toMutableList()
+        mWaveEnded = false
+    }
 
     fun addTowerToList(t: Tower) { this.mTowers.add(t) }
 
