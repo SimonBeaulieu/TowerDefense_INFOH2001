@@ -58,8 +58,13 @@ abstract class Enemy(col: Int, row: Int, spawnTick: Int) : Body(col, row), Attac
         mPreviousDirection = mNextDirection
         setGridX(getGridX() + mNextDirection.first)
         setGridY(getGridY() + mNextDirection.second)
+
         mNextDirection = getDirection()
-        //moveReal()
+
+        // Reached end: next tile is at dx=0, dy=0
+        if (mNextDirection.first == 0 && mNextDirection.second == 0) {
+            this.mReachedEnd = true
+        }
     }
 
     /**
@@ -106,13 +111,15 @@ abstract class Enemy(col: Int, row: Int, spawnTick: Int) : Body(col, row), Attac
      * return: Pair<dx, dy>
      *     where dx = -1, 0 or 1
      *           dy = -1, 0 or 1
+     *
+     *           returns (0,0) when no path found = end reached
      */
     private fun getDirection(): Pair<Int,Int> {
         var tileValue : Int
-        var maxTileValue = 0
+        var maxTileValue = mGameMapView.getTileContent(getGridX(), getGridY())
 
-        var nextX = getGridX()
-        var nextY = getGridY()
+        var nextX = 0
+        var nextY = 0
 
         // Haut, gauche, bas, droite
         val neighbors4 = listOf(0 to -1, -1 to 0, 0 to 1, 1 to 0)

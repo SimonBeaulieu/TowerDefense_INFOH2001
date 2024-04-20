@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        initGrids()
+        initGrid()
         initButtons()
         layoutBodies = findViewById(R.id.layoutBodies)
 
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         buttonArcher = findViewById(R.id.buttonArcher)
 
     }
-    private fun initGrids() {
+    private fun initGrid() {
         gridLayoutMap = findViewById(R.id.gridLayoutMap)
         gridLayoutMap.columnCount = GameMapUtils.N_COLUMNS
         gridLayoutMap.rowCount = GameMapUtils.N_ROWS
@@ -63,16 +63,16 @@ class MainActivity : AppCompatActivity() {
             for (r in 0 until GameMapUtils.N_ROWS) {
                 if (mGameMapView.getTileContent(c,r) <= Tiles.EMPTY.value) {
                     // Show grass
-                    drawTileMap(c,r, R.drawable.grass)
+                    drawTile(c,r, R.drawable.grass)
                 } else {
                     // Show road
-                    drawTileMap(c,r, R.drawable.road)
+                    drawTile(c,r, R.drawable.road)
                 }
             }
         }
     }
 
-    private fun drawTileMap(c : Int, r: Int, resId:Int){
+    private fun drawTile(c : Int, r: Int, resId:Int){
         val imageView = ImageView(this)
         imageView.setImageResource(resId)
 
