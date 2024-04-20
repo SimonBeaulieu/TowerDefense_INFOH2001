@@ -31,8 +31,8 @@ class GameTimer(private val displayTickInterval:Long = 50) : GameTimerViewer {
 
         // Executed code when timer period elapse
         mTimer?.scheduleAtFixedRate(timerTask {
-            mechanics()
-            display()
+            updateMechanics()
+            updateDisplay()
         }, 0, displayTickInterval)
     }
 
@@ -55,13 +55,13 @@ class GameTimer(private val displayTickInterval:Long = 50) : GameTimerViewer {
 
     //************************************* Private methods ************************************* //
 
-    private fun display() {
+    private fun updateDisplay() {
         if (enableDisplay) {
             mDisplayTickListener?.invoke()
         }
     }
 
-    private fun mechanics() {
+    private fun updateMechanics() {
         if (enableTicks) {
             mTickCount += 1
 

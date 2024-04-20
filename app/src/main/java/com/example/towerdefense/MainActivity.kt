@@ -14,12 +14,15 @@ import android.widget.ImageButton
 import androidx.gridlayout.widget.GridLayout
 import android.widget.ImageView
 import com.example.towerdefense.model.Archer
+import com.example.towerdefense.model.Body
+import com.example.towerdefense.model.Enemy
 import com.example.towerdefense.model.Game
 import com.example.towerdefense.model.GameMapUtils
 import com.example.towerdefense.model.GameMapViewer
 import com.example.towerdefense.model.References
 import com.example.towerdefense.model.Soldier
 import com.example.towerdefense.model.Tiles
+import com.example.towerdefense.model.Tower
 
 class MainActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
@@ -90,9 +93,13 @@ class MainActivity : AppCompatActivity() {
         gridLayoutMap.addView(imageView)
     }
 
-    private fun drawBody(px : Int, py: Int, resId: Int) {
+    private fun drawBody(px : Int, py: Int, resId: Int, body:Body) {
         val imageView = ImageView(this)
         imageView.setImageResource(resId)
+
+        if (body is Tower) {
+            imageView.setOnClickListener { onClickTower(body) }
+        }
 
         // Specify layout parameters
         val params = FrameLayout.LayoutParams(GameMapUtils.PX_PER_TILE, GameMapUtils.PX_PER_TILE)
@@ -104,6 +111,10 @@ class MainActivity : AppCompatActivity() {
 
         // Add the TextView to the GridLayout
         layoutBodies.addView(imageView)
+    }
+
+    private fun onClickTower(tower: Tower) {
+        // !!!SB: afficher upgrade list. Avoir une variable "selected" (pas meme chose que selectedTower)
     }
 
     private fun toggleTowerButton(imageButton: ImageButton) {
@@ -163,7 +174,7 @@ class MainActivity : AppCompatActivity() {
                         } else if (b is Soldier) {
                             image = R.drawable.soldier
                         }
-                        drawBody(b.getRealX(), b.getRealY(), image)
+                        drawBody(b.getRealX(), b.getRealY(), image, b)
                     }
                 }
                 Thread.sleep(50)
