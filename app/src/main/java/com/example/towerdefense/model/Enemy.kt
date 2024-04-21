@@ -12,6 +12,8 @@ abstract class Enemy(col: Int, row: Int, spawnTick: Int) : Body(col, row), Attac
     private var mPreviousDirection : Pair<Int,Int> = Pair(0,1)
     private var mNextDirection : Pair<Int,Int> = Pair(0,1)
 
+    private var mCost : Int = 0
+
     //*************************************** Constructor *************************************** //
 
     //************************************* Public methods ************************************* //

@@ -8,6 +8,8 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
     protected var mTarget : AttackListener? = null
     protected var mInBlastRadius: MutableList<AttackListener> = mutableListOf()
 
+    protected var mCost : Int = 0
+
     //*************************************** Constructor *************************************** //
 
     //************************************* Public methods ************************************** //
@@ -55,6 +57,10 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
     }
     fun upgradeTower(){
         mLevel+=1
+    }
+
+    fun getCost() : Int {
+        return mCost
     }
     //************************************* Private methods ************************************* //
 
