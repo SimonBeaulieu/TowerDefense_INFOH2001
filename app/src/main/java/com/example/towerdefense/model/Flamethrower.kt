@@ -20,7 +20,7 @@ class Flamethrower(col: Int, row: Int) : Tower(col, row) {
     }
 
     override fun findEnemiesInBlastRadius(enemies: List<AttackListener>) {
-        TODO("Not yet implemented")
+        // !!! KCSJ : Implémenter
     }
 
 
