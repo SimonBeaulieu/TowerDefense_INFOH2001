@@ -17,6 +17,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.towerdefense.model.Archer
 import com.example.towerdefense.model.Body
+import com.example.towerdefense.model.Cannon
+import com.example.towerdefense.model.Flamethrower
 import com.example.towerdefense.model.Game
 import com.example.towerdefense.model.GameMapUtils
 import com.example.towerdefense.model.GameMapViewer
@@ -38,6 +40,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var buttonStartWave : Button
 
     private lateinit var buttonArcher : ImageButton
+    private lateinit var buttonCannon : ImageButton
+    private lateinit var buttonFlamethrower : ImageButton
+
     private var selectedTower : ImageButton? = null
 
     private val game : Game = Game()
@@ -72,6 +77,8 @@ class MainActivity : AppCompatActivity() {
     private fun initButtons() {
         buttonStartWave = findViewById(R.id.buttonStartWave)
         buttonArcher = findViewById(R.id.buttonArcher)
+        buttonCannon = findViewById(R.id.buttonCannon)
+        buttonFlamethrower = findViewById(R.id.buttonFlamethrower)
     }
 
     private fun initStats(){
@@ -151,7 +158,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun toggleTowerButton(imageButton: ImageButton) {
         if (selectedTower == imageButton) {
-            imageButton.setBackgroundColor(Color.TRANSPARENT)
+            imageButton.setBackgroundColor(Color.LTGRAY)
             selectedTower = null
         } else {
             imageButton.setBackgroundColor(Color.GREEN)
@@ -171,6 +178,14 @@ class MainActivity : AppCompatActivity() {
         toggleTowerButton(buttonArcher)
     }
 
+    fun onClickButtonCannon(view: View){
+        toggleTowerButton(buttonCannon)
+    }
+
+    fun onClickButtonFlamethrower(view: View){
+        toggleTowerButton(buttonFlamethrower)
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     fun onClickGridLayoutMap(view: View){
         gridLayoutMap.setOnTouchListener{_, event ->
@@ -185,6 +200,15 @@ class MainActivity : AppCompatActivity() {
                         game.addTower(pos.first, pos.second, Tiles.ARCHER)
                         toggleTowerButton(buttonArcher)
                     }
+                    buttonCannon -> {
+                        game.addTower(pos.first, pos.second, Tiles.CANNON)
+                        toggleTowerButton(buttonCannon)
+                    }
+                    buttonFlamethrower -> {
+                        game.addTower(pos.first, pos.second, Tiles.FLAMETHROWER)
+                        toggleTowerButton(buttonFlamethrower)
+                    }
+
                 }
             }
             // Return false to indicate that we haven't consumed the touch event,
@@ -204,6 +228,10 @@ class MainActivity : AppCompatActivity() {
                     for (b in game.getDrawableBodies()) {
                         if (b is Archer) {
                             image = R.drawable.archer
+                        } else if (b is Cannon){
+                            image = R.drawable.cannon
+                        } else if (b is Flamethrower){
+                            image = R.drawable.flame
                         } else if (b is Soldier) {
                             image = R.drawable.soldier
                         }

@@ -5,6 +5,10 @@ class Flamethrower(col: Int, row: Int) : Tower(col, row) {
 
     //*************************************** Constructor *************************************** //
 
+    init{
+        mCost=600
+    }
+
     //************************************* Public methods ************************************** //
     override fun advanceMainTick() {
         // !!!SB: Implementer

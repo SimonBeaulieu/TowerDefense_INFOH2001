@@ -8,6 +8,10 @@ class Archer(col: Int, row: Int) : Tower(col, row) {
     private var numberOfExtraTargets : Int = 1
     //*************************************** Constructor *************************************** //
 
+    init{
+        mCost=500
+    }
+
     //************************************* Public methods ************************************** //
     override fun advanceMainTick() {
         super.advanceMainTick()

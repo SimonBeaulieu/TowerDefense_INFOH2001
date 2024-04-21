@@ -84,16 +84,29 @@ class Game {
         if (mGameMap.isEmptyTile(col, row)) {
             when (towerType) {
                 Tiles.ARCHER -> {
-                    mGameManager.addTowerToList(Archer(col, row))
-                    mGameMap.setTileContent(col, row, towerType.value)
+                    val archerTower : Archer = Archer(col, row)
+                    if(archerTower.getCost()<=this.mMoney){
+                        mGameManager.addTowerToList(archerTower)
+                        mGameMap.setTileContent(col, row, towerType.value)
+                        this.mMoney-=archerTower.getCost()
+                    }
+
                 }
                 Tiles.CANNON -> {
-                    mGameManager.addTowerToList(Cannon(col, row))
-                    mGameMap.setTileContent(col, row, towerType.value)
+                    val cannonTower : Cannon = Cannon(col, row)
+                    if(cannonTower.getCost()<=this.mMoney) {
+                        mGameManager.addTowerToList(cannonTower)
+                        mGameMap.setTileContent(col, row, towerType.value)
+                        this.mMoney-=cannonTower.getCost()
+                    }
                 }
                 Tiles.FLAMETHROWER -> {
-                    mGameManager.addTowerToList(Flamethrower(col, row))
-                    mGameMap.setTileContent(col, row, towerType.value)
+                    val flameThrowerTower : Flamethrower = Flamethrower(col, row)
+                    if(flameThrowerTower.getCost()<=this.mMoney) {
+                        mGameManager.addTowerToList(flameThrowerTower)
+                        mGameMap.setTileContent(col, row, towerType.value)
+                        this.mMoney-=flameThrowerTower.getCost()
+                    }
                 }
                 else -> { }
             }
