@@ -1,6 +1,5 @@
 package com.example.towerdefense.model
 
-
 class GameMap(val nWave:Int = 12) : GameMapViewer {
     private val mFirstTile : Pair<Int, Int> = Pair(3,0)
 

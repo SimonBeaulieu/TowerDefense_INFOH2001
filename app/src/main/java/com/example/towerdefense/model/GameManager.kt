@@ -86,6 +86,8 @@ class GameManager {
      * Must be removed if is dead or has reached the end. Otherwise advance a turn
      */
     private fun advanceActiveEnemies() {
+        val damagePerHitPoints = 5
+
         val enemyIterator = mActiveEnemies.iterator()
         var e : Enemy
 
@@ -97,7 +99,7 @@ class GameManager {
                 enemyIterator.remove()
 
             } else if (e.hasReachedEnd()) {
-                mHitPointsToRemove += e.getHitPoints()
+                mHitPointsToRemove += e.getHitPoints() * damagePerHitPoints
                 enemyIterator.remove()
 
             } else {

@@ -3,11 +3,26 @@ package com.example.towerdefense.model
 class Game {
     //**************************************** Variables **************************************** //
     private var mCurrentWave : Wave
-    private var mWaveNum = 1
+    private var mWaveNum = 0
+    private var mGameOver = false
 
     private var mDisplayTickDuration : Long = 50
     private var mMoney : Int = 1000
+        set(value) {
+            if (value >= 0) {
+                field = value
+            }
+        }
+    fun getMoney(): Int { return mMoney }
+
     private var mHitPoints : Int = 200
+        set(value) {
+            if (value >= 0) {
+                field = value
+            }
+        }
+    fun getHitPoints(): Int { return mHitPoints }
+
 
     private val mGameMap : GameMap
     private var mGameManager: GameManager
@@ -52,7 +67,7 @@ class Game {
 
     //************************************* Public methods ************************************* //
     fun startWave() {
-        if (mWaveNum < mGameMap.nWave && !mCurrentWave.mInProgress) {
+        if (mWaveNum <= mGameMap.nWave && !mCurrentWave.mInProgress) {
             setNextWaveEnemies()
 
             mGameTimer?.enableTicks = true
@@ -65,11 +80,15 @@ class Game {
     fun pauseWave() {
         mGameTimer?.enableTicks = false
         mGameTimer?.enableDisplay = true
+
+        // !!!SB: Popup
     }
 
     fun resumeWave() {
         mGameTimer?.enableTicks = true
         mGameTimer?.enableDisplay = true
+
+        // !!!SB: Remove popup
     }
 
     fun endGame() {
@@ -77,6 +96,8 @@ class Game {
         mGameTimer?.enableDisplay = false
 
         mCurrentWave.mInProgress = false
+
+        // !!!SB: Popup with gameOver or gaved up
     }
 
     fun addTower(col : Int, row : Int, towerType: Tiles) {
@@ -125,13 +146,10 @@ class Game {
         mGameManager.advanceMainTick()
 
         if (mCurrentWave.mInProgress && mGameManager.getWaveEnded()) {
-            mMoney += mCurrentWave.getCompletionReward()
-            mCurrentWave.mInProgress = false
-            mCurrentWave = mGameMap.getWave(mWaveNum++)
+            wavedEnded()
         }
 
-        mMoney += mGameManager.getMoneyToAdd()
-        mHitPoints -= mGameManager.getHitPointsToRemove()
+        updateStats()
     }
 
     private fun advanceDisplayTick() {
@@ -140,15 +158,22 @@ class Game {
 
     private fun setNextWaveEnemies() {
         mWaveNum++
-        mCurrentWave = mGameMap.getWave(mWaveNum)
+        mCurrentWave = mGameMap.getWave(mWaveNum-1)
         mGameManager.setPendingEnemies(mCurrentWave.getEnemies())
     }
 
-    fun getHitPoints(): Int {
-        return mHitPoints
+    private fun wavedEnded(){
+        mMoney += mCurrentWave.getCompletionReward()
+        mCurrentWave.mInProgress = false
     }
 
-    fun getMoney(): Int {
-        return mMoney
+    private fun updateStats() {
+        mMoney += mGameManager.getMoneyToAdd()
+        mHitPoints -= mGameManager.getHitPointsToRemove()
+
+        if (mHitPoints <= 0 ) {
+            mGameOver = true
+            endGame()
+        }
     }
 }
