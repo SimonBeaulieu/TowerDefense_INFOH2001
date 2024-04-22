@@ -21,15 +21,14 @@ class MainActivity : AppCompatActivity() {
         gameRoot.visibility = View.VISIBLE
         menuRoot.visibility = View.GONE
 
-        gameController.enableDisplay = true
-        gameController.showView()
+        gameController.resumeGame()
     }
 
     fun showMenu() {
         menuRoot.visibility = View.VISIBLE
         gameRoot.visibility = View.GONE
 
-        gameController.enableDisplay = false
+        gameController.pauseGame()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

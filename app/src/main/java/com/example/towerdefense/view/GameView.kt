@@ -14,9 +14,13 @@ import android.widget.TextView
 import com.example.towerdefense.MainActivity
 import com.example.towerdefense.R
 import com.example.towerdefense.controller.GameControllerListener
+import com.example.towerdefense.model.Archer
 import com.example.towerdefense.model.Body
+import com.example.towerdefense.model.Cannon
+import com.example.towerdefense.model.Flamethrower
 import com.example.towerdefense.model.GameMapUtils
 import com.example.towerdefense.model.GameMapViewer
+import com.example.towerdefense.model.Soldier
 import com.example.towerdefense.model.Tiles
 import com.example.towerdefense.model.Tower
 
@@ -102,28 +106,22 @@ class GameView(private val app : MainActivity, private val mListener: GameContro
         }
     }
 
-    fun drawBody(px : Int, py: Int, resId: Int, body: Body) {
-        val imageView = ImageView(app)
-        imageView.setImageResource(resId)
-
-        if (body is Tower) {
-            imageView.setOnClickListener { onClickTower(body) }
-        }
-
-        // Specify layout parameters
-        val params = FrameLayout.LayoutParams(GameMapUtils.PX_PER_TILE, GameMapUtils.PX_PER_TILE)
-        params.leftMargin = px
-        params.topMargin = py
-
-        // Set layout parameters
-        imageView.layoutParams = params
-
-        // Add the TextView to the GridLayout
-        layoutBodies.addView(imageView)
-    }
-
     fun clearBodies() {
         layoutBodies.removeAllViews()
+    }
+
+    fun drawBodies(drawableBodies : List<Body>) {
+        for (b in drawableBodies) {
+            if (b is Archer) {
+                drawBody(b.getRealX(), b.getRealY(), R.drawable.archer, b)
+            } else if (b is Cannon){
+                drawBody(b.getRealX(), b.getRealY(), R.drawable.cannon, b)
+            } else if (b is Flamethrower){
+                drawBody(b.getRealX(), b.getRealY(), R.drawable.flame, b)
+            } else if (b is Soldier) {
+                drawBody(b.getRealX(), b.getRealY(), R.drawable.soldier, b)
+            }
+        }
     }
 
     //************************************* event handlers ************************************* //
@@ -197,6 +195,26 @@ class GameView(private val app : MainActivity, private val mListener: GameContro
 
         // Add the TextView to the GridLayout
         gridLayoutMap.addView(imageView)
+    }
+
+    private fun drawBody(px : Int, py: Int, resId: Int, body: Body) {
+        val imageView = ImageView(app)
+        imageView.setImageResource(resId)
+
+        if (body is Tower) {
+            imageView.setOnClickListener { onClickTower(body) }
+        }
+
+        // Specify layout parameters
+        val params = FrameLayout.LayoutParams(GameMapUtils.PX_PER_TILE, GameMapUtils.PX_PER_TILE)
+        params.leftMargin = px
+        params.topMargin = py
+
+        // Set layout parameters
+        imageView.layoutParams = params
+
+        // Add the TextView to the GridLayout
+        layoutBodies.addView(imageView)
     }
 
     private fun toggleTowerButton(imageButton: ImageButton) {
