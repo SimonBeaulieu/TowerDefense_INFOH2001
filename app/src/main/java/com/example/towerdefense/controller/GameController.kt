@@ -50,7 +50,18 @@ class GameController(private val app: MainActivity) : GameControllerListener {
         enableDisplay = true
     }
 
-    fun launchDrawingThread() {
+    //************************************* Private methods ************************************* //
+    private fun setTilesDimensions() {
+        val screenWidth = app.resources.displayMetrics.widthPixels - mView.layoutCharacters.layoutParams.width
+        val screenHeight = app.resources.displayMetrics.heightPixels
+
+        val cellWidth = screenWidth / GameMapUtils.N_COLUMNS
+        val cellHeight = screenHeight / GameMapUtils.N_ROWS
+
+        GameMapUtils.PX_PER_TILE = minOf(cellWidth, cellHeight)
+    }
+
+    private fun launchDrawingThread() {
         Thread {
             while (true) {
                 if (enableDisplay) {
@@ -63,16 +74,5 @@ class GameController(private val app: MainActivity) : GameControllerListener {
                 }
             }
         }.start()
-    }
-
-    //************************************* Private methods ************************************* //
-    private fun setTilesDimensions() {
-        val screenWidth = app.resources.displayMetrics.widthPixels - mView.layoutCharacters.layoutParams.width
-        val screenHeight = app.resources.displayMetrics.heightPixels
-
-        val cellWidth = screenWidth / GameMapUtils.N_COLUMNS
-        val cellHeight = screenHeight / GameMapUtils.N_ROWS
-
-        GameMapUtils.PX_PER_TILE = minOf(cellWidth, cellHeight)
     }
 }

@@ -1,12 +1,12 @@
 package com.example.towerdefense.view
 
+import androidx.gridlayout.widget.GridLayout
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
-import android.widget.GridLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -185,6 +185,7 @@ class GameView(private val app : MainActivity, private val mListener: GameContro
 
         // Specify layout parameters
         val params = GridLayout.LayoutParams()
+
         params.columnSpec = GridLayout.spec(c)
         params.rowSpec = GridLayout.spec(r)
         params.width = GameMapUtils.PX_PER_TILE
