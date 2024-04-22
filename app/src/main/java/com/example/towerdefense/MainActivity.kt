@@ -13,6 +13,7 @@ import java.nio.channels.Selector
 
 class MainActivity : AppCompatActivity() {
     private lateinit var container: ConstraintLayout
+
     private lateinit var gameRoot : ConstraintLayout
     private lateinit var menuRoot : ConstraintLayout
     private lateinit var selectorRoot : ConstraintLayout
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     fun showGame() {
         gameRoot.visibility = View.VISIBLE
+
         menuRoot.visibility = View.GONE
         selectorRoot.visibility = View.GONE
 
@@ -31,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     fun showMenu() {
         menuRoot.visibility = View.VISIBLE
+
         gameRoot.visibility = View.GONE
         selectorRoot.visibility = View.GONE
 
@@ -39,8 +42,11 @@ class MainActivity : AppCompatActivity() {
 
     fun showSelector() {
         selectorRoot.visibility = View.VISIBLE
+
         menuRoot.visibility = View.GONE
         gameRoot.visibility = View.GONE
+
+        gameController.pauseGame()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

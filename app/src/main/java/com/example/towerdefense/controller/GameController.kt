@@ -13,7 +13,8 @@ import com.example.towerdefense.view.GameView
 class GameController(private val app: MainActivity) : GameControllerListener {
     //**************************************** Variables **************************************** //
     private var mGame : Game = Game()
-    private var mView : GameView = GameView(app, this as GameControllerListener)
+    private var mView : GameView = GameView(app, this)
+
     private val mGameMapViewer = References.getRef(GameMapViewer::class.java)
 
     private val handler = Handler(Looper.getMainLooper())

@@ -5,8 +5,7 @@ import com.example.towerdefense.view.MenuView
 
 // MenuController.kt
 class MenuController(private val app: MainActivity) : MenuControllerListener {
-    //private var mMenu : Menu = Menu()
-    private var mView : MenuView = MenuView(app, this as MenuControllerListener)
+    private var mView : MenuView = MenuView(app, this)
 
     override fun switchToSelector() {
         app.showSelector()

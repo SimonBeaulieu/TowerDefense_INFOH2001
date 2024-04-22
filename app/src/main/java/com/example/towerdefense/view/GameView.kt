@@ -11,7 +11,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.example.towerdefense.MainActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.example.towerdefense.R
 import com.example.towerdefense.controller.GameControllerListener
 import com.example.towerdefense.model.Archer
@@ -24,7 +24,7 @@ import com.example.towerdefense.model.Soldier
 import com.example.towerdefense.model.Tiles
 import com.example.towerdefense.model.Tower
 
-class GameView(private val app : MainActivity, private val mListener: GameControllerListener) {
+class GameView(private val app : AppCompatActivity, private val mController: GameControllerListener) {
     //**************************************** Variables **************************************** //
     lateinit var layoutCharacters : LinearLayout
     private lateinit var gridLayoutMap : androidx.gridlayout.widget.GridLayout
@@ -126,7 +126,7 @@ class GameView(private val app : MainActivity, private val mListener: GameContro
 
     //************************************* event handlers ************************************* //
     fun onClickButtonEnd(view: View) {
-        mListener.switchToMenu()
+        mController.switchToMenu()
     }
 
     fun onClickTower(tower: Tower) {
@@ -134,7 +134,7 @@ class GameView(private val app : MainActivity, private val mListener: GameContro
     }
 
     fun onClickButtonStartWave(view: View) {
-        mListener.startWave()
+        mController.startWave()
     }
 
     fun onClickButtonArcher(view: View) {
@@ -160,15 +160,15 @@ class GameView(private val app : MainActivity, private val mListener: GameContro
 
                 when (selectedTower) {
                     buttonArcher -> {
-                        mListener.addTower(pos.first, pos.second, Tiles.ARCHER)
+                        mController.addTower(pos.first, pos.second, Tiles.ARCHER)
                         toggleTowerButton(buttonArcher)
                     }
                     buttonCannon -> {
-                        mListener.addTower(pos.first, pos.second, Tiles.CANNON)
+                        mController.addTower(pos.first, pos.second, Tiles.CANNON)
                         toggleTowerButton(buttonCannon)
                     }
                     buttonFlamethrower -> {
-                        mListener.addTower(pos.first, pos.second, Tiles.FLAMETHROWER)
+                        mController.addTower(pos.first, pos.second, Tiles.FLAMETHROWER)
                         toggleTowerButton(buttonFlamethrower)
                     }
                 }

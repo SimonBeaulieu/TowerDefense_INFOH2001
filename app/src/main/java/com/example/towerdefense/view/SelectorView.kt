@@ -2,12 +2,11 @@ package com.example.towerdefense.view
 
 import android.view.View
 import android.widget.ImageView
-import com.example.towerdefense.MainActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.example.towerdefense.R
-import com.example.towerdefense.controller.MenuControllerListener
 import com.example.towerdefense.controller.SelectorControllerListener
 
-class SelectorView(private val app : MainActivity, private val mListener : SelectorControllerListener) {
+class SelectorView(private val app : AppCompatActivity, private val mController : SelectorControllerListener) {
     private lateinit var imageMap1 : ImageView
 
     init {
@@ -20,6 +19,6 @@ class SelectorView(private val app : MainActivity, private val mListener : Selec
     }
 
     fun onClickImageMap1(view: View) {
-        mListener.switchToGame()
+        mController.switchToGame()
     }
 }
