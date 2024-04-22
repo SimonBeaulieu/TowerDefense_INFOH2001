@@ -18,6 +18,6 @@ class MenuView(private val app : MainActivity, private val mListener : MenuContr
         buttonStart.setOnClickListener { onClickButtonStart(buttonStart) }
     }
     fun onClickButtonStart(view: View) {
-        mListener.switchToGame()
+        mListener.switchToSelector()
     }
 }
