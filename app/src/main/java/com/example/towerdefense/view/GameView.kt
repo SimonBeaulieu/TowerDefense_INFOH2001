@@ -32,6 +32,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
 
     private lateinit var textHitPoints : TextView
     private lateinit var textMoney : TextView
+    private lateinit var textTowerCost : TextView
 
     private lateinit var buttonStartWave : Button
     private lateinit var buttonEnd : Button
@@ -75,6 +76,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     private fun initStats() {
         textHitPoints = app.findViewById(R.id.textViewHitPoints)
         textMoney = app.findViewById(R.id.textViewMoney)
+        textTowerCost = app.findViewById<TextView>(R.id.textViewTowerCost)
     }
 
     private fun initGrid() {
@@ -137,16 +139,22 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
         mController.startWave()
     }
 
+    @SuppressLint("SetTextI18n")
     fun onClickButtonArcher(view: View) {
         toggleTowerButton(buttonArcher)
+        textTowerCost.text="Cost: "+ Archer(0,0).getCost().toString()
     }
 
+    @SuppressLint("SetTextI18n")
     fun onClickButtonCannon(view: View){
         toggleTowerButton(buttonCannon)
+        textTowerCost.text="Cost: "+ Cannon(0,0).getCost().toString()
     }
 
+    @SuppressLint("SetTextI18n")
     fun onClickButtonFlamethrower(view: View){
         toggleTowerButton(buttonFlamethrower)
+        textTowerCost.text="Cost: "+ Flamethrower(0,0).getCost().toString()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -222,9 +230,14 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
         if (selectedTower == imageButton) {
             imageButton.setBackgroundColor(Color.LTGRAY)
             selectedTower = null
+            textTowerCost.visibility = View.INVISIBLE
         } else {
+            buttonArcher.setBackgroundColor(Color.LTGRAY)
+            buttonCannon.setBackgroundColor(Color.LTGRAY)
+            buttonFlamethrower.setBackgroundColor(Color.LTGRAY)
             imageButton.setBackgroundColor(Color.GREEN)
             selectedTower = imageButton
+            textTowerCost.visibility = View.VISIBLE
         }
     }
 

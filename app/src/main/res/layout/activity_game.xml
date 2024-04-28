@@ -118,6 +118,15 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/flame" />
 
+            <TextView
+                android:id="@+id/textViewTowerCost"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:text="TextView"
+                android:textSize="17sp"
+                android:visibility="invisible" />
+
             <Button
                 android:id="@+id/buttonStartWave"
                 android:layout_width="match_parent"
@@ -129,6 +138,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="End" />
+
         </LinearLayout>
 
     </LinearLayout>

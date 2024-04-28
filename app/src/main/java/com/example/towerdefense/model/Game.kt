@@ -12,6 +12,9 @@ class Game {
             if (value >= 0) {
                 field = value
             }
+            else{
+                field = 0
+            }
         }
     fun getMoney(): Int { return mMoney }
 
@@ -19,6 +22,9 @@ class Game {
         set(value) {
             if (value >= 0) {
                 field = value
+            }
+            else{
+                field = 0
             }
         }
     fun getHitPoints(): Int { return mHitPoints }
