@@ -4,6 +4,8 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
     protected var mRange : Int = 200
     protected var mDamage : Int = 1
     protected var mLevel : Int = 1
+    protected var mAttackSpdTick : Int = 3
+    private var mActualAttackTick : Int = 0
 
     protected var mTarget : AttackListener? = null
     protected var mInBlastRadius: MutableList<AttackListener> = mutableListOf()
@@ -14,12 +16,17 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
 
     //************************************* Public methods ************************************** //
     override fun advanceMainTick() {
-        if (mTarget != null) {
+        if (mTarget != null && mActualAttackTick == 0) {
             mTarget?.onAttack(mDamage)
+
+            for (e in mInBlastRadius) {
+                e.onAttack(mDamage)
+            }
+            mActualAttackTick = mAttackSpdTick
+        }else if (mActualAttackTick != 0) {
+            mActualAttackTick -= 1
         }
-        for (e in mInBlastRadius) {
-            e.onAttack(mDamage)
-        }
+
     }
 
     override fun advanceDisplayTick() {
@@ -32,6 +39,7 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
     }
 
     private fun findMainTarget(enemies: List<AttackListener>){
+        mTarget=null
         var pos : Pair<Int, Int>
         var tileValue : Int = 0
         var maxTileValue : Int = 0
@@ -48,6 +56,7 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
     }
 
     protected abstract fun findEnemiesInBlastRadius(enemies: List<AttackListener>)
+
     protected fun isInRange(enemy: AttackListener): Boolean {
         var dx = enemy.getPosX()-this.getRealX()
         var dy = enemy.getPosY()-this.getRealY()
@@ -55,6 +64,7 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
         var dy2 = dy * dy
         return ((dx2 + dy2) < (mRange * mRange))
     }
+
     fun upgradeTower(){
         mLevel+=1
     }

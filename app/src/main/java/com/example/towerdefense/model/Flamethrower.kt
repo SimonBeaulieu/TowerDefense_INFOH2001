@@ -7,11 +7,13 @@ class Flamethrower(col: Int, row: Int) : Tower(col, row) {
 
     init{
         mCost=600
+        mDamage=1
+        mRange=150
     }
 
     //************************************* Public methods ************************************** //
     override fun advanceMainTick() {
-        // !!!SB: Implementer
+        super.advanceMainTick()
     }
 
     override fun advanceDisplayTick() {
@@ -20,7 +22,14 @@ class Flamethrower(col: Int, row: Int) : Tower(col, row) {
     }
 
     override fun findEnemiesInBlastRadius(enemies: List<AttackListener>) {
-        // !!! KCSJ : Implémenter
+
+        mInBlastRadius.clear()
+
+        for (e in enemies) {
+            if (mTarget != e && isInRange(e)) {
+                mInBlastRadius.add(e)
+            }
+        }
     }
 
 

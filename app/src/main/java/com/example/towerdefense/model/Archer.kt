@@ -10,6 +10,8 @@ class Archer(col: Int, row: Int) : Tower(col, row) {
 
     init{
         mCost=500
+        mRange=250
+        mDamage = 5
     }
 
     //************************************* Public methods ************************************** //
