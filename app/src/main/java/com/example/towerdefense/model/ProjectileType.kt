@@ -1,4 +1,4 @@
-package com.example.towerdefense.Model
+package com.example.towerdefense.model
 
 enum class ProjectileType (val value:Int) {
     ARCHER_PROJECTILE(1),

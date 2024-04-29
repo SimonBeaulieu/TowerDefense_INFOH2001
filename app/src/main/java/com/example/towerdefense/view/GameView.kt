@@ -1,5 +1,6 @@
 package com.example.towerdefense.view
 
+import CircleView
 import androidx.gridlayout.widget.GridLayout
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -22,6 +23,7 @@ import com.example.towerdefense.model.Flamethrower
 import com.example.towerdefense.model.GameMapUtils
 import com.example.towerdefense.model.GameMapViewer
 import com.example.towerdefense.model.Projectile
+import com.example.towerdefense.model.ProjectileType
 import com.example.towerdefense.model.Soldier
 import com.example.towerdefense.model.Tiles
 import com.example.towerdefense.model.Tower
@@ -115,6 +117,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     }
 
     fun drawBodies(drawableBodies : List<Body>) {
+
         for (b in drawableBodies) {
             if (b is Archer) {
                 drawBody(b.getRealX(), b.getRealY(), R.drawable.archer, b)
@@ -128,7 +131,32 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
                 //drawBody(b.getRealX(), b.getRealY(), R.drawable.boss, b)
             } else if (b is Projectile){
                 //KF!!! À implémenter
+                var p = b as Projectile
+                drawProjectile(p)
+
+                if(p.isVisible()){
+
+                }
             }
+        }
+    }
+
+    private fun drawProjectile(p: Projectile) {
+        when(p.getType()){
+            ProjectileType.ARCHER_PROJECTILE -> {
+
+                val circleView = CircleView(app)
+                circleView.setCircleAttributes(p.getRealX(), p.getRealY(), 50, Color.LTGRAY)
+                layoutBodies.addView(circleView)
+
+            }
+            ProjectileType.CANNON_PROJECTILE -> {
+
+            }
+            ProjectileType.FLAMETHROWER_PROJECTILE -> {
+
+            }
+            else -> {}
         }
     }
 

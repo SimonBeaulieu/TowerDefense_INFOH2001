@@ -1,5 +1,6 @@
 package com.example.towerdefense.model
 
+
 class Flamethrower(col: Int, row: Int) : Tower(col, row) {
     //**************************************** Variables **************************************** //
 
@@ -7,7 +8,7 @@ class Flamethrower(col: Int, row: Int) : Tower(col, row) {
 
     init{
         mCost=600
-        mDamage=1
+        mDamage=5
         mRange=150
     }
 
@@ -29,6 +30,18 @@ class Flamethrower(col: Int, row: Int) : Tower(col, row) {
             if (mTarget != e && isInRange(e)) {
                 mInBlastRadius.add(e)
             }
+        }
+    }
+
+    override fun createProjectile() {
+        if(mTarget != null){
+            mProjectiles.add(Projectile(this.getRealX(), this.getRealY(),
+                ProjectileType.FLAMETHROWER_PROJECTILE, mTarget!!,false,mDamage))
+        }
+        for (e in mInBlastRadius){
+            mProjectiles.add(Projectile(this.getRealX(), this.getRealY(),
+                ProjectileType.FLAMETHROWER_PROJECTILE, e,false,mDamage))
+
         }
     }
 

@@ -10,7 +10,7 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
     protected var mTarget : AttackListener? = null
     protected var mInBlastRadius: MutableList<AttackListener> = mutableListOf()
 
-    protected var mTowerProjectile: MutableList<Projectile> = mutableListOf()
+    protected var mProjectiles: MutableList<Projectile> = mutableListOf()
 
     protected var mCost : Int = 0
 
@@ -18,14 +18,26 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
 
     //************************************* Public methods ************************************** //
     override fun advanceMainTick() {
-        if (mTarget != null && mActualAttackTick == 0) {
-            mTarget?.onAttack(mDamage)
 
-            for (e in mInBlastRadius) {
-                e.onAttack(mDamage)
+        val projectileIterator = mProjectiles.iterator()
+        var p : Projectile
+
+        while (projectileIterator.hasNext()){
+            p = projectileIterator.next()
+            p.advanceMainTick()
+
+            if (p.hasReachedTarget()){
+                projectileIterator.remove()
             }
+        }
+
+
+
+        if (mTarget != null && mActualAttackTick <= 0) {
+            createProjectile()
             mActualAttackTick = mAttackSpdTick
-        }else if (mActualAttackTick != 0) {
+
+        }else if (mActualAttackTick > 0) {
             mActualAttackTick -= 1
         }
 
@@ -74,6 +86,13 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
     fun getCost() : Int {
         return mCost
     }
+
+    protected abstract fun createProjectile()
+
+    fun getProjectiles(): List<Projectile>{
+        return mProjectiles
+    }
+
     //************************************* Private methods ************************************* //
 
 

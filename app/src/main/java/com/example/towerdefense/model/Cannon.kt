@@ -6,7 +6,7 @@ class Cannon(col: Int, row: Int) : Tower(col, row) {
     //*************************************** Constructor *************************************** //
     init {
         mCost = 1000
-        mDamage = 2
+        mDamage = 5
 
     }
     //************************************* Public methods ************************************** //
@@ -27,6 +27,18 @@ class Cannon(col: Int, row: Int) : Tower(col, row) {
             if (mTarget != e && isInBlastRadius(e)) {
                 mInBlastRadius.add(e)
             }
+        }
+    }
+
+    override fun createProjectile() {
+        if(mTarget != null){
+            mProjectiles.add(Projectile(this.getRealX(), this.getRealY(),
+                ProjectileType.CANNON_PROJECTILE, mTarget!!,true,mDamage))
+        }
+        for (e in mInBlastRadius){
+            mProjectiles.add(Projectile(this.getRealX(), this.getRealY(),
+                ProjectileType.CANNON_PROJECTILE, e,false,mDamage))
+
         }
     }
 

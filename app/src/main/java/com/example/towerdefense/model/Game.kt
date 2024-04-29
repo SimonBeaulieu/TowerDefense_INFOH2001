@@ -144,6 +144,10 @@ class Game {
         val r : MutableList<Body> = mGameManager.getTowers().toMutableList()
         r.addAll(mGameManager.getActiveEnemies())
 
+        for (t in mGameManager.getTowers()){
+            r.addAll(t.getProjectiles())
+        }
+
         return r.toList()
     }
 

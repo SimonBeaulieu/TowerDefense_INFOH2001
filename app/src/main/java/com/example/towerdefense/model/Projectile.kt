@@ -1,9 +1,8 @@
 package com.example.towerdefense.model
 
-import com.example.towerdefense.Model.ProjectileType
 import kotlin.math.sqrt
 
-class Projectile(col: Int, row: Int, projectileType: ProjectileType, target: Enemy, visibility: Boolean, damage: Int) : Body(col, row) {
+class Projectile(col: Int, row: Int, projectileType: ProjectileType, target: AttackListener, visibility: Boolean, damage: Int) : Body(col, row) {
     //**************************************** Variables **************************************** //
 
     private val mProjectileType = projectileType
@@ -18,6 +17,7 @@ class Projectile(col: Int, row: Int, projectileType: ProjectileType, target: Ene
     private val SPEED_PER_TICK = 50
     private var mAttackTick: Int = 0
     private val mDamage:Int = damage
+    private val mVisibility = visibility
 
     //*************************************** Constructor *************************************** //
 
@@ -40,11 +40,19 @@ class Projectile(col: Int, row: Int, projectileType: ProjectileType, target: Ene
         // !!!SB: Implementer
     }
 
-    //************************************* Private methods ************************************* //
-    private fun hasReachedTarget() : Boolean {
-        // !!!KFL : A implementer
-        return false
+    fun isVisible(): Boolean{
+        return mVisibility
     }
+
+    fun hasReachedTarget() : Boolean {
+        return mTargetAttacked
+    }
+
+    fun getType() : ProjectileType{
+        return mProjectileType
+    }
+
+    //************************************* Private methods ************************************* //
 
     private fun calculateAttackTick() {
         mAttackTick=distanceToTarget().toInt()/SPEED_PER_TICK
