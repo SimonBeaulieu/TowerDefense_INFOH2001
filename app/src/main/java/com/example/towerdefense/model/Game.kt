@@ -147,6 +147,11 @@ class Game {
         return r.toList()
     }
 
+
+    fun toggleSpeed() {
+        mGameTimer?.toggleSpeed()
+    }
+
     //************************************* Private methods ************************************* //
     private fun advanceTick() {
         mGameManager.advanceMainTick()

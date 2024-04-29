@@ -41,6 +41,10 @@ class GameController(private val app: MainActivity) : GameControllerListener {
         app.showMenu()
     }
 
+    override fun toggleSpeed() {
+        mGame.toggleSpeed()
+    }
+
     fun pauseGame() {
         mGame.pauseWave()
         enableDisplay = false

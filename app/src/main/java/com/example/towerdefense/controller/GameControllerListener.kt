@@ -8,4 +8,6 @@ interface GameControllerListener {
     fun addTower(col : Int, row : Int, towerType: Tiles)
 
     fun switchToMenu()
+
+    fun toggleSpeed()
 }

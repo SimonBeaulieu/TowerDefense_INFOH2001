@@ -32,16 +32,22 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
 
     private lateinit var textHitPoints : TextView
     private lateinit var textMoney : TextView
-    private lateinit var textTowerCost : TextView
 
-    private lateinit var buttonStartWave : Button
-    private lateinit var buttonEnd : Button
+    private lateinit var textCost : TextView
+    private lateinit var textLevel : TextView
+    private lateinit var textSelection : TextView
+
+    private lateinit var buttonStart : ImageButton
+    private lateinit var buttonPause : ImageButton
+    private lateinit var buttonEnd : ImageButton
+    private lateinit var buttonFast : ImageButton
 
     private lateinit var buttonArcher : ImageButton
     private lateinit var buttonCannon : ImageButton
     private lateinit var buttonFlamethrower : ImageButton
 
     private var selectedTower : ImageButton? = null
+    private var fastButtonClicked = false
 
     //*************************************** Constructor *************************************** //
     init {
@@ -57,9 +63,6 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     }
 
     private fun initButtons() {
-        buttonStartWave = app.findViewById(R.id.buttonStartWave)
-        buttonStartWave.setOnClickListener { onClickButtonStartWave(buttonStartWave) }
-
         buttonArcher = app.findViewById(R.id.buttonArcher)
         buttonArcher.setOnClickListener { onClickButtonArcher(buttonArcher) }
 
@@ -69,14 +72,26 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
         buttonFlamethrower = app.findViewById(R.id.buttonFlamethrower)
         buttonFlamethrower.setOnClickListener{ onClickButtonFlamethrower(buttonFlamethrower) }
 
-        buttonEnd = app.findViewById(R.id.buttonEnd)
-        buttonEnd.setOnClickListener { onClickButtonEnd(buttonEnd) }
+        buttonStart = app.findViewById(R.id.buttonStart)
+        buttonStart.setOnClickListener { onClickButtonStart(buttonStart) }
+
+        buttonPause = app.findViewById(R.id.buttonPause)
+        buttonPause.setOnClickListener { onClickPause(buttonPause) }
+
+        //buttonEnd = app.findViewById(R.id.buttonEnd)
+        //buttonEnd.setOnClickListener { onClickButtonEnd(buttonEnd) }
+
+        buttonFast = app.findViewById(R.id.buttonFast)
+        buttonFast.setOnClickListener { onClickFast(buttonFast) }
     }
 
     private fun initStats() {
         textHitPoints = app.findViewById(R.id.textViewHitPoints)
         textMoney = app.findViewById(R.id.textViewMoney)
-        textTowerCost = app.findViewById<TextView>(R.id.textViewTowerCost)
+
+        textCost = app.findViewById(R.id.textCost)
+        textLevel = app.findViewById(R.id.textLevel)
+        textSelection = app.findViewById(R.id.textSelection)
     }
 
     private fun initGrid() {
@@ -127,34 +142,56 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     }
 
     //************************************* event handlers ************************************* //
-    fun onClickButtonEnd(view: View) {
-        mController.switchToMenu()
-    }
-
     fun onClickTower(tower: Tower) {
         // !!!SB: afficher upgrade list. Avoir une variable "selected" (pas meme chose que selectedTower)
     }
 
-    fun onClickButtonStartWave(view: View) {
+    fun onClickButtonStart(view: View) {
         mController.startWave()
+    }
+
+    fun onClickPause(view: View) {
+        mController.switchToMenu()
+    }
+
+    fun onClickFast(view: View) {
+        mController.toggleSpeed()
+        fastButtonClicked = !fastButtonClicked
+
+        if (fastButtonClicked) {
+            buttonFast.setBackgroundColor(Color.GREEN)
+        } else {
+            buttonFast.setBackgroundColor(Color.LTGRAY)
+        }
+    }
+
+    fun onClickButtonEnd(view: View) {
+
     }
 
     @SuppressLint("SetTextI18n")
     fun onClickButtonArcher(view: View) {
         toggleTowerButton(buttonArcher)
-        textTowerCost.text="Cost: "+ Archer(0,0).getCost().toString()
+
+        textCost.text="Cost: "+ Archer(0,0).getCost().toString()
+        textSelection.text = "Selection: Archer"
+        textLevel.text = "Level: 1"
     }
 
     @SuppressLint("SetTextI18n")
     fun onClickButtonCannon(view: View){
         toggleTowerButton(buttonCannon)
-        textTowerCost.text="Cost: "+ Cannon(0,0).getCost().toString()
+        textCost.text="Cost: "+ Cannon(0,0).getCost().toString()
+        textSelection.text = "Selection: Cannon"
+        textLevel.text = "Level: 1"
     }
 
     @SuppressLint("SetTextI18n")
     fun onClickButtonFlamethrower(view: View){
         toggleTowerButton(buttonFlamethrower)
-        textTowerCost.text="Cost: "+ Flamethrower(0,0).getCost().toString()
+        textCost.text="Cost: "+ Flamethrower(0,0).getCost().toString()
+        textSelection.text = "Selection: Flamethrower"
+        textLevel.text = "Level: 1"
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -230,15 +267,30 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
         if (selectedTower == imageButton) {
             imageButton.setBackgroundColor(Color.LTGRAY)
             selectedTower = null
-            textTowerCost.visibility = View.INVISIBLE
+            hideTowerStats()
+
         } else {
             buttonArcher.setBackgroundColor(Color.LTGRAY)
             buttonCannon.setBackgroundColor(Color.LTGRAY)
             buttonFlamethrower.setBackgroundColor(Color.LTGRAY)
+
             imageButton.setBackgroundColor(Color.GREEN)
             selectedTower = imageButton
-            textTowerCost.visibility = View.VISIBLE
+
+            showTowerStats()
         }
+    }
+
+    private fun showTowerStats() {
+        textCost.visibility = View.VISIBLE
+        textSelection.visibility = View.VISIBLE
+        textLevel.visibility = View.VISIBLE
+    }
+
+    private fun hideTowerStats() {
+        textCost.visibility = View.INVISIBLE
+        textSelection.visibility = View.INVISIBLE
+        textLevel.visibility = View.INVISIBLE
     }
 
     private fun isTowerSelected(imageButton: ImageButton) : Boolean {
