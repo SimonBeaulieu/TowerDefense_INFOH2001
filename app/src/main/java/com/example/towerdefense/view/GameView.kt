@@ -16,10 +16,12 @@ import com.example.towerdefense.R
 import com.example.towerdefense.controller.GameControllerListener
 import com.example.towerdefense.model.Archer
 import com.example.towerdefense.model.Body
+import com.example.towerdefense.model.Boss
 import com.example.towerdefense.model.Cannon
 import com.example.towerdefense.model.Flamethrower
 import com.example.towerdefense.model.GameMapUtils
 import com.example.towerdefense.model.GameMapViewer
+import com.example.towerdefense.model.Projectile
 import com.example.towerdefense.model.Soldier
 import com.example.towerdefense.model.Tiles
 import com.example.towerdefense.model.Tower
@@ -122,6 +124,10 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
                 drawBody(b.getRealX(), b.getRealY(), R.drawable.flame, b)
             } else if (b is Soldier) {
                 drawBody(b.getRealX(), b.getRealY(), R.drawable.soldier, b)
+            } else if (b is Boss){
+                //drawBody(b.getRealX(), b.getRealY(), R.drawable.boss, b)
+            } else if (b is Projectile){
+                //KF!!! À implémenter
             }
         }
     }

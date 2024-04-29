@@ -10,6 +10,8 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
     protected var mTarget : AttackListener? = null
     protected var mInBlastRadius: MutableList<AttackListener> = mutableListOf()
 
+    protected var mTowerProjectile: MutableList<Projectile> = mutableListOf()
+
     protected var mCost : Int = 0
 
     //*************************************** Constructor *************************************** //
@@ -58,10 +60,10 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
     protected abstract fun findEnemiesInBlastRadius(enemies: List<AttackListener>)
 
     protected fun isInRange(enemy: AttackListener): Boolean {
-        var dx = enemy.getPosX()-this.getRealX()
-        var dy = enemy.getPosY()-this.getRealY()
-        var dx2 = dx * dx
-        var dy2 = dy * dy
+        val dx = enemy.getPosX()-this.getRealX()
+        val dy = enemy.getPosY()-this.getRealY()
+        val dx2 = dx * dx
+        val dy2 = dy * dy
         return ((dx2 + dy2) < (mRange * mRange))
     }
 
