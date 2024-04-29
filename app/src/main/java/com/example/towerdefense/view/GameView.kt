@@ -132,10 +132,9 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
             } else if (b is Projectile){
                 //KF!!! À implémenter
                 var p = b as Projectile
-                drawProjectile(p)
 
                 if(p.isVisible()){
-
+                    drawProjectile(p)
                 }
             }
         }

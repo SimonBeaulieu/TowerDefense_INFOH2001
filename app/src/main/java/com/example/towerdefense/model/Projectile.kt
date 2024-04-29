@@ -12,6 +12,9 @@ class Projectile(col: Int, row: Int, projectileType: ProjectileType, target: Att
     private val mStartY = row
     private val mFinalX = mTarget.getPosX()
     private val mFinalY = mTarget.getPosY()
+    private var mDx: Double = 0.0
+    private var mDy: Double = 0.0
+
 
     private var mTargetAttacked = false
     private val SPEED_PER_TICK = 50
@@ -33,11 +36,12 @@ class Projectile(col: Int, row: Int, projectileType: ProjectileType, target: Att
             mTargetAttacked=true
         } else{
             mAttackTick-=1
+
         }
     }
 
     override fun advanceDisplayTick() {
-        // !!!SB: Implementer
+        updatePosition()
     }
 
     fun isVisible(): Boolean{
@@ -59,9 +63,16 @@ class Projectile(col: Int, row: Int, projectileType: ProjectileType, target: Att
     }
 
     private fun distanceToTarget(): Double {
-        val dx:Double = mFinalX.toDouble()-mStartX
-        val dy:Double = mFinalY.toDouble()-mStartY
-        return sqrt((dx * dx)+(dy * dy))
+        mDx = mFinalX.toDouble()-mStartX
+        mDy = mFinalY.toDouble()-mStartY
+        return sqrt((mDx * mDx)+(mDy * mDy))
+    }
+
+    private fun updatePosition(){
+
+        setRealX(getRealX() + (mDx/(mAttackTick * mGameTimerView.getTickFraction())).toInt())
+        setRealY(getRealY() + (mDy/(mAttackTick * mGameTimerView.getTickFraction())).toInt())
+
     }
 
 }
