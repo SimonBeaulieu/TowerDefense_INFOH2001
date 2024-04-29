@@ -1,8 +1,8 @@
 package com.example.towerdefense.model
 
-abstract class Enemy(col: Int, row: Int, spawnTick: Int) : Body(col, row), AttackListener {
+abstract class Enemy(col: Int, row: Int, spawnTick: Int, hitPoints: Int) : Body(col, row), AttackListener {
     //**************************************** Variables **************************************** //
-    protected var mHitPoints: Int = 0
+    protected var mHitPoints: Int = hitPoints
     protected var mLoot: Int = 0
 
     protected var mSpawnTick: Int = spawnTick
@@ -11,8 +11,6 @@ abstract class Enemy(col: Int, row: Int, spawnTick: Int) : Body(col, row), Attac
 
     private var mPreviousDirection : Pair<Int,Int> = Pair(0,1)
     private var mNextDirection : Pair<Int,Int> = Pair(0,1)
-
-    private var mCost : Int = 0
 
     //*************************************** Constructor *************************************** //
 

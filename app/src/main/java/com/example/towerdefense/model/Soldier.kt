@@ -1,12 +1,12 @@
 package com.example.towerdefense.model
 
-class Soldier(col:Int, row: Int, spawnTick: Int) : Enemy(col, row, spawnTick) {
+class Soldier(col: Int, row: Int, spawnTick: Int, hitPoints: Int) : Enemy(col, row, spawnTick, hitPoints) {
     //**************************************** Variables **************************************** //
 
     //*************************************** Constructor *************************************** //
     init {
-        mHitPoints=5
-        mLoot=50
+        mHitPoints = hitPoints
+        mLoot= 10*mHitPoints
     }
 
     //************************************* Public methods ************************************* //

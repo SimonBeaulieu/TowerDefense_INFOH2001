@@ -30,6 +30,11 @@ class Cannon(col: Int, row: Int) : Tower(col, row) {
         }
     }
 
+    override fun upgradeStats() {
+        mRange += 50
+        mDamage += 2
+        mBlastRadius += 25
+    }
 
     //************************************* Private methods ************************************* //
     private fun isInBlastRadius(enemy: AttackListener) : Boolean{

@@ -3,7 +3,6 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
     //**************************************** Variables **************************************** //
     protected var mRange : Int = 200
     protected var mDamage : Int = 1
-    protected var mLevel : Int = 1
     protected var mAttackSpdTick : Int = 3
     private var mActualAttackTick : Int = 0
 
@@ -11,6 +10,9 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
     protected var mInBlastRadius: MutableList<AttackListener> = mutableListOf()
 
     protected var mCost : Int = 0
+
+    protected var mLevel : Int = 1
+    protected val mMaxLevel : Int = 4
 
     //*************************************** Constructor *************************************** //
 
@@ -66,11 +68,23 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
     }
 
     fun upgradeTower(){
-        mLevel+=1
+        if (!isMaxLevel()) {
+            mLevel++
+            upgradeStats()
+        }
     }
+
+    abstract fun upgradeStats()
 
     fun getCost() : Int {
         return mCost
+    }
+    fun getUpgradeCost() : Int {
+        return 500*mLevel
+    }
+
+    fun isMaxLevel() : Boolean {
+        return mLevel == mMaxLevel
     }
     //************************************* Private methods ************************************* //
 

@@ -6,11 +6,12 @@ import kotlin.time.times
 class Archer(col: Int, row: Int) : Tower(col, row) {
     //**************************************** Variables **************************************** //
     private var numberOfExtraTargets : Int = 1
+
     //*************************************** Constructor *************************************** //
 
-    init{
-        mCost=500
-        mRange=250
+    init {
+        mCost = 500
+        mRange = 250
         mDamage = 5
     }
 
@@ -42,6 +43,12 @@ class Archer(col: Int, row: Int) : Tower(col, row) {
                 }
             }
         }
+    }
+
+    override fun upgradeStats() {
+        mRange += 25
+        mDamage += 2
+        numberOfExtraTargets += 1
     }
 
     //************************************* Private methods ************************************* //

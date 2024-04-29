@@ -6,9 +6,9 @@ class Flamethrower(col: Int, row: Int) : Tower(col, row) {
     //*************************************** Constructor *************************************** //
 
     init{
-        mCost=600
-        mDamage=1
-        mRange=150
+        mCost = 600
+        mDamage = 1
+        mRange = 150
     }
 
     //************************************* Public methods ************************************** //
@@ -29,6 +29,15 @@ class Flamethrower(col: Int, row: Int) : Tower(col, row) {
             if (mTarget != e && isInRange(e)) {
                 mInBlastRadius.add(e)
             }
+        }
+    }
+
+    override fun upgradeStats() {
+        mRange += 10
+        mDamage += 1
+
+        if (mAttackSpdTick >= 2) {
+            mAttackSpdTick -= 1
         }
     }
 
