@@ -67,7 +67,7 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
         return ((dx2 + dy2) < (mRange * mRange))
     }
 
-    fun upgradeTower(){
+    fun upgrade(){
         if (!isMaxLevel()) {
             mLevel++
             upgradeStats()
@@ -81,6 +81,10 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
     }
     fun getUpgradeCost() : Int {
         return 500*mLevel
+    }
+
+    fun getLevel() : Int {
+        return mLevel
     }
 
     fun isMaxLevel() : Boolean {

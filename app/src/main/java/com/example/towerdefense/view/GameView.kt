@@ -41,12 +41,15 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     private lateinit var buttonPause : ImageButton
     private lateinit var buttonEnd : ImageButton
     private lateinit var buttonFast : ImageButton
+    private lateinit var buttonUpgrade : Button
 
     private lateinit var buttonArcher : ImageButton
     private lateinit var buttonCannon : ImageButton
     private lateinit var buttonFlamethrower : ImageButton
 
-    private var selectedTower : ImageButton? = null
+    private var selectedBuyable : ImageButton? = null
+    private var selectedTower : Tower? = null
+
     private var fastButtonClicked = false
 
     //*************************************** Constructor *************************************** //
@@ -83,6 +86,9 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
 
         buttonFast = app.findViewById(R.id.buttonFast)
         buttonFast.setOnClickListener { onClickFast(buttonFast) }
+
+        buttonUpgrade = app.findViewById(R.id.buttonUpgrade)
+        buttonUpgrade.setOnClickListener{ onClickUpgrade(buttonUpgrade) }
     }
 
     private fun initStats() {
@@ -142,8 +148,24 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     }
 
     //************************************* event handlers ************************************* //
-    fun onClickTower(tower: Tower) {
-        // !!!SB: afficher upgrade list. Avoir une variable "selected" (pas meme chose que selectedTower)
+    @SuppressLint("SetTextI18n")
+    fun onClickTower(view: View, tower: Tower) {
+        if (selectedTower == tower) {
+            selectedTower = null
+            hideTowerStats()
+
+        } else {
+            selectedTower = tower
+            textSelection.text = "Upgrading tower.."
+            textCost.text = "Cost: " + tower.getUpgradeCost().toString()
+            textLevel.text = "Level: " + tower.getLevel()
+            showTowerStats()
+        }
+
+    }
+
+    private fun onClickUpgrade(view: View) {
+        selectedTower?.upgrade()
     }
 
     fun onClickButtonStart(view: View) {
@@ -203,7 +225,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
                 val y = event.y.toInt()
                 val pos: Pair<Int, Int> = GameMapUtils.pixelToGrid(x,y)
 
-                when (selectedTower) {
+                when (selectedBuyable) {
                     buttonArcher -> {
                         mController.addTower(pos.first, pos.second, Tiles.ARCHER)
                         toggleTowerButton(buttonArcher)
@@ -248,7 +270,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
         imageView.setImageResource(resId)
 
         if (body is Tower) {
-            imageView.setOnClickListener { onClickTower(body) }
+            imageView.setOnClickListener { onClickTower(imageView, body) }
         }
 
         // Specify layout parameters
@@ -264,9 +286,9 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     }
 
     private fun toggleTowerButton(imageButton: ImageButton) {
-        if (selectedTower == imageButton) {
+        if (selectedBuyable == imageButton) {
             imageButton.setBackgroundColor(Color.LTGRAY)
-            selectedTower = null
+            selectedBuyable = null
             hideTowerStats()
 
         } else {
@@ -275,7 +297,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
             buttonFlamethrower.setBackgroundColor(Color.LTGRAY)
 
             imageButton.setBackgroundColor(Color.GREEN)
-            selectedTower = imageButton
+            selectedBuyable = imageButton
 
             showTowerStats()
         }
@@ -291,9 +313,5 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
         textCost.visibility = View.INVISIBLE
         textSelection.visibility = View.INVISIBLE
         textLevel.visibility = View.INVISIBLE
-    }
-
-    private fun isTowerSelected(imageButton: ImageButton) : Boolean {
-        return imageButton == selectedTower
     }
 }
