@@ -41,6 +41,37 @@
 
             </FrameLayout>
 
+            <LinearLayout
+                android:id="@+id/layoutGameOver"
+                android:layout_width="800px"
+                android:layout_height="600px"
+                android:orientation="vertical"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_default="wrap"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="wrap">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/gameover" />
+
+                <Button
+                    android:id="@+id/buttonMainMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="400px"
+                    android:layout_weight="1"
+                    android:backgroundTint="#732626"
+                    android:fontFamily="sans-serif-black"
+                    android:text="Main menu" />
+            </LinearLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout

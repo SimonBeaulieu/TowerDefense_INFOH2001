@@ -147,9 +147,12 @@ class Game {
         return r.toList()
     }
 
-
     fun toggleSpeed() {
         mGameTimer?.toggleSpeed()
+    }
+
+    fun isGameOver() : Boolean {
+        return mGameOver
     }
 
     //************************************* Private methods ************************************* //

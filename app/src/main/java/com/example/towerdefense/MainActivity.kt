@@ -9,7 +9,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.towerdefense.controller.GameController
 import com.example.towerdefense.controller.MenuController
 import com.example.towerdefense.controller.SelectorController
-import java.nio.channels.Selector
 
 class MainActivity : AppCompatActivity() {
     private lateinit var container: ConstraintLayout
@@ -22,9 +21,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var menuController: MenuController
     private lateinit var selectorController : SelectorController
 
+    private lateinit var inflater : LayoutInflater
+
     fun showGame() {
         gameRoot.visibility = View.VISIBLE
-
         menuRoot.visibility = View.GONE
         selectorRoot.visibility = View.GONE
 
@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity() {
 
     fun showMenu() {
         menuRoot.visibility = View.VISIBLE
-
         gameRoot.visibility = View.GONE
         selectorRoot.visibility = View.GONE
 
@@ -42,7 +41,6 @@ class MainActivity : AppCompatActivity() {
 
     fun showSelector() {
         selectorRoot.visibility = View.VISIBLE
-
         menuRoot.visibility = View.GONE
         gameRoot.visibility = View.GONE
 
@@ -52,6 +50,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        inflater = LayoutInflater.from(this)
 
         // Container of subviews
         container = findViewById(R.id.container)
@@ -69,12 +69,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadXML() {
-        val inflater = LayoutInflater.from(this)
+        gameRoot = getGameRoot()
+        addContentView(gameRoot, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
 
         // Inflate XML
-        val temp1 = inflater.inflate(R.layout.activity_game, null)
-        gameRoot = temp1.findViewById(R.id.gameRoot)
-
         val temp2 = inflater.inflate(R.layout.activity_menu, null)
         menuRoot = temp2.findViewById(R.id.menuRoot)
 
@@ -82,8 +80,12 @@ class MainActivity : AppCompatActivity() {
         selectorRoot = temp3.findViewById(R.id.selectorRoot)
 
         // Add root elements of each XML in the mainActivity
-        addContentView(gameRoot, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
         addContentView(menuRoot, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
         addContentView(selectorRoot, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
+    }
+
+    private fun getGameRoot() : ConstraintLayout {
+        val temp1 = inflater.inflate(R.layout.activity_game, null)
+        return temp1.findViewById(R.id.gameRoot)
     }
 }

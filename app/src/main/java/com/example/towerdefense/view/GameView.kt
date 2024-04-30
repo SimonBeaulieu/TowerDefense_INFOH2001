@@ -29,6 +29,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     lateinit var layoutCharacters : LinearLayout
     private lateinit var gridLayoutMap : androidx.gridlayout.widget.GridLayout
     private lateinit var layoutBodies : FrameLayout
+    private lateinit var layoutGameOver : LinearLayout
 
     private lateinit var textHitPoints : TextView
     private lateinit var textMoney : TextView
@@ -42,6 +43,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     private lateinit var buttonEnd : ImageButton
     private lateinit var buttonFast : ImageButton
     private lateinit var buttonUpgrade : Button
+    private lateinit var buttonMainMenu : Button
 
     private lateinit var buttonArcher : ImageButton
     private lateinit var buttonCannon : ImageButton
@@ -52,6 +54,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
 
     private val drawableBodies : MutableList<DrawableBody> = mutableListOf()
     private var fastButtonClicked = false
+    private var disableUI : Boolean = false
 
     //*************************************** Constructor *************************************** //
     init {
@@ -64,6 +67,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     private fun initLayouts() {
         layoutBodies = app.findViewById(R.id.layoutBodies)
         layoutCharacters = app.findViewById(R.id.layoutCharacters)
+        layoutGameOver = app.findViewById(R.id.layoutGameOver)
     }
 
     private fun initButtons() {
@@ -90,6 +94,9 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
 
         buttonUpgrade = app.findViewById(R.id.buttonUpgrade)
         buttonUpgrade.setOnClickListener{ onClickUpgrade(buttonUpgrade) }
+
+        buttonMainMenu = app.findViewById(R.id.buttonMainMenu)
+        buttonMainMenu.setOnClickListener{ onClickMainMenu(buttonMainMenu) }
     }
 
     private fun initStats() {
@@ -157,26 +164,33 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
         }
     }
 
+    fun showGameOver() {
+        layoutGameOver.visibility = View.VISIBLE
+        disableUI = true
+    }
+
     //************************************* event handlers ************************************* //
     @SuppressLint("SetTextI18n")
     fun onClickTower(view : View, tower : Tower) {
-        unselectTowers()
+        if (!disableUI) {
+            unselectTowers()
 
-        if (selectedTower == tower) {
-            selectedTower = null
-            hideTowerStats()
+            if (selectedTower == tower) {
+                selectedTower = null
+                hideTowerStats()
 
-        } else {
-            selectedTower = tower
-            textSelection.text = "Upgrading tower.."
-            textCost.text = "Cost: " + tower.getUpgradeCost().toString()
-            textLevel.text = "Level: " + tower.getLevel()
-            showTowerStats()
+            } else {
+                selectedTower = tower
+                textSelection.text = "Upgrading tower.."
+                textCost.text = "Cost: " + tower.getUpgradeCost().toString()
+                textLevel.text = "Level: " + tower.getLevel()
+                showTowerStats()
+            }
         }
     }
 
     private fun onClickUpgrade(view: View) {
-        if (selectedTower != null) {
+        if (!disableUI && selectedTower != null) {
             mController.upgradeTower(selectedTower!!)
             selectedTower = null
             textSelection.text = "Selection: "
@@ -187,79 +201,102 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     }
 
     fun onClickButtonStart(view: View) {
-        mController.startWave()
+        if (!disableUI){
+            mController.startWave()
+        }
     }
 
     fun onClickPause(view: View) {
+        if (!disableUI) {
+            //mController.switchToMenu()
+        }
+    }
+
+    fun onClickMainMenu(view : View) {
         mController.switchToMenu()
+        layoutGameOver.visibility = View.INVISIBLE
+        disableUI = false
     }
 
     fun onClickFast(view: View) {
-        mController.toggleSpeed()
-        fastButtonClicked = !fastButtonClicked
+        if (!disableUI) {
+            mController.toggleSpeed()
+            fastButtonClicked = !fastButtonClicked
 
-        if (fastButtonClicked) {
-            buttonFast.setBackgroundColor(Color.GREEN)
-        } else {
-            buttonFast.setBackgroundColor(Color.LTGRAY)
+            if (fastButtonClicked) {
+                buttonFast.setBackgroundColor(Color.GREEN)
+            } else {
+                buttonFast.setBackgroundColor(Color.LTGRAY)
+            }
         }
     }
 
     fun onClickButtonEnd(view: View) {
-
+        if (!disableUI) {
+        }
     }
 
     @SuppressLint("SetTextI18n")
     fun onClickButtonArcher(view: View) {
-        toggleTowerButton(buttonArcher)
+        if (!disableUI) {
+            toggleTowerButton(buttonArcher)
 
-        textCost.text="Cost: "+ Archer(0,0).getCost().toString()
-        textSelection.text = "Selection: Archer"
-        textLevel.text = "Level: 1"
+            textCost.text = "Cost: " + Archer(0, 0).getCost().toString()
+            textSelection.text = "Selection: Archer"
+            textLevel.text = "Level: 1"
+        }
     }
 
     @SuppressLint("SetTextI18n")
     fun onClickButtonCannon(view: View){
-        toggleTowerButton(buttonCannon)
-        textCost.text="Cost: "+ Cannon(0,0).getCost().toString()
-        textSelection.text = "Selection: Cannon"
-        textLevel.text = "Level: 1"
+        if (!disableUI) {
+            toggleTowerButton(buttonCannon)
+            textCost.text = "Cost: " + Cannon(0, 0).getCost().toString()
+            textSelection.text = "Selection: Cannon"
+            textLevel.text = "Level: 1"
+        }
     }
 
     @SuppressLint("SetTextI18n")
     fun onClickButtonFlamethrower(view: View){
-        toggleTowerButton(buttonFlamethrower)
-        textCost.text="Cost: "+ Flamethrower(0,0).getCost().toString()
-        textSelection.text = "Selection: Flamethrower"
-        textLevel.text = "Level: 1"
+        if (!disableUI) {
+            toggleTowerButton(buttonFlamethrower)
+            textCost.text = "Cost: " + Flamethrower(0, 0).getCost().toString()
+            textSelection.text = "Selection: Flamethrower"
+            textLevel.text = "Level: 1"
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun onClickGridLayoutMap(view: View){
-        gridLayoutMap.setOnTouchListener{_, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                // Get X and Y coordinates of the touch event
-                val x = event.x.toInt()
-                val y = event.y.toInt()
-                val pos: Pair<Int, Int> = GameMapUtils.pixelToGrid(x,y)
+        if (!disableUI) {
+            gridLayoutMap.setOnTouchListener { _, event ->
+                if (event.action == MotionEvent.ACTION_DOWN) {
+                    // Get X and Y coordinates of the touch event
+                    val x = event.x.toInt()
+                    val y = event.y.toInt()
+                    val pos: Pair<Int, Int> = GameMapUtils.pixelToGrid(x, y)
 
-                when (selectedBuyable) {
-                    buttonArcher -> {
-                        mController.addTower(pos.first, pos.second, Tiles.ARCHER)
-                        toggleTowerButton(buttonArcher)
-                    }
-                    buttonCannon -> {
-                        mController.addTower(pos.first, pos.second, Tiles.CANNON)
-                        toggleTowerButton(buttonCannon)
-                    }
-                    buttonFlamethrower -> {
-                        mController.addTower(pos.first, pos.second, Tiles.FLAMETHROWER)
-                        toggleTowerButton(buttonFlamethrower)
+                    when (selectedBuyable) {
+                        buttonArcher -> {
+                            mController.addTower(pos.first, pos.second, Tiles.ARCHER)
+                            toggleTowerButton(buttonArcher)
+                        }
+
+                        buttonCannon -> {
+                            mController.addTower(pos.first, pos.second, Tiles.CANNON)
+                            toggleTowerButton(buttonCannon)
+                        }
+
+                        buttonFlamethrower -> {
+                            mController.addTower(pos.first, pos.second, Tiles.FLAMETHROWER)
+                            toggleTowerButton(buttonFlamethrower)
+                        }
                     }
                 }
+                // Return false to indicate that we haven't consumed the touch event,
+                false
             }
-            // Return false to indicate that we haven't consumed the touch event,
-            false
         }
     }
 

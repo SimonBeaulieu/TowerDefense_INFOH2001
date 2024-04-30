@@ -39,6 +39,8 @@ class GameController(private val app: MainActivity) : GameControllerListener {
     }
 
     override fun switchToMenu() {
+        // New game for next time
+        mGame = Game()
         app.showMenu()
     }
 
@@ -78,6 +80,10 @@ class GameController(private val app: MainActivity) : GameControllerListener {
                     handler.post {
                         mView.updateStats(mGame.getMoney(), mGame.getHitPoints())
                         mView.drawBodies(mGame.getDrawableBodies())
+
+                        if (mGame.isGameOver()) {
+                            mView.showGameOver()
+                        }
                     }
                     Thread.sleep(50)
                 }
