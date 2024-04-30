@@ -22,6 +22,14 @@ class GameMapUtils {
             return Pair(pixelToGrid(px),pixelToGrid(py))
         }
 
+        fun gridToCenterPixel(px : Int, py: Int): Pair<Int, Int>{
+            return Pair(gridToCenterPixel(px),gridToCenterPixel(py))
+        }
+
+        fun gridToCenterPixel(grid: Int): Int{
+            return gridToPixel(grid) + PX_PER_TILE/2
+        }
+
         fun isValidRow(row: Int) : Boolean {
             return row in 0..<N_ROWS
         }
