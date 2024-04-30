@@ -8,13 +8,13 @@ class Projectile(col: Int, row: Int, projectileType: ProjectileType, projectileR
     private val mProjectileType = projectileType
     private val mTarget = target
 
-    private var mStartX = GameMapUtils.gridToPixel(col)
-    private var mStartY = GameMapUtils.gridToPixel(row)
-    private val mFinalX = mTarget.getPosX()
-    private val mFinalY = mTarget.getPosY()
-    private var mDx: Double = 0.0
-    private var mDy: Double = 0.0
-    private val mRadius = projectileRadius
+    private var mStartX : Int = GameMapUtils.gridToPixel(col) + (0.5*GameMapUtils.PX_PER_TILE).toInt()
+    private var mStartY : Int = GameMapUtils.gridToPixel(row) + (0.5*GameMapUtils.PX_PER_TILE).toInt()
+    private val mFinalX : Int = mTarget.getPosX() + (0.5*GameMapUtils.PX_PER_TILE).toInt()
+    private val mFinalY : Int = mTarget.getPosY() + (0.5*GameMapUtils.PX_PER_TILE).toInt()
+    private var mDx: Int = 0
+    private var mDy: Int = 0
+    private val mRadius : Int = projectileRadius
 
 
     private var mTargetAttacked = false
@@ -27,8 +27,7 @@ class Projectile(col: Int, row: Int, projectileType: ProjectileType, projectileR
     //*************************************** Constructor *************************************** //
 
     init {
-        //setRealX(col)
-        //setRealY(row)
+
         calculateAttackTick()
         distanceToTarget()
 
@@ -73,17 +72,20 @@ class Projectile(col: Int, row: Int, projectileType: ProjectileType, projectileR
     }
 
     private fun distanceToTarget(): Double {
-        mDx = mFinalX.toDouble()-mStartX
-        mDy = mFinalY.toDouble()-mStartY
-        return sqrt((mDx * mDx)+(mDy * mDy))
+        mDx = mFinalX-mStartX
+        mDy = mFinalY-mStartY
+        return sqrt(((mDx * mDx)+(mDy * mDy).toDouble()))
     }
 
     private fun updatePosition(){
 
-        val realX: Int = getRealX()
-        val realY: Int = getRealY()
-        val newX:Int = realX + (mDx/(mAttackTick * mGameTimerView.getTickRatio()) + 0.5*GameMapUtils.PX_PER_TILE).toInt()
-        val newY:Int = realY + (mDy/(mAttackTick * mGameTimerView.getTickRatio()) + 0.5*GameMapUtils.PX_PER_TILE).toInt()
+        val realX: Int = this.getRealX()
+        val realY: Int = this.getRealY()
+        //val newX:Int = realX + (mDx/(mAttackTick * mGameTimerView.getTickRatio()) + 0.5*GameMapUtils.PX_PER_TILE).toInt()
+        //val newY:Int = realY + (mDy/(mAttackTick * mGameTimerView.getTickRatio()) + 0.5*GameMapUtils.PX_PER_TILE).toInt()
+
+        val newX:Int = (mFinalX-mStartX)/(mAttackTick * mGameTimerView.getTickRatio()) + this.getRealX()
+        val newY:Int = (mFinalY-mStartY)/(mAttackTick * mGameTimerView.getTickRatio()) + this.getRealY()
 
         setRealX(newX)
         setRealY(newY)

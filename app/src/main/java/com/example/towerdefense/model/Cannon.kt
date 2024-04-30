@@ -33,7 +33,7 @@ class Cannon(col: Int, row: Int) : Tower(col, row) {
 
     override fun createProjectile() {
         if(mTarget != null){
-            mProjectiles.add(Projectile(this.getRealX(), this.getRealY(),
+            mProjectiles.add(Projectile(this.getGridX(), this.getGridY(),
                 ProjectileType.CANNON_PROJECTILE, mProjectileRadius, mTarget!!,true,mDamage))
         }
         for (e in mInBlastRadius){
