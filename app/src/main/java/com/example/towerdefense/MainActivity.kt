@@ -1,11 +1,15 @@
 package com.example.towerdefense
 
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.media3.common.MediaItem
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.PlayerView
 import com.example.towerdefense.controller.GameController
 import com.example.towerdefense.controller.MenuController
 import com.example.towerdefense.controller.SelectorController
@@ -21,9 +25,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var menuController: MenuController
     private lateinit var selectorController : SelectorController
 
+    private lateinit var player : ExoPlayer
+    private lateinit var playerView: PlayerView
+
+    private lateinit var mediaItemMenu : MediaItem
+    private lateinit var mediaItemGame : MediaItem
+
     private lateinit var inflater : LayoutInflater
 
     fun showGame() {
+        playGameMusic()
         gameRoot.visibility = View.VISIBLE
         menuRoot.visibility = View.GONE
         selectorRoot.visibility = View.GONE
@@ -32,6 +43,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showMenu() {
+        playMenuMusic()
         menuRoot.visibility = View.VISIBLE
         gameRoot.visibility = View.GONE
         selectorRoot.visibility = View.GONE
@@ -64,6 +76,9 @@ class MainActivity : AppCompatActivity() {
         menuController = MenuController(this)
         selectorController = SelectorController(this)
 
+        // Music
+        initMusic()
+
         // Enable menu
         showMenu()
     }
@@ -87,5 +102,26 @@ class MainActivity : AppCompatActivity() {
     private fun getGameRoot() : ConstraintLayout {
         val temp1 = inflater.inflate(R.layout.activity_game, null)
         return temp1.findViewById(R.id.gameRoot)
+    }
+
+    private fun initMusic() {
+        player = ExoPlayer.Builder(this).build()
+        playerView = PlayerView(this)
+        playerView.player = player
+
+        mediaItemMenu = MediaItem.fromUri(Uri.parse("android.resource://$packageName/${R.raw.mainmenu}"))
+        mediaItemGame = MediaItem.fromUri(Uri.parse("android.resource://$packageName/${R.raw.game}"))
+    }
+
+    private fun playMenuMusic() {
+        player.setMediaItem(mediaItemMenu)
+        player.prepare()
+        player.play()
+    }
+
+    private fun playGameMusic() {
+        player.setMediaItem(mediaItemGame)
+        player.prepare()
+        player.play()
     }
 }

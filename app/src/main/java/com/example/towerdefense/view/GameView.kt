@@ -42,6 +42,8 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     private lateinit var buttonPause : ImageButton
     private lateinit var buttonEnd : ImageButton
     private lateinit var buttonFast : ImageButton
+    private lateinit var buttonQuit : ImageButton
+
     private lateinit var buttonUpgrade : Button
     private lateinit var buttonMainMenu : Button
 
@@ -54,7 +56,9 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
 
     private val drawableBodies : MutableList<DrawableBody> = mutableListOf()
     private var fastButtonClicked = false
+
     private var disableUI : Boolean = false
+    private var isPaused : Boolean = false
 
     //*************************************** Constructor *************************************** //
     init {
@@ -97,6 +101,9 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
 
         buttonMainMenu = app.findViewById(R.id.buttonMainMenu)
         buttonMainMenu.setOnClickListener{ onClickMainMenu(buttonMainMenu) }
+
+        buttonQuit = app.findViewById(R.id.buttonQuit)
+        buttonQuit.setOnClickListener{ onClickQuit(buttonQuit) }
     }
 
     private fun initStats() {
@@ -208,7 +215,15 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
 
     fun onClickPause(view: View) {
         if (!disableUI) {
-            //mController.switchToMenu()
+            if (isPaused) {
+                mController.resumeGame()
+                buttonPause.setBackgroundColor(Color.LTGRAY)
+            } else {
+                mController.pauseGame()
+                buttonPause.setBackgroundColor(Color.GREEN)
+            }
+
+            isPaused = !isPaused
         }
     }
 
@@ -216,6 +231,11 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
         mController.switchToMenu()
         layoutGameOver.visibility = View.INVISIBLE
         disableUI = false
+    }
+
+    fun onClickQuit(view : View) {
+        showGameOver()
+        disableUI = true
     }
 
     fun onClickFast(view: View) {
@@ -378,5 +398,11 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
         buttonArcher.setBackgroundColor(Color.LTGRAY)
         buttonCannon.setBackgroundColor(Color.LTGRAY)
         buttonFlamethrower.setBackgroundColor(Color.LTGRAY)
+    }
+
+    fun unselectAll() {
+        unselectTowers()
+        buttonPause.setBackgroundColor(Color.LTGRAY)
+        buttonFast.setBackgroundColor(Color.LTGRAY)
     }
 }

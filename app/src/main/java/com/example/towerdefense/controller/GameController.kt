@@ -41,6 +41,7 @@ class GameController(private val app: MainActivity) : GameControllerListener {
     override fun switchToMenu() {
         // New game for next time
         mGame = Game()
+        mView.unselectAll()
         app.showMenu()
     }
 
@@ -52,12 +53,12 @@ class GameController(private val app: MainActivity) : GameControllerListener {
         mGame.upgradeTower(tower)
     }
 
-    fun pauseGame() {
+    override fun pauseGame() {
         mGame.pauseWave()
         enableDisplay = false
     }
 
-    fun resumeGame() {
+    override fun resumeGame() {
         mGame.resumeWave()
         enableDisplay = true
     }

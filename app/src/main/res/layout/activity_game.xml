@@ -273,12 +273,13 @@
                         android:src="@drawable/fast" />
 
                     <ImageButton
-                        android:id="@+id/imageButton4"
+                        android:id="@+id/buttonQuit"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:src="@android:drawable/btn_star"
-                        android:visibility="invisible" />
+                        android:scaleType="centerInside"
+                        android:src="@drawable/quit"
+                        android:visibility="visible" />
                 </LinearLayout>
 
             </LinearLayout>

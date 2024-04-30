@@ -13,4 +13,8 @@ interface GameControllerListener {
     fun toggleSpeed()
 
     fun upgradeTower(tower : Tower)
+
+    fun pauseGame()
+
+    fun resumeGame()
 }
