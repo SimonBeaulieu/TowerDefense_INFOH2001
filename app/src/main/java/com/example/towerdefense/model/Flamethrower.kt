@@ -10,6 +10,7 @@ class Flamethrower(col: Int, row: Int) : Tower(col, row) {
         mCost=600
         mDamage=5
         mRange=150
+        mProjectileRadius = 50
     }
 
     //************************************* Public methods ************************************** //
@@ -36,11 +37,11 @@ class Flamethrower(col: Int, row: Int) : Tower(col, row) {
     override fun createProjectile() {
         if(mTarget != null){
             mProjectiles.add(Projectile(this.getRealX(), this.getRealY(),
-                ProjectileType.FLAMETHROWER_PROJECTILE, mTarget!!,false,mDamage))
+                ProjectileType.FLAMETHROWER_PROJECTILE, mProjectileRadius, mTarget!!,false,mDamage))
         }
         for (e in mInBlastRadius){
             mProjectiles.add(Projectile(this.getRealX(), this.getRealY(),
-                ProjectileType.FLAMETHROWER_PROJECTILE, e,false,mDamage))
+                ProjectileType.FLAMETHROWER_PROJECTILE, mProjectileRadius, e,false,mDamage))
 
         }
     }

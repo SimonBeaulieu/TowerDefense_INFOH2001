@@ -39,9 +39,9 @@ class GameManager {
         l.addAll(mTowers)
         l.addAll(mActiveEnemies)
 
-        for (t in mTowers){
-            l.addAll(t.getProjectiles())
-        }
+        //for (t in mTowers){
+        //    l.addAll(t.getProjectiles())
+        //}
 
         val it = l.iterator()
         var b : Body

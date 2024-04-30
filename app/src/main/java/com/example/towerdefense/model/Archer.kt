@@ -7,9 +7,10 @@ class Archer(col: Int, row: Int) : Tower(col, row) {
     //*************************************** Constructor *************************************** //
 
     init{
-        mCost=500
-        mRange=250
+        mCost = 500
+        mRange = 250
         mDamage = 5
+        mProjectileRadius = 10
     }
 
     //************************************* Public methods ************************************** //
@@ -44,12 +45,12 @@ class Archer(col: Int, row: Int) : Tower(col, row) {
 
     override fun createProjectile() {
         if(mTarget != null){
-            mProjectiles.add(Projectile(this.getRealX(), this.getRealY(),
-                ProjectileType.ARCHER_PROJECTILE, mTarget!!,true,mDamage))
+            mProjectiles.add(Projectile(this.getGridX(), this.getGridY(),
+                ProjectileType.ARCHER_PROJECTILE, mProjectileRadius, mTarget!!,true,mDamage))
         }
         for (e in mInBlastRadius){
-            mProjectiles.add(Projectile(this.getRealX(), this.getRealY(),
-                ProjectileType.ARCHER_PROJECTILE, e,true,mDamage))
+            mProjectiles.add(Projectile(this.getGridX(), this.getGridY(),
+                ProjectileType.ARCHER_PROJECTILE, mProjectileRadius, e,true,mDamage))
         }
     }
 

@@ -11,6 +11,7 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
     protected var mInBlastRadius: MutableList<AttackListener> = mutableListOf()
 
     protected var mProjectiles: MutableList<Projectile> = mutableListOf()
+    protected var mProjectileRadius:Int=0
 
     protected var mCost : Int = 0
 
@@ -45,6 +46,9 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
 
     override fun advanceDisplayTick() {
         // !!!SB: Implementer
+        for (p in mProjectiles){
+            p.advanceDisplayTick()
+        }
     }
 
     fun findTargets(enemies: List<AttackListener>){
@@ -91,6 +95,10 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
 
     fun getProjectiles(): List<Projectile>{
         return mProjectiles
+    }
+
+    fun getProjectileRadius():Int{
+        return mProjectileRadius
     }
 
     //************************************* Private methods ************************************* //
