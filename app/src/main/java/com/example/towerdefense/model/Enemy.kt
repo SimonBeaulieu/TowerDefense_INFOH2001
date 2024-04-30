@@ -12,6 +12,9 @@ abstract class Enemy(col: Int, row: Int, spawnTick: Int) : Body(col, row), Attac
     private var mPreviousDirection : Pair<Int,Int> = Pair(0,1)
     private var mNextDirection : Pair<Int,Int> = Pair(0,1)
 
+    private var mNextRealPosX: Int = 0
+    private var mNextRealPosY: Int = 0
+
     private var mCost : Int = 0
 
     //*************************************** Constructor *************************************** //
@@ -70,6 +73,9 @@ abstract class Enemy(col: Int, row: Int, spawnTick: Int) : Body(col, row), Attac
         setGridY(getGridY() + mNextDirection.second)
 
         mNextDirection = getDirection()
+
+        mNextRealPosX = getGridX() + mNextDirection.first
+        mNextRealPosY = getGridY() + mNextDirection.second
 
         // Reached end: next tile is at dx=0, dy=0
         if (mNextDirection.first == 0 && mNextDirection.second == 0) {
@@ -152,4 +158,13 @@ abstract class Enemy(col: Int, row: Int, spawnTick: Int) : Body(col, row), Attac
         // appeler équivalent de isDead pour isDone genre
         return Pair(nextX, nextY)
     }
+
+    override fun getNextGridPos(): Pair<Int,Int> {
+        return Pair(mNextRealPosX, mNextRealPosY)
+    }
+
+    override fun getNextRealPos(): Pair<Int,Int> {
+        return Pair(GameMapUtils.gridToPixel(mNextRealPosX), GameMapUtils.gridToPixel(mNextRealPosY))
+    }
+
 }
