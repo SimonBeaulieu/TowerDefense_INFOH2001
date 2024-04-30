@@ -8,6 +8,7 @@ import com.example.towerdefense.model.GameMapUtils
 import com.example.towerdefense.model.GameMapViewer
 import com.example.towerdefense.model.References
 import com.example.towerdefense.model.Tiles
+import com.example.towerdefense.model.Tower
 import com.example.towerdefense.view.GameView
 
 class GameController(private val app: MainActivity) : GameControllerListener {
@@ -45,6 +46,10 @@ class GameController(private val app: MainActivity) : GameControllerListener {
         mGame.toggleSpeed()
     }
 
+    override fun upgradeTower(tower: Tower) {
+        mGame.upgradeTower(tower)
+    }
+
     fun pauseGame() {
         mGame.pauseWave()
         enableDisplay = false
@@ -72,7 +77,6 @@ class GameController(private val app: MainActivity) : GameControllerListener {
                 if (enableDisplay) {
                     handler.post {
                         mView.updateStats(mGame.getMoney(), mGame.getHitPoints())
-                        mView.clearBodies()
                         mView.drawBodies(mGame.getDrawableBodies())
                     }
                     Thread.sleep(50)

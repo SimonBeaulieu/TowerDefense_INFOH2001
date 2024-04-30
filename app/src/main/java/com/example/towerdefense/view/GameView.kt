@@ -47,9 +47,10 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     private lateinit var buttonCannon : ImageButton
     private lateinit var buttonFlamethrower : ImageButton
 
-    private var selectedBuyable : ImageButton? = null
+    private var selectedBuyable : ImageView? = null
     private var selectedTower : Tower? = null
 
+    private val drawableBodies : MutableList<DrawableBody> = mutableListOf()
     private var fastButtonClicked = false
 
     //*************************************** Constructor *************************************** //
@@ -129,27 +130,38 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
         }
     }
 
-    fun clearBodies() {
-        layoutBodies.removeAllViews()
-    }
+    fun drawBodies(bodies : List<Body>) {
+        val copyBodies : MutableList<Body> = bodies.toMutableList()
 
-    fun drawBodies(drawableBodies : List<Body>) {
-        for (b in drawableBodies) {
-            if (b is Archer) {
-                drawBody(b.getRealX(), b.getRealY(), R.drawable.archer, b)
-            } else if (b is Cannon){
-                drawBody(b.getRealX(), b.getRealY(), R.drawable.cannon, b)
-            } else if (b is Flamethrower){
-                drawBody(b.getRealX(), b.getRealY(), R.drawable.flame, b)
-            } else if (b is Soldier) {
-                drawBody(b.getRealX(), b.getRealY(), R.drawable.soldier, b)
+        // Add drawable for Body not in Drawable list
+        copyBodies.forEach { body ->
+            if (!drawableBodies.any { it.getBody() == body }) {
+                drawableBodies.add(createDrawableBody(body))
             }
+        }
+
+        // Remove drawable not in Body list
+        val drawableToRemove = drawableBodies.filterNot { drawableBody ->
+            copyBodies.any { it == drawableBody.getBody() }
+        }
+        drawableBodies.removeAll(drawableToRemove)
+
+        // Remove from view
+        for (db in drawableToRemove) {
+            layoutBodies.removeView(db.getImage())
+        }
+
+        // Update all images
+        for (db in drawableBodies) {
+            db.updateImage()
         }
     }
 
     //************************************* event handlers ************************************* //
     @SuppressLint("SetTextI18n")
-    fun onClickTower(view: View, tower: Tower) {
+    fun onClickTower(view : View, tower : Tower) {
+        unselectTowers()
+
         if (selectedTower == tower) {
             selectedTower = null
             hideTowerStats()
@@ -161,11 +173,17 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
             textLevel.text = "Level: " + tower.getLevel()
             showTowerStats()
         }
-
     }
 
     private fun onClickUpgrade(view: View) {
-        selectedTower?.upgrade()
+        if (selectedTower != null) {
+            mController.upgradeTower(selectedTower!!)
+            selectedTower = null
+            textSelection.text = "Selection: "
+            textLevel.text = "Level: "
+            textCost.text = "Cost: "
+            hideTowerStats()
+        }
     }
 
     fun onClickButtonStart(view: View) {
@@ -265,37 +283,41 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
         gridLayoutMap.addView(imageView)
     }
 
-    private fun drawBody(px : Int, py: Int, resId: Int, body: Body) {
+    private fun createDrawableBody(body: Body) : DrawableBody {
         val imageView = ImageView(app)
-        imageView.setImageResource(resId)
+        imageView.setImageResource(getImageId(body))
 
         if (body is Tower) {
             imageView.setOnClickListener { onClickTower(imageView, body) }
         }
 
-        // Specify layout parameters
-        val params = FrameLayout.LayoutParams(GameMapUtils.PX_PER_TILE, GameMapUtils.PX_PER_TILE)
-        params.leftMargin = px
-        params.topMargin = py
-
-        // Set layout parameters
-        imageView.layoutParams = params
-
-        // Add the TextView to the GridLayout
         layoutBodies.addView(imageView)
+
+        return DrawableBody(body, imageView)
+    }
+
+    private fun getImageId(body: Body): Int {
+        if (body is Archer) {
+            return R.drawable.archer
+        } else if (body is Cannon){
+            return R.drawable.cannon
+        } else if (body is Flamethrower){
+            return R.drawable.flame
+        } else if (body is Soldier) {
+            return R.drawable.soldier
+        } else {
+            return R.drawable.ic_launcher_foreground
+        }
     }
 
     private fun toggleTowerButton(imageButton: ImageButton) {
+        unselectTowers()
+
         if (selectedBuyable == imageButton) {
-            imageButton.setBackgroundColor(Color.LTGRAY)
             selectedBuyable = null
             hideTowerStats()
 
         } else {
-            buttonArcher.setBackgroundColor(Color.LTGRAY)
-            buttonCannon.setBackgroundColor(Color.LTGRAY)
-            buttonFlamethrower.setBackgroundColor(Color.LTGRAY)
-
             imageButton.setBackgroundColor(Color.GREEN)
             selectedBuyable = imageButton
 
@@ -313,5 +335,11 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
         textCost.visibility = View.INVISIBLE
         textSelection.visibility = View.INVISIBLE
         textLevel.visibility = View.INVISIBLE
+    }
+
+    private fun unselectTowers() {
+        buttonArcher.setBackgroundColor(Color.LTGRAY)
+        buttonCannon.setBackgroundColor(Color.LTGRAY)
+        buttonFlamethrower.setBackgroundColor(Color.LTGRAY)
     }
 }

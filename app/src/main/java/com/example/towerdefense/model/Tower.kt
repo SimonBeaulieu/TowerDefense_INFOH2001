@@ -43,8 +43,8 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
     private fun findMainTarget(enemies: List<AttackListener>){
         mTarget=null
         var pos : Pair<Int, Int>
-        var tileValue : Int = 0
-        var maxTileValue : Int = 0
+        var tileValue = 0
+        var maxTileValue = 0
         for (e in enemies){
             if (isInRange(e)){
                 pos = GameMapUtils.pixelToGrid(e.getPosX(), e.getPosY())
@@ -60,10 +60,10 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
     protected abstract fun findEnemiesInBlastRadius(enemies: List<AttackListener>)
 
     protected fun isInRange(enemy: AttackListener): Boolean {
-        var dx = enemy.getPosX()-this.getRealX()
-        var dy = enemy.getPosY()-this.getRealY()
-        var dx2 = dx * dx
-        var dy2 = dy * dy
+        val dx = enemy.getPosX()-this.getRealX()
+        val dy = enemy.getPosY()-this.getRealY()
+        val dx2 = dx * dx
+        val dy2 = dy * dy
         return ((dx2 + dy2) < (mRange * mRange))
     }
 
@@ -74,7 +74,7 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
         }
     }
 
-    abstract fun upgradeStats()
+    protected abstract fun upgradeStats()
 
     fun getCost() : Int {
         return mCost

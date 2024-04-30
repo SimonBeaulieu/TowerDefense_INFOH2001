@@ -13,7 +13,7 @@ class Wave(waveNum:Int = 0) {
     //*************************************** Constructor *************************************** //
     init {
         val nEnemies : Int = round(4 * 20.0.pow((waveNum - 1)/10.0)).toInt()
-        val enemiesHitPoints : Int = 5 + 2*waveNum
+        val enemiesHitPoints : Int = 5 + waveNum
 
         mCompletionReward = waveNum * 50 + 100
 

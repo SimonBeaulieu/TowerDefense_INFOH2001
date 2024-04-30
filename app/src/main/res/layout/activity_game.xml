@@ -175,7 +175,6 @@
                     android:layout_height="match_parent"
                     android:fontFamily="sans-serif-black"
                     android:gravity="center_vertical"
-                    android:text="Sélection:"
                     android:textSize="14sp"
                     android:visibility="visible" />
 
@@ -184,7 +183,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-black"
-                    android:text="Level:"
                     android:textSize="14sp" />
 
                 <TextView
@@ -192,7 +190,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-black"
-                    android:text="Cost:"
                     android:textSize="14sp" />
 
                 <Button
