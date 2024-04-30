@@ -30,12 +30,13 @@ class Projectile(col: Int, row: Int, projectileType: ProjectileType, projectileR
     //************************************* Public methods ************************************** //
     override fun advanceMainTick() {
         // !!!SB: Implementer
-        if(mActualTick<=0){
-            mTarget.onAttack(mDamage)
-            mTargetAttacked=true
+        mTarget.onAttack(mDamage)
+        mTargetAttacked=true
+        /*if(mActualTick<=0){
+
         } else{
             mActualTick-=1
-        }
+        }*/
     }
 
     override fun advanceDisplayTick() {
