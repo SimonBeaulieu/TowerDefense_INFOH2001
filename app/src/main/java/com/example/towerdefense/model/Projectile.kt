@@ -32,11 +32,6 @@ class Projectile(col: Int, row: Int, projectileType: ProjectileType, projectileR
         // !!!SB: Implementer
         mTarget.onAttack(mDamage)
         mTargetAttacked=true
-        /*if(mActualTick<=0){
-
-        } else{
-            mActualTick-=1
-        }*/
     }
 
     override fun advanceDisplayTick() {

@@ -12,8 +12,9 @@ abstract class Enemy(col: Int, row: Int, spawnTick: Int) : Body(col, row), Attac
     private var mPreviousDirection : Pair<Int,Int> = Pair(0,1)
     private var mNextDirection : Pair<Int,Int> = Pair(0,1)
 
-    private var mNextRealPosX: Int = 0
-    private var mNextRealPosY: Int = 0
+
+    private var mNextGridPosX: Int = mGameMapView.getFirstTile().first
+    private var mNextGridPosY: Int = mGameMapView.getFirstTile().second
 
     private var mCost : Int = 0
 
@@ -38,11 +39,11 @@ abstract class Enemy(col: Int, row: Int, spawnTick: Int) : Body(col, row), Attac
     fun decrementSpawnTick() {
         mSpawnTick--; }
 
-    override fun getPosX() : Int {
+    final override fun getPosX() : Int {
         return super.getRealX()
     }
 
-    override fun getPosY() : Int{
+    final override fun getPosY() : Int{
         return super.getRealY()
     }
 
@@ -74,8 +75,8 @@ abstract class Enemy(col: Int, row: Int, spawnTick: Int) : Body(col, row), Attac
 
         mNextDirection = getDirection()
 
-        mNextRealPosX = getGridX() + mNextDirection.first
-        mNextRealPosY = getGridY() + mNextDirection.second
+        mNextGridPosX = getGridX() + mNextDirection.first
+        mNextGridPosY = getGridY() + mNextDirection.second
 
         // Reached end: next tile is at dx=0, dy=0
         if (mNextDirection.first == 0 && mNextDirection.second == 0) {
@@ -160,11 +161,12 @@ abstract class Enemy(col: Int, row: Int, spawnTick: Int) : Body(col, row), Attac
     }
 
     override fun getNextGridPos(): Pair<Int,Int> {
-        return Pair(mNextRealPosX, mNextRealPosY)
+        return Pair(mNextGridPosX, mNextGridPosY)
     }
 
     override fun getNextRealPos(): Pair<Int,Int> {
-        return Pair(GameMapUtils.gridToPixel(mNextRealPosX), GameMapUtils.gridToPixel(mNextRealPosY))
+        val pair = GameMapUtils.gridToCenterPixel(mNextGridPosX,mNextGridPosY)
+        return Pair(pair.first, pair.second)
     }
 
 }
