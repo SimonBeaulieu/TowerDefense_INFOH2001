@@ -124,4 +124,16 @@ class MainActivity : AppCompatActivity() {
         player.prepare()
         player.play()
     }
+
+    override fun onPause() {
+        super.onPause()
+        player.pause()
+        gameController.pauseGame()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        player.play()
+        gameController.resumeGame()
+    }
 }

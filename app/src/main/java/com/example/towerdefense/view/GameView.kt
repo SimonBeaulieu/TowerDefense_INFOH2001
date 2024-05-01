@@ -199,7 +199,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     //************************************* event handlers ************************************* //
     @SuppressLint("SetTextI18n")
     fun onClickTower(view : View, tower : Tower) {
-        if (!disableUI) {
+        if (!disableUI && !isPaused) {
             unselectTowers()
 
             if (selectedTower == tower) {
@@ -228,7 +228,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     }
 
     fun onClickButtonStart(view: View) {
-        if (!disableUI){
+        if (!disableUI && !isPaused){
             mController.startWave()
         }
     }
@@ -254,8 +254,10 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     }
 
     fun onClickQuit(view : View) {
-        showGameOver()
-        disableUI = true
+        if (!disableUI && !isPaused){
+            showGameOver()
+            disableUI = true
+        }
     }
 
     fun onClickFast(view: View) {
@@ -271,14 +273,9 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
         }
     }
 
-    fun onClickButtonEnd(view: View) {
-        if (!disableUI) {
-        }
-    }
-
     @SuppressLint("SetTextI18n")
     fun onClickButtonArcher(view: View) {
-        if (!disableUI) {
+        if (!disableUI && !isPaused) {
             toggleTowerButton(buttonArcher)
 
             textCost.text = "Cost: " + Archer(0, 0).getCost().toString()
@@ -289,7 +286,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
 
     @SuppressLint("SetTextI18n")
     fun onClickButtonCannon(view: View){
-        if (!disableUI) {
+        if (!disableUI && !isPaused) {
             toggleTowerButton(buttonCannon)
             textCost.text = "Cost: " + Cannon(0, 0).getCost().toString()
             textSelection.text = "Selection: Cannon"
@@ -299,7 +296,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
 
     @SuppressLint("SetTextI18n")
     fun onClickButtonFlamethrower(view: View){
-        if (!disableUI) {
+        if (!disableUI && !isPaused) {
             toggleTowerButton(buttonFlamethrower)
             textCost.text = "Cost: " + Flamethrower(0, 0).getCost().toString()
             textSelection.text = "Selection: Flamethrower"
@@ -309,7 +306,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
 
     @SuppressLint("ClickableViewAccessibility")
     private fun onClickGridLayoutMap(view: View){
-        if (!disableUI) {
+        if (!disableUI && !isPaused) {
             gridLayoutMap.setOnTouchListener { _, event ->
                 if (event.action == MotionEvent.ACTION_DOWN) {
                     // Get X and Y coordinates of the touch event
