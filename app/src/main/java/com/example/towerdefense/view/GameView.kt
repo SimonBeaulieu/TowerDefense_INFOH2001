@@ -186,8 +186,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
 
     private fun createProjectile(p: Projectile) : CircleView {
         val circleView = CircleView(app)
-        circleView.setCircleAttributes(p.getRealX(), p.getRealY(), p.getRadius(), p.getColor())
-
+        circleView.setCircleAttributes(p.getRealX(), p.getRealY(), p.getRadius(), p.getColor(), p.getAlpha())
         return circleView
     }
 
