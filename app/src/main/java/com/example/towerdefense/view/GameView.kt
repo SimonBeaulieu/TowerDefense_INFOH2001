@@ -80,8 +80,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     }
     private fun initCircleView(){
         towerRange = CircleView(app)
-        towerRange.setCircleAttributes(-1,-1,1,Color.GRAY)
-        towerRange.setCircleAlpha(127)
+        towerRange.setCircleAttributes(-1,-1,1,Color.GRAY,127)
         towerRange.visibility = View.INVISIBLE
         layoutBodies.addView(towerRange)
     }
@@ -231,7 +230,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
 
     private fun showTowerRange(tower: Tower) {
         towerRange.setCircleAttributes(tower.getRealX()+GameMapUtils.PX_PER_TILE/2,
-            tower.getRealY()+GameMapUtils.PX_PER_TILE/2,tower.getRange(),Color.GRAY)
+            tower.getRealY()+GameMapUtils.PX_PER_TILE/2,tower.getRange(),Color.GRAY, 127)
         towerRange.setCircleAlpha(127)
         towerRange.visibility = View.VISIBLE
     }
