@@ -130,6 +130,7 @@
                         android:gravity="center_vertical"
                         android:text="200"
                         android:textAlignment="center"
+                        android:textColor="#000000"
                         android:textSize="20sp" />
                 </LinearLayout>
 
@@ -153,6 +154,7 @@
                         android:gravity="center_vertical"
                         android:text="0"
                         android:textAlignment="center"
+                        android:textColor="#000000"
                         android:textSize="20sp" />
                 </LinearLayout>
 
@@ -171,7 +173,8 @@
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
                     android:text="Wave: 1"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="#000000" />
 
             </LinearLayout>
 
@@ -240,6 +243,7 @@
                     android:layout_height="match_parent"
                     android:fontFamily="sans-serif-black"
                     android:gravity="center_vertical"
+                    android:textColor="#000000"
                     android:textSize="14sp"
                     android:visibility="visible" />
 
@@ -248,6 +252,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-black"
+                    android:textColor="#000000"
                     android:textSize="14sp" />
 
                 <TextView
@@ -255,6 +260,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-black"
+                    android:textColor="#000000"
                     android:textSize="14sp" />
 
                 <Button
