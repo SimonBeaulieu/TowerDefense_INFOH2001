@@ -68,7 +68,9 @@ abstract class Enemy(col: Int, row: Int, spawnTick: Int, hitPoints: Int) : Body(
         setGridY(getGridY() + mNextDirection.second)
 
         mNextDirection = getDirection()
-
+        getGridX() + mNextDirection.first
+        getGridY() + mNextDirection.second
+        
         // Reached end: next tile is at dx=0, dy=0
         if (mNextDirection.first == 0 && mNextDirection.second == 0) {
             this.mReachedEnd = true

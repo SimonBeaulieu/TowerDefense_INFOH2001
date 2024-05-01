@@ -29,6 +29,8 @@ class Game {
         }
     fun getHitPoints(): Int { return mHitPoints }
 
+    fun getWave() : Int { return mWaveNum }
+
 
     private val mGameMap : GameMap
     private var mGameManager: GameManager

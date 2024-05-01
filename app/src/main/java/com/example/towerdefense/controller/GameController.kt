@@ -24,7 +24,7 @@ class GameController(private val app: MainActivity) : GameControllerListener {
     //*************************************** Constructor *************************************** //
     init {
         setTilesDimensions()
-        mView.updateStats(mGame.getMoney(), mGame.getHitPoints())
+        mView.updateStats(mGame.getMoney(), mGame.getHitPoints(), mGame.getWave()+1)
         mView.drawMap(mGameMapViewer)
         launchDrawingThread()
     }
@@ -79,7 +79,7 @@ class GameController(private val app: MainActivity) : GameControllerListener {
             while (true) {
                 if (enableDisplay) {
                     handler.post {
-                        mView.updateStats(mGame.getMoney(), mGame.getHitPoints())
+                        mView.updateStats(mGame.getMoney(), mGame.getHitPoints(), mGame.getWave()+1)
                         mView.drawBodies(mGame.getDrawableBodies())
 
                         if (mGame.isGameOver()) {

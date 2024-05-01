@@ -37,6 +37,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     private lateinit var textCost : TextView
     private lateinit var textLevel : TextView
     private lateinit var textSelection : TextView
+    private lateinit var textWave : TextView
 
     private lateinit var buttonStart : ImageButton
     private lateinit var buttonPause : ImageButton
@@ -109,6 +110,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     private fun initStats() {
         textHitPoints = app.findViewById(R.id.textViewHitPoints)
         textMoney = app.findViewById(R.id.textViewMoney)
+        textWave = app.findViewById(R.id.textWave)
 
         textCost = app.findViewById(R.id.textCost)
         textLevel = app.findViewById(R.id.textLevel)
@@ -123,9 +125,10 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     }
 
     //************************************* Public methods ************************************** //
-    fun updateStats(money: Int, hitPoints: Int) {
+    fun updateStats(money: Int, hitPoints: Int, wave: Int) {
         textHitPoints.text = hitPoints.toString()
         textMoney.text = money.toString()
+        textWave.text = "Wave: " + wave.toString()
     }
 
     fun drawMap(map : GameMapViewer) {
