@@ -20,8 +20,10 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="0px"
             android:layout_weight="1"
             android:background="#E8DFCA"
+            android:paddingTop="50px"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_default="wrap"
@@ -33,7 +35,6 @@
                 android:id="@+id/gridLayoutMap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="15dp"
                 app:columnCount="16"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -67,9 +68,9 @@
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_default="wrap"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHeight_default="wrap"
                 app:layout_constraintWidth_default="wrap">
 
                 <ImageView
@@ -94,7 +95,7 @@
 
         <LinearLayout
             android:id="@+id/layoutCharacters"
-            android:layout_width="700px"
+            android:layout_width="650px"
             android:layout_height="match_parent"
             android:background="#E8DFCA"
             android:orientation="vertical"
