@@ -6,7 +6,6 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageButton
@@ -183,14 +182,12 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
         }
     }
 
-    private fun drawProjectile(p: Projectile) {
+    private fun createDrawableProjectile(p: Projectile):DrawableBody {
+        val circleView = CircleView(app)
+
         when(p.getType()){
             ProjectileType.ARCHER_PROJECTILE -> {
-
-                val circleView = CircleView(app)
                 circleView.setCircleAttributes(p.getRealX(), p.getRealY(), p.getRadius(), Color.RED)
-                layoutBodies.addView(circleView)
-
             }
             ProjectileType.CANNON_PROJECTILE -> {
 
@@ -200,6 +197,8 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
             }
             else -> {}
         }
+        layoutBodies.addView(circleView)
+        return DrawableBody(p,circleView)
     }
 
     fun showGameOver() {
@@ -373,13 +372,21 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
 
     private fun createDrawableBody(body: Body) : DrawableBody {
         val imageView = ImageView(app)
-        imageView.setImageResource(getImageId(body))
+        if (body is Projectile){
+            var p = body as Projectile
 
-        if (body is Tower) {
-            imageView.setOnClickListener { onClickTower(imageView, body) }
+            if(p.isVisible()){
+                return createDrawableProjectile(p)
+            }
+        } else{
+            imageView.setImageResource(getImageId(body))
+
+            if (body is Tower) {
+                imageView.setOnClickListener { onClickTower(imageView, body) }
+            }
+
+            layoutBodies.addView(imageView)
         }
-
-        layoutBodies.addView(imageView)
 
         return DrawableBody(body, imageView)
     }
@@ -393,16 +400,10 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
             return R.drawable.flame
         } else if (body is Soldier) {
             return R.drawable.soldier
-        } else if (body is Boss){
+        } /*else if (body is Boss){
             //drawBody(b.getRealX(), b.getRealY(), R.drawable.boss, b)
-        } else if (body is Projectile){
-            //KF!!! À implémenter
-            var p = body as Projectile
-
-            if(p.isVisible()){
-                drawProjectile(p)
-            }
-        }
+            return 0
+        } */
         else {
             return R.drawable.ic_launcher_foreground
         }
