@@ -12,8 +12,8 @@ class Projectile(col: Int, row: Int, projectileType: ProjectileType, projectileR
 
     private var mStartX : Int = GameMapUtils.gridToCenterPixel(col)
     private var mStartY : Int = GameMapUtils.gridToCenterPixel(row)
-    private val mFinalX : Int = mTarget.getNextRealPos().first + (GameMapUtils.PX_PER_TILE/2)
-    private val mFinalY : Int = mTarget.getNextRealPos().second + (GameMapUtils.PX_PER_TILE/2)
+    private val mFinalX : Int = mTarget.getNextRealPos().first
+    private val mFinalY : Int = mTarget.getNextRealPos().second
 
     private val mRadius : Int = projectileRadius
     private val mColor : Int = color
