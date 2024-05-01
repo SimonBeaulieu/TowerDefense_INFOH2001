@@ -17,7 +17,6 @@ import com.example.towerdefense.R
 import com.example.towerdefense.controller.GameControllerListener
 import com.example.towerdefense.model.Archer
 import com.example.towerdefense.model.Body
-import com.example.towerdefense.model.Boss
 import com.example.towerdefense.model.Cannon
 import com.example.towerdefense.model.Flamethrower
 import com.example.towerdefense.model.GameMapUtils
@@ -156,49 +155,40 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     }
 
     fun drawBodies(bodies : List<Body>) {
+        // List up to date: copyBodies
         val copyBodies : MutableList<Body> = bodies.toMutableList()
 
-        // Add drawable for Body not in Drawable list
+        // We need to update drawable Bodies
+
+        // 1. For elements of bodies not in drawable yet, add it
         copyBodies.forEach { body ->
             if (!drawableBodies.any { it.getBody() == body }) {
                 drawableBodies.add(createDrawableBody(body))
             }
         }
 
-        // Remove drawable not in Body list
+        // 2. For elements of drawableBody not in bodies, remove them
         val drawableToRemove = drawableBodies.filterNot { drawableBody ->
             copyBodies.any { it == drawableBody.getBody() }
         }
         drawableBodies.removeAll(drawableToRemove)
 
-        // Remove from view
+        // 3. Remove from actual view
         for (db in drawableToRemove) {
-            layoutBodies.removeView(db.getImage())
+            layoutBodies.removeView(db.getView())
         }
 
-        // Update all images
+        // 4. Update images remaining in  drawableBodies
         for (db in drawableBodies) {
             db.updateImage()
         }
     }
 
-    private fun createDrawableProjectile(p: Projectile):DrawableBody {
+    private fun createProjectile(p: Projectile) : CircleView {
         val circleView = CircleView(app)
+        circleView.setCircleAttributes(p.getRealX(), p.getRealY(), p.getRadius(), p.getColor())
 
-        when(p.getType()){
-            ProjectileType.ARCHER_PROJECTILE -> {
-                circleView.setCircleAttributes(p.getRealX(), p.getRealY(), p.getRadius(), Color.RED)
-            }
-            ProjectileType.CANNON_PROJECTILE -> {
-
-            }
-            ProjectileType.FLAMETHROWER_PROJECTILE -> {
-
-            }
-            else -> {}
-        }
-        layoutBodies.addView(circleView)
-        return DrawableBody(p,circleView)
+        return circleView
     }
 
     fun showGameOver() {
@@ -371,14 +361,17 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     }
 
     private fun createDrawableBody(body: Body) : DrawableBody {
-        val imageView = ImageView(app)
         if (body is Projectile){
-            var p = body as Projectile
+            val projectile : Projectile = body
+            val circleView = createProjectile(body)
 
-            if(p.isVisible()){
-                return createDrawableProjectile(p)
+            if (projectile.isVisible()) {
+                layoutBodies.addView(circleView)
             }
-        } else{
+            return DrawableBody(body, circleView)
+
+        } else {
+            val imageView = ImageView(app)
             imageView.setImageResource(getImageId(body))
 
             if (body is Tower) {
@@ -386,9 +379,8 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
             }
 
             layoutBodies.addView(imageView)
+            return DrawableBody(body, imageView)
         }
-
-        return DrawableBody(body, imageView)
     }
 
     private fun getImageId(body: Body): Int {
@@ -400,11 +392,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
             return R.drawable.flame
         } else if (body is Soldier) {
             return R.drawable.soldier
-        } /*else if (body is Boss){
-            //drawBody(b.getRealX(), b.getRealY(), R.drawable.boss, b)
-            return 0
-        } */
-        else {
+        } else {
             return R.drawable.ic_launcher_foreground
         }
     }

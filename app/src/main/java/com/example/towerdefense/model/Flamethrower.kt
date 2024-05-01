@@ -1,5 +1,7 @@
 package com.example.towerdefense.model
 
+import android.graphics.Color
+
 class Flamethrower(col: Int, row: Int) : Tower(col, row) {
     //**************************************** Variables **************************************** //
 
@@ -10,6 +12,8 @@ class Flamethrower(col: Int, row: Int) : Tower(col, row) {
         mDamage = 1
         mRange = 150
         mProjectileRadius = 50
+
+        mProjectileColor = Color.parseColor("#f95109")
     }
 
     //************************************* Public methods ************************************** //
@@ -36,11 +40,11 @@ class Flamethrower(col: Int, row: Int) : Tower(col, row) {
     override fun createProjectile() {
         if(mTarget != null){
             mProjectiles.add(Projectile(this.getGridX(), this.getGridY(),
-                ProjectileType.FLAMETHROWER_PROJECTILE, mProjectileRadius, mTarget!!,false,mDamage))
+                ProjectileType.FLAMETHROWER_PROJECTILE, mProjectileRadius, mTarget!!,false,mDamage, mProjectileColor))
         }
         for (e in mInBlastRadius){
             mProjectiles.add(Projectile(this.getRealX(), this.getRealY(),
-                ProjectileType.FLAMETHROWER_PROJECTILE, mProjectileRadius, e,false,mDamage))
+                ProjectileType.FLAMETHROWER_PROJECTILE, mProjectileRadius, e,false,mDamage, mProjectileColor))
 
         }
     }

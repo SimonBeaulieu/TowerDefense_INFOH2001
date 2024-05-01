@@ -6,9 +6,7 @@ import android.util.AttributeSet
 import android.view.View
 
 class CircleView(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
-
     //**************************************** Variables **************************************** //
-
     private var mPosX = 0
     private var mPosY = 0
     private var mRadius = 50

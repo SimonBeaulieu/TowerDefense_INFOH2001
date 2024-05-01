@@ -1,5 +1,7 @@
 package com.example.towerdefense.model
 
+import android.graphics.Color
+
 class Cannon(col: Int, row: Int) : Tower(col, row) {
     //**************************************** Variables **************************************** //
     private var mBlastRadius : Int = 100
@@ -9,6 +11,7 @@ class Cannon(col: Int, row: Int) : Tower(col, row) {
         mDamage = 5
         mProjectileRadius = 20
 
+        mProjectileColor = Color.BLACK
     }
     //************************************* Public methods ************************************** //
     override fun advanceMainTick() {
@@ -39,11 +42,11 @@ class Cannon(col: Int, row: Int) : Tower(col, row) {
     override fun createProjectile() {
         if(mTarget != null){
             mProjectiles.add(Projectile(this.getGridX(), this.getGridY(),
-                ProjectileType.CANNON_PROJECTILE, mProjectileRadius, mTarget!!,true,mDamage))
+                ProjectileType.CANNON_PROJECTILE, mProjectileRadius, mTarget!!,true,mDamage, mProjectileColor))
         }
         for (e in mInBlastRadius){
             mProjectiles.add(Projectile(this.getRealX(), this.getRealY(),
-                ProjectileType.CANNON_PROJECTILE, mProjectileRadius, e,false,mDamage))
+                ProjectileType.CANNON_PROJECTILE, mProjectileRadius, e,false,mDamage, mProjectileColor))
 
         }
     }

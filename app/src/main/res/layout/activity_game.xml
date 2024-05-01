@@ -32,7 +32,8 @@
             <androidx.gridlayout.widget.GridLayout
                 android:id="@+id/gridLayoutMap"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
                 app:columnCount="16"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -49,6 +50,11 @@
                     android:layout_height="match_parent"
                     app:layout_column="0"
                     app:layout_columnSpan="16"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_row="0"
                     app:layout_rowSpan="8"></FrameLayout>
             </androidx.gridlayout.widget.GridLayout>

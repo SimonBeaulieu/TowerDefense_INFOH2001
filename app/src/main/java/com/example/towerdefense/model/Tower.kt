@@ -1,4 +1,7 @@
 package com.example.towerdefense.model
+
+import android.graphics.Color
+
 abstract class Tower(col: Int, row: Int) : Body(col, row) {
     //**************************************** Variables **************************************** //
     protected var mRange : Int = 200
@@ -11,11 +14,13 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
 
     protected var mProjectiles: MutableList<Projectile> = mutableListOf()
     protected var mProjectileRadius:Int=0
+    protected var mProjectileColor : Int = Color.RED
 
     protected var mCost : Int = 0
 
     protected var mLevel : Int = 1
     protected val mMaxLevel : Int = 4
+
 
     //*************************************** Constructor *************************************** //
 

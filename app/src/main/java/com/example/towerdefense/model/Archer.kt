@@ -1,5 +1,6 @@
 package com.example.towerdefense.model
 
+import android.graphics.Color
 import kotlin.math.pow
 import kotlin.time.times
 
@@ -14,6 +15,8 @@ class Archer(col: Int, row: Int) : Tower(col, row) {
         mRange = 250
         mDamage = 5
         mProjectileRadius = 10
+
+        mProjectileColor = Color.RED
     }
 
     //************************************* Public methods ************************************** //
@@ -55,11 +58,11 @@ class Archer(col: Int, row: Int) : Tower(col, row) {
     override fun createProjectile() {
         if(mTarget != null){
             mProjectiles.add(Projectile(this.getGridX(), this.getGridY(),
-                ProjectileType.ARCHER_PROJECTILE, mProjectileRadius, mTarget!!,true,mDamage))
+                ProjectileType.ARCHER_PROJECTILE, mProjectileRadius, mTarget!!,true,mDamage, mProjectileColor))
         }
         for (e in mInBlastRadius){
             mProjectiles.add(Projectile(this.getGridX(), this.getGridY(),
-                ProjectileType.ARCHER_PROJECTILE, mProjectileRadius, e,true,mDamage))
+                ProjectileType.ARCHER_PROJECTILE, mProjectileRadius, e,true,mDamage, mProjectileColor))
         }
     }
 

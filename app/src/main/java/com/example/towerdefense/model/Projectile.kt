@@ -1,8 +1,10 @@
 package com.example.towerdefense.model
 
+import android.graphics.Color
 import kotlin.math.sqrt
 
-class Projectile(col: Int, row: Int, projectileType: ProjectileType, projectileRadius: Int, target: AttackListener, visibility: Boolean, damage: Int) : Body(col, row) {
+class Projectile(col: Int, row: Int, projectileType: ProjectileType, projectileRadius: Int,
+                 target: AttackListener, visibility: Boolean, damage: Int, color : Int = Color.RED) : Body(col, row) {
     //**************************************** Variables **************************************** //
 
     private val mProjectileType = projectileType
@@ -14,6 +16,7 @@ class Projectile(col: Int, row: Int, projectileType: ProjectileType, projectileR
     private val mFinalY : Int = mTarget.getNextRealPos().second + (GameMapUtils.PX_PER_TILE/2)
 
     private val mRadius : Int = projectileRadius
+    private val mColor : Int = color
 
     private var mTargetAttacked = false
     private val mDamage: Int = damage
@@ -45,6 +48,10 @@ class Projectile(col: Int, row: Int, projectileType: ProjectileType, projectileR
 
     fun getRadius():Int{
         return mRadius
+    }
+
+    fun getColor() : Int {
+        return mColor
     }
 
     //************************************* Private methods ************************************* //
