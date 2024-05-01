@@ -59,11 +59,32 @@
                     android:textColor="#000000"
                     android:textSize="24sp" />
 
-                <ImageView
-                    android:id="@+id/imageMap1"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@drawable/map1" />
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/imageMap1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:srcCompat="@drawable/map1" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#80000000"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="sans-serif-black"
+                        android:text="Locked"
+                        android:textColor="#FFFFFF"
+                        android:textSize="34sp"
+                        android:visibility="invisible" />
+                </RelativeLayout>
 
             </LinearLayout>
 
