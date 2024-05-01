@@ -15,21 +15,14 @@ class Projectile(col: Int, row: Int, projectileType: ProjectileType, projectileR
 
     private val mRadius : Int = projectileRadius
 
-
     private var mTargetAttacked = false
-    private var mActualTick: Int = 1
     private val mDamage: Int = damage
     private val mVisibility = visibility
 
     //*************************************** Constructor *************************************** //
 
-    init {
-
-    }
-
     //************************************* Public methods ************************************** //
     override fun advanceMainTick() {
-        // !!!SB: Implementer
         mTarget.onAttack(mDamage)
         mTargetAttacked=true
     }
@@ -55,7 +48,6 @@ class Projectile(col: Int, row: Int, projectileType: ProjectileType, projectileR
     }
 
     //************************************* Private methods ************************************* //
-
     private fun updatePosition(){
 
         val tickFraction: Double = mGameTimerView.getTickFraction()
@@ -65,7 +57,5 @@ class Projectile(col: Int, row: Int, projectileType: ProjectileType, projectileR
 
         setRealX(newX)
         setRealY(newY)
-
     }
-
 }

@@ -4,6 +4,4 @@ interface GameTimerViewer {
     fun getTickFraction() : Double
 
     fun isFirstHalf(): Boolean
-
-    fun getTickRatio() : Int
 }

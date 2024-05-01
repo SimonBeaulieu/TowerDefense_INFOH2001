@@ -52,11 +52,6 @@ class GameTimer(private val displayTickInterval:Long = 50) : GameTimerViewer {
         return mTickCount/mTickRatio.toDouble() < 0.5
     }
 
-    override fun getTickRatio():Int{
-        return mTickRatio
-    }
-
-
     //************************************* Private methods ************************************* //
     private fun updateDisplay() {
         if (enableDisplay) {
