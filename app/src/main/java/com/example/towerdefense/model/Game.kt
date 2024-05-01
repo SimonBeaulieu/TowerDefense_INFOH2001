@@ -200,8 +200,8 @@ class Game {
 
     fun upgradeTower(tower: Tower) {
         if (mMoney >= tower.getUpgradeCost() && !tower.isMaxLevel()) {
-            tower.upgrade()
             mMoney -= tower.getUpgradeCost()
+            tower.upgrade()
         }
     }
 }
