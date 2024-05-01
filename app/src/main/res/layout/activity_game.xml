@@ -23,7 +23,7 @@
             android:layout_marginTop="0px"
             android:layout_weight="1"
             android:background="#E8DFCA"
-            android:paddingTop="50px"
+            android:paddingTop="100px"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_default="wrap"
