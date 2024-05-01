@@ -94,7 +94,7 @@
 
         <LinearLayout
             android:id="@+id/layoutCharacters"
-            android:layout_width="450px"
+            android:layout_width="700px"
             android:layout_height="match_parent"
             android:background="#E8DFCA"
             android:orientation="vertical"
