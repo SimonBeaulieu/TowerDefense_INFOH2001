@@ -16,7 +16,7 @@ class DrawableBody(private val mBody: Body, private val mView: View) {
         if (mView is CircleView && mBody is Projectile) {
             val circleView = mView
             val p = mBody
-            circleView.setCircleAttributes(mBody.getRealX(), mBody.getRealY(), p.getRadius(), p.getColor())
+            circleView.setCircleAttributes(mBody.getRealX(), mBody.getRealY(), p.getRadius(), p.getColor(), p.getAlpha())
 
         } else {
             val params = FrameLayout.LayoutParams(GameMapUtils.PX_PER_TILE, GameMapUtils.PX_PER_TILE)

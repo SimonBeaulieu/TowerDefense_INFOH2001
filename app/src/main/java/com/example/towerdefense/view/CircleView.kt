@@ -39,11 +39,12 @@ class CircleView(context: Context, attrs: AttributeSet? = null) : View(context, 
         invalidate() // Redraw the view
     }
 
-    fun setCircleAttributes(x: Int, y: Int, radius: Int, color: Int) {
+    fun setCircleAttributes(x: Int, y: Int, radius: Int, color: Int, alpha: Int) {
         mPosX = x
         mPosY = y
         mRadius = radius
         paint.color = color
+        paint.alpha = alpha
 
         invalidate() // Redessiner la vue avec les nouvelles valeurs
     }
