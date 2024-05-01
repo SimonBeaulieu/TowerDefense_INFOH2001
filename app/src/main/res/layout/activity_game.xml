@@ -18,28 +18,40 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="#E8DFCA"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_default="wrap"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_default="wrap">
 
             <androidx.gridlayout.widget.GridLayout
                 android:id="@+id/gridLayoutMap"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:columnCount="8"
+                android:layout_height="wrap_content"
+                app:columnCount="16"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_default="wrap"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:rowCount="12"
-                app:useDefaultMargins="false" />
+                app:layout_constraintWidth_default="wrap"
+                app:rowCount="8"
+                app:useDefaultMargins="false">
 
-            <FrameLayout
-                android:id="@+id/layoutBodies"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/layoutBodies"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_column="0"
+                    app:layout_columnSpan="16"
+                    app:layout_row="0"
+                    app:layout_rowSpan="8"></FrameLayout>
+            </androidx.gridlayout.widget.GridLayout>
 
             <LinearLayout
                 android:id="@+id/layoutGameOver"
@@ -67,7 +79,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="400px"
                     android:layout_weight="1"
-                    android:backgroundTint="#732626"
+                    android:backgroundTint="#3077AF"
                     android:fontFamily="sans-serif-black"
                     android:text="Main menu" />
             </LinearLayout>
@@ -78,6 +90,7 @@
             android:id="@+id/layoutCharacters"
             android:layout_width="450px"
             android:layout_height="match_parent"
+            android:background="#E8DFCA"
             android:orientation="vertical"
             android:paddingLeft="10px"
             android:paddingTop="10px"
@@ -173,6 +186,10 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:contentDescription="Archer"
+                        android:paddingLeft="10px"
+                        android:paddingTop="10px"
+                        android:paddingRight="10px"
+                        android:paddingBottom="0px"
                         android:scaleType="fitCenter"
                         app:srcCompat="@drawable/archer" />
 
@@ -182,6 +199,10 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:contentDescription="Cannon"
+                        android:paddingLeft="10px"
+                        android:paddingTop="10px"
+                        android:paddingRight="10px"
+                        android:paddingBottom="10px"
                         android:scaleType="fitCenter"
                         android:src="@drawable/cannon" />
 
@@ -191,6 +212,10 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:contentDescription="Flamethrower"
+                        android:paddingLeft="10px"
+                        android:paddingTop="10px"
+                        android:paddingRight="10px"
+                        android:paddingBottom="10px"
                         android:scaleType="fitCenter"
                         android:src="@drawable/flame" />
                 </LinearLayout>
@@ -230,7 +255,7 @@
                     android:id="@+id/buttonUpgrade"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#732626"
+                    android:backgroundTint="#3077AF"
                     android:text="Upgrade" />
             </LinearLayout>
 
@@ -248,7 +273,15 @@
                         android:id="@+id/buttonStart"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="10px"
+                        android:layout_marginTop="10px"
+                        android:layout_marginRight="10px"
+                        android:layout_marginBottom="10px"
                         android:layout_weight="1"
+                        android:paddingLeft="10px"
+                        android:paddingTop="10px"
+                        android:paddingRight="10px"
+                        android:paddingBottom="10px"
                         android:scaleType="centerInside"
                         android:src="@drawable/start" />
 
@@ -256,7 +289,15 @@
                         android:id="@+id/buttonPause"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="10px"
+                        android:layout_marginTop="10px"
+                        android:layout_marginRight="10px"
+                        android:layout_marginBottom="10px"
                         android:layout_weight="1"
+                        android:paddingLeft="10px"
+                        android:paddingTop="10px"
+                        android:paddingRight="10px"
+                        android:paddingBottom="10px"
                         android:scaleType="centerInside"
                         android:src="@drawable/pause" />
 
@@ -271,7 +312,15 @@
                         android:id="@+id/buttonFast"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="10px"
+                        android:layout_marginTop="10px"
+                        android:layout_marginRight="10px"
+                        android:layout_marginBottom="10px"
                         android:layout_weight="1"
+                        android:paddingLeft="10px"
+                        android:paddingTop="10px"
+                        android:paddingRight="10px"
+                        android:paddingBottom="10px"
                         android:scaleType="centerInside"
                         android:src="@drawable/fast" />
 
@@ -279,7 +328,15 @@
                         android:id="@+id/buttonQuit"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="10px"
+                        android:layout_marginTop="10px"
+                        android:layout_marginRight="10px"
+                        android:layout_marginBottom="10px"
                         android:layout_weight="1"
+                        android:paddingLeft="10px"
+                        android:paddingTop="10px"
+                        android:paddingRight="10px"
+                        android:paddingBottom="10px"
                         android:scaleType="centerInside"
                         android:src="@drawable/quit"
                         android:visibility="visible" />

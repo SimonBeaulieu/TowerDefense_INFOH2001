@@ -9,11 +9,12 @@ class Game {
     private var mDisplayTickDuration : Long = 50
     private var mMoney : Int = 1000
         set(value) {
-            if (value >= 0) {
-                field = value
-            }
-            else{
+            if (value >= 9999) {
+                field = 9999
+            } else if (value <= 0) {
                 field = 0
+            } else {
+                field = value
             }
         }
     fun getMoney(): Int { return mMoney }

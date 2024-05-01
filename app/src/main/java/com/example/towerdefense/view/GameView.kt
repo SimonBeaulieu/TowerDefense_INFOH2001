@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageButton
@@ -41,7 +42,6 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
 
     private lateinit var buttonStart : ImageButton
     private lateinit var buttonPause : ImageButton
-    private lateinit var buttonEnd : ImageButton
     private lateinit var buttonFast : ImageButton
     private lateinit var buttonQuit : ImageButton
 
@@ -78,24 +78,27 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     private fun initButtons() {
         buttonArcher = app.findViewById(R.id.buttonArcher)
         buttonArcher.setOnClickListener { onClickButtonArcher(buttonArcher) }
+        buttonArcher.setBackgroundColor(Color.LTGRAY)
 
         buttonCannon = app.findViewById(R.id.buttonCannon)
         buttonCannon.setOnClickListener{ onClickButtonCannon(buttonCannon) }
+        buttonCannon.setBackgroundColor(Color.LTGRAY)
 
         buttonFlamethrower = app.findViewById(R.id.buttonFlamethrower)
         buttonFlamethrower.setOnClickListener{ onClickButtonFlamethrower(buttonFlamethrower) }
+        buttonFlamethrower.setBackgroundColor(Color.LTGRAY)
 
         buttonStart = app.findViewById(R.id.buttonStart)
         buttonStart.setOnClickListener { onClickButtonStart(buttonStart) }
+        buttonStart.setBackgroundColor(Color.LTGRAY)
 
         buttonPause = app.findViewById(R.id.buttonPause)
         buttonPause.setOnClickListener { onClickPause(buttonPause) }
-
-        //buttonEnd = app.findViewById(R.id.buttonEnd)
-        //buttonEnd.setOnClickListener { onClickButtonEnd(buttonEnd) }
+        buttonPause.setBackgroundColor(Color.LTGRAY)
 
         buttonFast = app.findViewById(R.id.buttonFast)
         buttonFast.setOnClickListener { onClickFast(buttonFast) }
+        buttonFast.setBackgroundColor(Color.LTGRAY)
 
         buttonUpgrade = app.findViewById(R.id.buttonUpgrade)
         buttonUpgrade.setOnClickListener{ onClickUpgrade(buttonUpgrade) }
@@ -105,6 +108,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
 
         buttonQuit = app.findViewById(R.id.buttonQuit)
         buttonQuit.setOnClickListener{ onClickQuit(buttonQuit) }
+        buttonQuit.setBackgroundColor(Color.LTGRAY)
     }
 
     private fun initStats() {
@@ -145,6 +149,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
                 }
             }
         }
+        gridLayoutMap.addView(layoutBodies)
     }
 
     fun drawBodies(bodies : List<Body>) {
