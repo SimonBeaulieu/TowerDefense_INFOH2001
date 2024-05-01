@@ -6,8 +6,10 @@ class GameTimer(private val displayTickInterval:Long = 50) : GameTimerViewer {
     //**************************************** Variables **************************************** //
     private val mTickRatio = 10
     private var mTickCount = 0
+    private var mAccelerated = false
+    private var mActualTickInterval : Long = displayTickInterval
+    private var mRestart : Boolean = false
 
-    //private var mIsRunning = false
     var enableDisplay = false
     var enableTicks = false
 
@@ -17,7 +19,10 @@ class GameTimer(private val displayTickInterval:Long = 50) : GameTimerViewer {
     private var mDisplayTickListener: (() -> Unit)? = null
 
     //*************************************** Constructor *************************************** //
-
+    init {
+        // Creation of timer
+        mTimer = Timer()
+    }
     //************************************* Public methods ************************************** //
     /**
      * Should only be called onced, at initialisation, after the listener
@@ -26,14 +31,23 @@ class GameTimer(private val displayTickInterval:Long = 50) : GameTimerViewer {
      * Use enableDisplay and enableTicks to stop/start these functionnalities
      */
     fun start() {
-        // Creation of timer
-        mTimer = Timer()
-
         // Executed code when timer period elapse
+        mTimer?.purge()
         mTimer?.scheduleAtFixedRate(timerTask {
             updateMechanics()
             updateDisplay()
-        }, 0, displayTickInterval)
+        }, 0, mActualTickInterval)
+    }
+
+    fun toggleSpeed() {
+        mAccelerated = !mAccelerated
+
+        if (mAccelerated) {
+            mActualTickInterval = displayTickInterval/2
+        } else {
+            mActualTickInterval = displayTickInterval
+        }
+        mRestart = true
     }
 
     fun setMainTickListener(listener: () -> Unit){
@@ -67,6 +81,13 @@ class GameTimer(private val displayTickInterval:Long = 50) : GameTimerViewer {
                 mMainTickListener?.invoke()
                 mTickCount = 0
             }
+        }
+
+        if (mRestart) {
+            mTimer?.cancel()
+            mTimer = Timer()
+            start()
+            mRestart = false
         }
     }
 }

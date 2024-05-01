@@ -3,7 +3,6 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
     //**************************************** Variables **************************************** //
     protected var mRange : Int = 200
     protected var mDamage : Int = 1
-    protected var mLevel : Int = 1
     protected var mAttackSpdTick : Int = 3
     private var mActualAttackTick : Int = 0
 
@@ -14,6 +13,9 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
     protected var mProjectileRadius:Int=0
 
     protected var mCost : Int = 0
+
+    protected var mLevel : Int = 1
+    protected val mMaxLevel : Int = 4
 
     //*************************************** Constructor *************************************** //
 
@@ -32,8 +34,6 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
             }
         }
 
-
-
         if (mTarget != null && mActualAttackTick <= 0) {
             createProjectile()
             mActualAttackTick = mAttackSpdTick
@@ -45,7 +45,6 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
     }
 
     override fun advanceDisplayTick() {
-        // !!!SB: Implementer
         for (p in mProjectiles){
             p.advanceDisplayTick()
         }
@@ -59,8 +58,8 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
     private fun findMainTarget(enemies: List<AttackListener>){
         mTarget=null
         var pos : Pair<Int, Int>
-        var tileValue : Int = 0
-        var maxTileValue : Int = 0
+        var tileValue = 0
+        var maxTileValue = 0
         for (e in enemies){
             if (isInRange(e)){
                 pos = GameMapUtils.pixelToGrid(e.getPosX(), e.getPosY())
@@ -83,9 +82,14 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
         return ((dx2 + dy2) < (mRange * mRange))
     }
 
-    fun upgradeTower(){
-        mLevel+=1
+    fun upgrade(){
+        if (!isMaxLevel()) {
+            mLevel++
+            upgradeStats()
+        }
     }
+
+    protected abstract fun upgradeStats()
 
     fun getCost() : Int {
         return mCost
@@ -101,6 +105,17 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
         return mProjectileRadius
     }
 
+    fun getUpgradeCost() : Int {
+        return 500*mLevel
+    }
+
+    fun getLevel() : Int {
+        return mLevel
+    }
+
+    fun isMaxLevel() : Boolean {
+        return mLevel == mMaxLevel
+    }
     //************************************* Private methods ************************************* //
 
 

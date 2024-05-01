@@ -9,11 +9,12 @@ class Game {
     private var mDisplayTickDuration : Long = 50
     private var mMoney : Int = 1000
         set(value) {
-            if (value >= 0) {
-                field = value
-            }
-            else{
+            if (value >= 9999) {
+                field = 9999
+            } else if (value <= 0) {
                 field = 0
+            } else {
+                field = value
             }
         }
     fun getMoney(): Int { return mMoney }
@@ -29,6 +30,8 @@ class Game {
         }
     fun getHitPoints(): Int { return mHitPoints }
 
+    fun getWave() : Int { return mWaveNum }
+
 
     private val mGameMap : GameMap
     private var mGameManager: GameManager
@@ -38,7 +41,7 @@ class Game {
     init {
         // Create references
         initGameTimer()
-        mGameMap = GameMap()
+        mGameMap = GameMap(20)
 
         // Register references (timer and map)
         initReferences()
@@ -111,7 +114,7 @@ class Game {
         if (mGameMap.isEmptyTile(col, row)) {
             when (towerType) {
                 Tiles.ARCHER -> {
-                    val archerTower : Archer = Archer(col, row)
+                    val archerTower = Archer(col, row)
                     if(archerTower.getCost()<=this.mMoney){
                         mGameManager.addTowerToList(archerTower)
                         mGameMap.setTileContent(col, row, towerType.value)
@@ -120,7 +123,7 @@ class Game {
 
                 }
                 Tiles.CANNON -> {
-                    val cannonTower : Cannon = Cannon(col, row)
+                    val cannonTower = Cannon(col, row)
                     if(cannonTower.getCost()<=this.mMoney) {
                         mGameManager.addTowerToList(cannonTower)
                         mGameMap.setTileContent(col, row, towerType.value)
@@ -149,6 +152,14 @@ class Game {
         }
 
         return r.toList()
+    }
+
+    fun toggleSpeed() {
+        mGameTimer?.toggleSpeed()
+    }
+
+    fun isGameOver() : Boolean {
+        return mGameOver
     }
 
     //************************************* Private methods ************************************* //
@@ -184,6 +195,13 @@ class Game {
         if (mHitPoints <= 0 ) {
             mGameOver = true
             endGame()
+        }
+    }
+
+    fun upgradeTower(tower: Tower) {
+        if (mMoney >= tower.getUpgradeCost()) {
+            tower.upgrade()
+            mMoney -= tower.getUpgradeCost()
         }
     }
 }

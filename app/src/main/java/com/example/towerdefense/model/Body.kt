@@ -1,6 +1,6 @@
 package com.example.towerdefense.model
 
-abstract class Body(col : Int = 0, row : Int = 0) {
+abstract class Body(col: Int = 0, row: Int = 0) {
     protected val mGameMapView = References.getRef(GameMapViewer::class.java)
     protected val mGameTimerView = References.getRef(GameTimerViewer::class.java)
 

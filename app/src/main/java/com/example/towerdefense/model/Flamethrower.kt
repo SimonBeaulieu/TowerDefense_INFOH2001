@@ -1,15 +1,14 @@
 package com.example.towerdefense.model
 
-
 class Flamethrower(col: Int, row: Int) : Tower(col, row) {
     //**************************************** Variables **************************************** //
 
     //*************************************** Constructor *************************************** //
 
     init{
-        mCost=600
-        mDamage=5
-        mRange=150
+        mCost = 600
+        mDamage = 1
+        mRange = 150
         mProjectileRadius = 50
     }
 
@@ -43,6 +42,15 @@ class Flamethrower(col: Int, row: Int) : Tower(col, row) {
             mProjectiles.add(Projectile(this.getRealX(), this.getRealY(),
                 ProjectileType.FLAMETHROWER_PROJECTILE, mProjectileRadius, e,false,mDamage))
 
+        }
+    }
+
+    override fun upgradeStats() {
+        mRange += 10
+        mDamage += 1
+
+        if (mAttackSpdTick >= 2) {
+            mAttackSpdTick -= 1
         }
     }
 

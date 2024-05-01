@@ -8,6 +8,7 @@ import com.example.towerdefense.model.GameMapUtils
 import com.example.towerdefense.model.GameMapViewer
 import com.example.towerdefense.model.References
 import com.example.towerdefense.model.Tiles
+import com.example.towerdefense.model.Tower
 import com.example.towerdefense.view.GameView
 
 class GameController(private val app: MainActivity) : GameControllerListener {
@@ -23,7 +24,7 @@ class GameController(private val app: MainActivity) : GameControllerListener {
     //*************************************** Constructor *************************************** //
     init {
         setTilesDimensions()
-        mView.updateStats(mGame.getMoney(), mGame.getHitPoints())
+        mView.updateStats(mGame.getMoney(), mGame.getHitPoints(), mGame.getWave())
         mView.drawMap(mGameMapViewer)
         launchDrawingThread()
     }
@@ -38,15 +39,26 @@ class GameController(private val app: MainActivity) : GameControllerListener {
     }
 
     override fun switchToMenu() {
+        // New game for next time
+        mGame = Game()
+        mView.unselectAll()
         app.showMenu()
     }
 
-    fun pauseGame() {
+    override fun toggleSpeed() {
+        mGame.toggleSpeed()
+    }
+
+    override fun upgradeTower(tower: Tower) {
+        mGame.upgradeTower(tower)
+    }
+
+    override fun pauseGame() {
         mGame.pauseWave()
         enableDisplay = false
     }
 
-    fun resumeGame() {
+    override fun resumeGame() {
         mGame.resumeWave()
         enableDisplay = true
     }
@@ -67,9 +79,12 @@ class GameController(private val app: MainActivity) : GameControllerListener {
             while (true) {
                 if (enableDisplay) {
                     handler.post {
-                        mView.updateStats(mGame.getMoney(), mGame.getHitPoints())
-                        mView.clearBodies()
+                        mView.updateStats(mGame.getMoney(), mGame.getHitPoints(), mGame.getWave())
                         mView.drawBodies(mGame.getDrawableBodies())
+
+                        if (mGame.isGameOver()) {
+                            mView.showGameOver()
+                        }
                     }
                     Thread.sleep(50)
                 }

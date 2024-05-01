@@ -1,10 +1,13 @@
 package com.example.towerdefense.model
 
-class Boss(col:Int, row: Int, spawnTick: Int) : Enemy(col, row, spawnTick) {
+class Boss(col:Int, row: Int, spawnTick: Int, hitPoints: Int) : Enemy(col, row, spawnTick, hitPoints) {
     //**************************************** Variables **************************************** //
 
     //*************************************** Constructor *************************************** //
-
+    init {
+        mHitPoints = hitPoints
+        mLoot= 100*mHitPoints
+    }
     //************************************* Public methods ************************************** //
 
     override fun advanceMainTick() {

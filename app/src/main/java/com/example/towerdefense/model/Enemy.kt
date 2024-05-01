@@ -1,8 +1,8 @@
 package com.example.towerdefense.model
 
-abstract class Enemy(col: Int, row: Int, spawnTick: Int) : Body(col, row), AttackListener {
+abstract class Enemy(col: Int, row: Int, spawnTick: Int, hitPoints: Int) : Body(col, row), AttackListener {
     //**************************************** Variables **************************************** //
-    protected var mHitPoints: Int = 0
+    protected var mHitPoints: Int = hitPoints
     protected var mLoot: Int = 0
 
     protected var mSpawnTick: Int = spawnTick
@@ -39,11 +39,11 @@ abstract class Enemy(col: Int, row: Int, spawnTick: Int) : Body(col, row), Attac
     fun decrementSpawnTick() {
         mSpawnTick--; }
 
-    final override fun getPosX() : Int {
+    override fun getPosX() : Int {
         return super.getRealX()
     }
 
-    final override fun getPosY() : Int{
+    override fun getPosY() : Int{
         return super.getRealY()
     }
 
