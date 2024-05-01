@@ -41,6 +41,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     private lateinit var textLevel : TextView
     private lateinit var textSelection : TextView
     private lateinit var textWave : TextView
+    private lateinit var towerRange : CircleView
 
     private lateinit var buttonStart : ImageButton
     private lateinit var buttonPause : ImageButton
@@ -66,6 +67,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     //*************************************** Constructor *************************************** //
     init {
         initLayouts()
+        initCircleView()
         initButtons()
         initStats()
         initGrid()
@@ -75,6 +77,13 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
         layoutBodies = app.findViewById(R.id.layoutBodies)
         layoutCharacters = app.findViewById(R.id.layoutCharacters)
         layoutGameOver = app.findViewById(R.id.layoutGameOver)
+    }
+    private fun initCircleView(){
+        towerRange = CircleView(app)
+        towerRange.setCircleAttributes(-1,-1,1,Color.GRAY)
+        towerRange.setCircleAlpha(127)
+        towerRange.visibility = View.INVISIBLE
+        layoutBodies.addView(towerRange)
     }
 
     private fun initButtons() {
@@ -205,15 +214,27 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
             if (selectedTower == tower) {
                 selectedTower = null
                 hideTowerStats()
-
+                hideTowerRange()
             } else {
                 selectedTower = tower
                 textSelection.text = "Upgrading tower.."
                 textCost.text = "Cost: " + tower.getUpgradeCost().toString()
                 textLevel.text = "Level: " + tower.getLevel()
+                showTowerRange(tower)
                 showTowerStats()
             }
         }
+    }
+
+    private fun hideTowerRange() {
+        towerRange.visibility = View.INVISIBLE
+    }
+
+    private fun showTowerRange(tower: Tower) {
+        towerRange.setCircleAttributes(tower.getRealX()+GameMapUtils.PX_PER_TILE/2,
+            tower.getRealY()+GameMapUtils.PX_PER_TILE/2,tower.getRange(),Color.GRAY)
+        towerRange.setCircleAlpha(127)
+        towerRange.visibility = View.VISIBLE
     }
 
     private fun onClickUpgrade(view: View) {
@@ -425,6 +446,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
         buttonArcher.setBackgroundColor(Color.LTGRAY)
         buttonCannon.setBackgroundColor(Color.LTGRAY)
         buttonFlamethrower.setBackgroundColor(Color.LTGRAY)
+        hideTowerRange()
     }
 
     fun unselectAll() {

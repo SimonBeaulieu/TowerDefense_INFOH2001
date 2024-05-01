@@ -99,7 +99,9 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
     fun getCost() : Int {
         return mCost
     }
-
+    fun getRange(): Int{
+        return mRange
+    }
     protected abstract fun createProjectile()
 
     fun getProjectiles(): List<Projectile>{
