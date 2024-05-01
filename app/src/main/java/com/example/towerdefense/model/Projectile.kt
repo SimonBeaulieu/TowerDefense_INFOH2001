@@ -16,7 +16,7 @@ class Projectile(col: Int, row: Int, projectileType: ProjectileType, projectileR
 
     private val mInitialRadius : Int = projectileRadius
     private var mRadius : Int = mInitialRadius
-    private val mColor : Int = color
+    private var mColor : Int = color
     private var mAlpha : Int = 255
 
     private var mTargetAttacked = false
@@ -66,19 +66,41 @@ class Projectile(col: Int, row: Int, projectileType: ProjectileType, projectileR
     private fun updatePosition(){
         val tickFraction: Double = mGameTimerView.getTickFraction()
 
-        if(mProjectileType == ProjectileType.FLAMETHROWER_PROJECTILE) {
-
-            mRadius = (mInitialRadius*tickFraction).toInt()
-            setRealX(mStartX)
-            setRealY(mStartY)
-
-        } else{
-            val newX:Int = ((mFinalX-mStartX)*tickFraction).toInt() + mStartX
-            val newY:Int = ((mFinalY-mStartY)*tickFraction).toInt() + mStartY
-
-            setRealX(newX)
-            setRealY(newY)
+        when(mProjectileType){
+            ProjectileType.FLAMETHROWER_PROJECTILE -> {
+                updatePositionFlameThrower(tickFraction)
+            }
+            ProjectileType.CANNON_PROJECTILE -> {
+                updatePositionCannon(tickFraction)
+            }
+            ProjectileType.ARCHER_PROJECTILE -> {
+                updatePositionArcher(tickFraction)
+            }
+            else -> {}
         }
-
     }
+
+    private fun updatePositionFlameThrower(tickFraction: Double){
+        mRadius = (mInitialRadius*tickFraction).toInt()
+        setRealX(mStartX)
+        setRealY(mStartY)
+    }
+
+    private fun updatePositionArcher(tickFraction: Double){
+        val newX:Int = ((mFinalX-mStartX)*tickFraction).toInt() + mStartX
+        val newY:Int = ((mFinalY-mStartY)*tickFraction).toInt() + mStartY
+
+        setRealX(newX)
+        setRealY(newY)
+    }
+
+    private fun updatePositionCannon(tickFraction: Double){
+        updatePositionArcher(tickFraction)
+        if(tickFraction>0.7){
+            mRadius = (100*(tickFraction-0.7)/0.3).toInt()
+            mColor = Color.parseColor("#d45800")
+            mAlpha = 128
+        }
+    }
+
 }
