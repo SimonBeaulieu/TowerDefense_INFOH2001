@@ -37,7 +37,7 @@ class Flamethrower(col: Int, row: Int) : Tower(col, row) {
         }
     }
 
-    override fun createProjectile() {
+    override fun createProjectiles() {
         if(mTarget != null){
             mProjectiles.add(Projectile(this.getGridX(), this.getGridY(),
                 ProjectileType.FLAMETHROWER_PROJECTILE, mRange, mTarget!!,true,mDamage, mProjectileColor))

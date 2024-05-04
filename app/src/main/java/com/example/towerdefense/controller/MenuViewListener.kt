@@ -1,5 +1,5 @@
 package com.example.towerdefense.controller
 
-interface MenuControllerListener {
+interface MenuViewListener {
     fun switchToSelector()
 }

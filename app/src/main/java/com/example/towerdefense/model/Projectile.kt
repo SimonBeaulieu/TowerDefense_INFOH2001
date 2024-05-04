@@ -43,10 +43,6 @@ class Projectile(col: Int, row: Int, projectileType: ProjectileType, projectileR
         return mTargetAttacked
     }
 
-    fun getType() : ProjectileType{
-        return mProjectileType
-    }
-
     fun getRadius():Int{
         return mRadius
     }
@@ -64,29 +60,31 @@ class Projectile(col: Int, row: Int, projectileType: ProjectileType, projectileR
 
     //************************************* Private methods ************************************* //
     private fun updatePosition(){
-        val tickFraction: Double = mGameTimerView.getTickFraction()
-
         when(mProjectileType){
             ProjectileType.FLAMETHROWER_PROJECTILE -> {
-                updatePositionFlameThrower(tickFraction)
+                updatePositionFlameThrower()
             }
             ProjectileType.CANNON_PROJECTILE -> {
-                updatePositionCannon(tickFraction)
+                updatePositionCannon()
             }
             ProjectileType.ARCHER_PROJECTILE -> {
-                updatePositionArcher(tickFraction)
+                updatePositionArcher()
             }
             else -> {}
         }
     }
 
-    private fun updatePositionFlameThrower(tickFraction: Double){
+    private fun updatePositionFlameThrower(){
+        val tickFraction: Double = mGameTimerView.getTickFraction()
+
         mRadius = (mInitialRadius*tickFraction).toInt()
         setRealX(mStartX)
         setRealY(mStartY)
     }
 
-    private fun updatePositionArcher(tickFraction: Double){
+    private fun updatePositionArcher(){
+        val tickFraction: Double = mGameTimerView.getTickFraction()
+
         val newX:Int = ((mFinalX-mStartX)*tickFraction).toInt() + mStartX
         val newY:Int = ((mFinalY-mStartY)*tickFraction).toInt() + mStartY
 
@@ -94,8 +92,11 @@ class Projectile(col: Int, row: Int, projectileType: ProjectileType, projectileR
         setRealY(newY)
     }
 
-    private fun updatePositionCannon(tickFraction: Double){
-        updatePositionArcher(tickFraction)
+    private fun updatePositionCannon(){
+        val tickFraction: Double = mGameTimerView.getTickFraction()
+
+        updatePositionArcher()
+        
         if(tickFraction>0.7){
             mRadius = (100*(tickFraction-0.7)/0.3).toInt()
             mColor = Color.parseColor("#d45800")

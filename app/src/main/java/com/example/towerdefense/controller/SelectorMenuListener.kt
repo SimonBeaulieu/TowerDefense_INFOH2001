@@ -1,5 +1,5 @@
 package com.example.towerdefense.controller
 
-interface SelectorControllerListener {
+interface SelectorMenuListener {
     fun switchToGame()
 }

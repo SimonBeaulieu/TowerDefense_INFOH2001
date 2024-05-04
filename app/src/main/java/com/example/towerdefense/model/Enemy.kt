@@ -16,8 +16,6 @@ abstract class Enemy(col: Int, row: Int, spawnTick: Int, hitPoints: Int) : Body(
     private var mNextGridPosX: Int = mGameMapView.getFirstTile().first
     private var mNextGridPosY: Int = mGameMapView.getFirstTile().second
 
-    private var mCost : Int = 0
-
     //*************************************** Constructor *************************************** //
 
     //************************************* Public methods ************************************* //

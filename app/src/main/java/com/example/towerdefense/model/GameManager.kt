@@ -64,7 +64,7 @@ class GameManager {
         mWaveEnded = false
     }
 
-    fun addTowerToList(t: Tower) { this.mTowers.add(t) }
+    fun addTower(t: Tower) { this.mTowers.add(t) }
 
     fun getTowers() : List<Tower> { return this.mTowers }
 

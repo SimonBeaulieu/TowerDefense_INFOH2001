@@ -1,4 +1,4 @@
-package com.example.towerdefense
+package com.example.towerdefense.controller
 
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -10,9 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
-import com.example.towerdefense.controller.GameController
-import com.example.towerdefense.controller.MenuController
-import com.example.towerdefense.controller.SelectorController
+import com.example.towerdefense.R
 
 class MainActivity : AppCompatActivity() {
     private lateinit var container: ConstraintLayout

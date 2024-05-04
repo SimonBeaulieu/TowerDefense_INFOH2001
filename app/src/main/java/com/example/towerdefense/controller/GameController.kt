@@ -2,31 +2,28 @@ package com.example.towerdefense.controller
 
 import android.os.Handler
 import android.os.Looper
-import com.example.towerdefense.MainActivity
 import com.example.towerdefense.model.Game
 import com.example.towerdefense.model.GameMapUtils
 import com.example.towerdefense.model.service.GameMapReadService
 import com.example.towerdefense.model.service.ServiceLocator
 import com.example.towerdefense.model.Tiles
 import com.example.towerdefense.model.Tower
-import com.example.towerdefense.model.service.Service
 import com.example.towerdefense.view.GameView
 
-class GameController(private val app: MainActivity) : GameControllerListener {
+class GameController(private val app: MainActivity) : GameViewListener {
     //**************************************** Variables **************************************** //
     private var mGame : Game = Game()
     private var mView : GameView = GameView(app, this)
 
-    private val mGameMapViewer : GameMapReadService = ServiceLocator.getService(GameMapReadService::class.java) as GameMapReadService
-
-    private val handler = Handler(Looper.getMainLooper())
-    var enableDisplay = false
+    private var mDisplayThreadEnable = false
 
     //*************************************** Constructor *************************************** //
     init {
+        val mGameMapViewer : GameMapReadService = ServiceLocator.getService(GameMapReadService::class.java) as GameMapReadService
+
         setTilesDimensions()
-        mView.updateStats(mGame.getMoney(), mGame.getHitPoints(), mGame.getWave())
-        mView.drawMap(mGameMapViewer as GameMapReadService)
+        mView.updateStats(mGame.getMoney(), mGame.getHitPoints(), mGame.getWaveNum())
+        mView.drawMap(mGameMapViewer)
         launchDrawingThread()
     }
 
@@ -56,12 +53,12 @@ class GameController(private val app: MainActivity) : GameControllerListener {
 
     override fun pauseGame() {
         mGame.pauseWave()
-        enableDisplay = false
+        mDisplayThreadEnable = false
     }
 
     override fun resumeGame() {
         mGame.resumeWave()
-        enableDisplay = true
+        mDisplayThreadEnable = true
     }
 
     //************************************* Private methods ************************************* //
@@ -76,11 +73,13 @@ class GameController(private val app: MainActivity) : GameControllerListener {
     }
 
     private fun launchDrawingThread() {
+        val handler = Handler(Looper.getMainLooper())
+
         Thread {
             while (true) {
-                if (enableDisplay) {
+                if (mDisplayThreadEnable) {
                     handler.post {
-                        mView.updateStats(mGame.getMoney(), mGame.getHitPoints(), mGame.getWave())
+                        mView.updateStats(mGame.getMoney(), mGame.getHitPoints(), mGame.getWaveNum())
                         mView.drawBodies(mGame.getDrawableBodies())
 
                         if (mGame.isGameOver()) {

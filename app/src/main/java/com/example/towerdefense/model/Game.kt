@@ -1,14 +1,12 @@
 package com.example.towerdefense.model
 
-import com.example.towerdefense.model.service.ServiceLocator
-
 class Game {
     //**************************************** Variables **************************************** //
     private var mCurrentWave : Wave
     private var mWaveNum = 0
     private var mGameOver = false
-
     private var mDisplayTickDuration : Long = 50
+
     private var mMoney : Int = 1000
         set(value) {
             if (value >= 9999) {
@@ -32,7 +30,7 @@ class Game {
         }
     fun getHitPoints(): Int { return mHitPoints }
 
-    fun getWave() : Int { return mWaveNum }
+    fun getWaveNum() : Int { return mWaveNum }
 
 
     private val mGameMap : GameMap
@@ -46,7 +44,6 @@ class Game {
         mGameMap = GameMap(20)
 
         // Create objects who requires references
-        mGameMap.initWaves()
         mGameManager = GameManager()
         mCurrentWave = mGameMap.getWave(mWaveNum)
 
@@ -78,15 +75,11 @@ class Game {
     fun pauseWave() {
         mGameTimer?.enableTicks = false
         mGameTimer?.enableDisplay = true
-
-        // !!!SB: Popup
     }
 
     fun resumeWave() {
         mGameTimer?.enableTicks = true
         mGameTimer?.enableDisplay = true
-
-        // !!!SB: Remove popup
     }
 
     fun endGame() {
@@ -94,18 +87,15 @@ class Game {
         mGameTimer?.enableDisplay = false
 
         mCurrentWave.mInProgress = false
-
-        // !!!SB: Popup with gameOver or gaved up
     }
 
     fun addTower(col : Int, row : Int, towerType: Tiles) {
-        // !!!SB: Ajouté à partir du main
         if (mGameMap.isEmptyTile(col, row)) {
             when (towerType) {
                 Tiles.ARCHER -> {
                     val archerTower = Archer(col, row)
                     if(archerTower.getCost()<=this.mMoney){
-                        mGameManager.addTowerToList(archerTower)
+                        mGameManager.addTower(archerTower)
                         mGameMap.setTileContent(col, row, towerType.value)
                         this.mMoney-=archerTower.getCost()
                     }
@@ -114,15 +104,15 @@ class Game {
                 Tiles.CANNON -> {
                     val cannonTower = Cannon(col, row)
                     if(cannonTower.getCost()<=this.mMoney) {
-                        mGameManager.addTowerToList(cannonTower)
+                        mGameManager.addTower(cannonTower)
                         mGameMap.setTileContent(col, row, towerType.value)
                         this.mMoney-=cannonTower.getCost()
                     }
                 }
                 Tiles.FLAMETHROWER -> {
-                    val flameThrowerTower : Flamethrower = Flamethrower(col, row)
+                    val flameThrowerTower = Flamethrower(col, row)
                     if(flameThrowerTower.getCost()<=this.mMoney) {
-                        mGameManager.addTowerToList(flameThrowerTower)
+                        mGameManager.addTower(flameThrowerTower)
                         mGameMap.setTileContent(col, row, towerType.value)
                         this.mMoney-=flameThrowerTower.getCost()
                     }

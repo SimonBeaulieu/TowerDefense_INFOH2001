@@ -39,7 +39,7 @@ class Cannon(col: Int, row: Int) : Tower(col, row) {
         mDamage += 2
         mBlastRadius += 25
     }
-    override fun createProjectile() {
+    override fun createProjectiles() {
         if(mTarget != null){
             mProjectiles.add(Projectile(this.getGridX(), this.getGridY(),
                 ProjectileType.CANNON_PROJECTILE, mProjectileRadius, mTarget!!,true,mDamage, mProjectileColor))

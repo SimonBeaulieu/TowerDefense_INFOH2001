@@ -7,7 +7,7 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
     protected var mRange : Int = 200
     protected var mDamage : Int = 1
     protected var mAttackSpdTick : Int = 3
-    private var mActualAttackTick : Int = 0
+    private var mAttackCoolDown : Int = 0
 
     protected var mTarget : AttackListener? = null
     protected var mInBlastRadius: MutableList<AttackListener> = mutableListOf()
@@ -39,12 +39,12 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
             }
         }
 
-        if (mTarget != null && mActualAttackTick <= 0) {
-            createProjectile()
-            mActualAttackTick = mAttackSpdTick
+        if (mTarget != null && mAttackCoolDown <= 0) {
+            createProjectiles()
+            mAttackCoolDown = mAttackSpdTick
 
-        }else if (mActualAttackTick > 0) {
-            mActualAttackTick -= 1
+        }else if (mAttackCoolDown > 0) {
+            mAttackCoolDown -= 1
         }
 
     }
@@ -102,7 +102,7 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
     fun getRange(): Int{
         return mRange
     }
-    protected abstract fun createProjectile()
+    protected abstract fun createProjectiles()
 
     fun getProjectiles(): List<Projectile>{
         return mProjectiles

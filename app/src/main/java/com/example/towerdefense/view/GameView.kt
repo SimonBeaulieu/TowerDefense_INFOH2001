@@ -14,7 +14,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.towerdefense.R
-import com.example.towerdefense.controller.GameControllerListener
+import com.example.towerdefense.controller.GameViewListener
 import com.example.towerdefense.model.Archer
 import com.example.towerdefense.model.Body
 import com.example.towerdefense.model.Cannon
@@ -26,7 +26,7 @@ import com.example.towerdefense.model.Soldier
 import com.example.towerdefense.model.Tiles
 import com.example.towerdefense.model.Tower
 
-class GameView(private val app : AppCompatActivity, private val mController: GameControllerListener) {
+class GameView(private val app : AppCompatActivity, private val mController: GameViewListener) {
     //**************************************** Variables **************************************** //
     lateinit var layoutCharacters : LinearLayout
     private lateinit var gridLayoutMap : androidx.gridlayout.widget.GridLayout

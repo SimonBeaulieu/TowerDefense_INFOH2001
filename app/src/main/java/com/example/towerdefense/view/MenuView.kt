@@ -2,12 +2,11 @@ package com.example.towerdefense.view
 
 import android.view.View
 import android.widget.Button
-import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.towerdefense.R
-import com.example.towerdefense.controller.MenuControllerListener
+import com.example.towerdefense.controller.MenuViewListener
 
-class MenuView(private val app : AppCompatActivity, private val mController : MenuControllerListener) {
+class MenuView(private val app : AppCompatActivity, private val mController : MenuViewListener) {
     private lateinit var buttonStartGame : Button
 
     init {

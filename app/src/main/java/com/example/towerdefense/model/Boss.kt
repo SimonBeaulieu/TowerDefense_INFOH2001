@@ -8,6 +8,7 @@ class Boss(col:Int, row: Int, spawnTick: Int, hitPoints: Int) : Enemy(col, row, 
         mHitPoints = hitPoints
         mLoot= 100*mHitPoints
     }
+
     //************************************* Public methods ************************************** //
 
     override fun advanceMainTick() {

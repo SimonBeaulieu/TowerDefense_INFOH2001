@@ -1,8 +1,6 @@
 package com.example.towerdefense.model
 
 import android.graphics.Color
-import kotlin.math.pow
-import kotlin.time.times
 
 class Archer(col: Int, row: Int) : Tower(col, row) {
     //**************************************** Variables **************************************** //
@@ -35,6 +33,7 @@ class Archer(col: Int, row: Int) : Tower(col, row) {
         var tileValue : Int = 0
         var maxTileValue : Int = 0
         var extraTargets = numberOfExtraTargets
+
         for (e in enemies) {
             if (mTarget != e && isInRange(e) && extraTargets >= 0) {
                 pos = GameMapUtils.pixelToGrid(e.getPosX(), e.getPosY())
@@ -55,8 +54,8 @@ class Archer(col: Int, row: Int) : Tower(col, row) {
         numberOfExtraTargets += 1
     }
 
-    override fun createProjectile() {
-        if(mTarget != null){
+    override fun createProjectiles() {
+        if(mTarget != null) {
             mProjectiles.add(Projectile(this.getGridX(), this.getGridY(),
                 ProjectileType.ARCHER_PROJECTILE, mProjectileRadius, mTarget!!,true,mDamage, mProjectileColor))
         }

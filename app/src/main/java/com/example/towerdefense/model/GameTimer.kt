@@ -1,5 +1,4 @@
 package com.example.towerdefense.model
-import com.example.towerdefense.model.service.GameMapReadService
 import com.example.towerdefense.model.service.GameTimerReadService
 import com.example.towerdefense.model.service.ServiceLocator
 import java.util.*
@@ -10,8 +9,8 @@ class GameTimer(private val displayTickInterval:Long = 50) {
     private val mTickRatio = 10
     private var mTickCount = 0
     private var mAccelerated = false
-    private var mActualTickInterval : Long = displayTickInterval
-    private var mRestart : Boolean = false
+    private var mTickDuration : Long = displayTickInterval
+    private var mNeedRestart : Boolean = false
 
     var enableDisplay = false
     var enableTicks = false
@@ -41,18 +40,18 @@ class GameTimer(private val displayTickInterval:Long = 50) {
         mTimer?.scheduleAtFixedRate(timerTask {
             updateMechanics()
             updateDisplay()
-        }, 0, mActualTickInterval)
+        }, 0, mTickDuration)
     }
 
     fun toggleSpeed() {
         mAccelerated = !mAccelerated
 
         if (mAccelerated) {
-            mActualTickInterval = displayTickInterval/2
+            mTickDuration = displayTickInterval/2
         } else {
-            mActualTickInterval = displayTickInterval
+            mTickDuration = displayTickInterval
         }
-        mRestart = true
+        mNeedRestart = true
     }
 
     fun setMainTickListener(listener: () -> Unit){
@@ -88,11 +87,11 @@ class GameTimer(private val displayTickInterval:Long = 50) {
             }
         }
 
-        if (mRestart) {
+        if (mNeedRestart) {
             mTimer?.cancel()
             mTimer = Timer()
             start()
-            mRestart = false
+            mNeedRestart = false
         }
     }
 }
