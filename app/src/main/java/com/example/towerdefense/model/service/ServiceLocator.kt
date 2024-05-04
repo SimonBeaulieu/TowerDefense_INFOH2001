@@ -8,7 +8,7 @@ object ServiceLocator {
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun <T : Any> getService(serviceClass: Class<T>): Service {
-        return services[serviceClass] as Service
+    fun <T> getService(serviceClass: Class<T>): T {
+        return services[serviceClass] as T
     }
 }
