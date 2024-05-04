@@ -18,7 +18,6 @@ class GameMap(val nWave:Int = 12) {
     //*************************************** Constructor *************************************** //
     init {
         initGrid()
-        initWaves()
         ServiceLocator.addService(GameMapReadService(this))
     }
 
@@ -57,7 +56,7 @@ class GameMap(val nWave:Int = 12) {
 
 
     //************************************* Private methods ************************************* //
-    private fun initWaves() {
+    fun initWaves() {
         for (i in 0 until nWave)
             mWaves.add(Wave(i))
     }

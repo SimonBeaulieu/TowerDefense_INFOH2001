@@ -12,7 +12,6 @@ abstract class Enemy(col: Int, row: Int, spawnTick: Int, hitPoints: Int) : Body(
     private var mPreviousDirection : Pair<Int,Int> = Pair(0,1)
     private var mNextDirection : Pair<Int,Int> = Pair(0,1)
 
-
     private var mNextGridPosX: Int = mGameMapView.getFirstTile().first
     private var mNextGridPosY: Int = mGameMapView.getFirstTile().second
 

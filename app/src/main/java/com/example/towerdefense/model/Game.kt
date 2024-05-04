@@ -32,7 +32,6 @@ class Game {
 
     fun getWaveNum() : Int { return mWaveNum }
 
-
     private val mGameMap : GameMap
     private var mGameManager: GameManager
     private var mGameTimer : GameTimer? = null
@@ -45,6 +44,11 @@ class Game {
 
         // Create objects who requires references
         mGameManager = GameManager()
+
+        // Init waves
+        mGameMap.initWaves()
+
+        // Get first wave
         mCurrentWave = mGameMap.getWave(mWaveNum)
 
         // Start timer (enableTicks are set to false)
