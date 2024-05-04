@@ -4,11 +4,6 @@ object ServiceLocator {
     private val services = mutableMapOf<Class<*>, Service>()
 
     fun addService(instance: Service) {
-        // If service already in the list, remove previous one
-        if (services.containsKey(instance.getServiceClass())) {
-            services.remove(instance.getServiceClass())
-        }
-
         services[instance.getServiceClass()] = instance
     }
 
