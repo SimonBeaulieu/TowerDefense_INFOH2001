@@ -1,5 +1,8 @@
 package com.example.towerdefense.model
 
+import com.example.towerdefense.model.service.GameMapReadService
+import com.example.towerdefense.model.service.ServiceLocator
+
 class GameManager {
 
     //**************************************** Variables **************************************** //
@@ -11,7 +14,7 @@ class GameManager {
     private var mActiveEnemies : MutableList<Enemy> = mutableListOf()
     private var mPendingEnemies : MutableList<Enemy> = mutableListOf()
 
-    private val mGameMapView = References.getRef(GameMapViewer::class.java)
+    private val mGameMapView : GameMapReadService = ServiceLocator.getService(GameMapReadService::class.java) as GameMapReadService
 
     //*************************************** Constructor *************************************** //
 

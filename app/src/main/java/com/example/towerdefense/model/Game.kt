@@ -1,5 +1,7 @@
 package com.example.towerdefense.model
 
+import com.example.towerdefense.model.service.ServiceLocator
+
 class Game {
     //**************************************** Variables **************************************** //
     private var mCurrentWave : Wave
@@ -43,9 +45,6 @@ class Game {
         initGameTimer()
         mGameMap = GameMap(20)
 
-        // Register references (timer and map)
-        initReferences()
-
         // Create objects who requires references
         mGameMap.initWaves()
         mGameManager = GameManager()
@@ -53,16 +52,6 @@ class Game {
 
         // Start timer (enableTicks are set to false)
         mGameTimer?.start()
-    }
-
-    private fun initReferences() {
-        // Reference à la carte en mode read only
-        References.addRef(mGameMap, GameMapViewer::class.java)
-
-        // Reference au timer en mode read only
-        if (mGameTimer != null) {
-            References.addRef(mGameTimer as GameTimer, GameTimerViewer::class.java)
-        }
     }
 
     private fun initGameTimer() {

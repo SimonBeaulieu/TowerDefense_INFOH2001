@@ -20,9 +20,8 @@ import com.example.towerdefense.model.Body
 import com.example.towerdefense.model.Cannon
 import com.example.towerdefense.model.Flamethrower
 import com.example.towerdefense.model.GameMapUtils
-import com.example.towerdefense.model.GameMapViewer
+import com.example.towerdefense.model.service.GameMapReadService
 import com.example.towerdefense.model.Projectile
-import com.example.towerdefense.model.ProjectileType
 import com.example.towerdefense.model.Soldier
 import com.example.towerdefense.model.Tiles
 import com.example.towerdefense.model.Tower
@@ -145,7 +144,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
         textWave.text = "Wave: " + wave.toString()
     }
 
-    fun drawMap(map : GameMapViewer) {
+    fun drawMap(map : GameMapReadService) {
         gridLayoutMap.removeAllViews()
 
         for (c in 0 until GameMapUtils.N_COLUMNS) {

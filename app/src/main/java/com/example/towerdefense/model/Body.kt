@@ -1,8 +1,12 @@
 package com.example.towerdefense.model
 
+import com.example.towerdefense.model.service.GameMapReadService
+import com.example.towerdefense.model.service.GameTimerReadService
+import com.example.towerdefense.model.service.ServiceLocator
+
 abstract class Body(col: Int = 0, row: Int = 0) {
-    protected val mGameMapView = References.getRef(GameMapViewer::class.java)
-    protected val mGameTimerView = References.getRef(GameTimerViewer::class.java)
+    protected val mGameMapView : GameMapReadService = ServiceLocator.getService(GameMapReadService::class.java) as GameMapReadService
+    protected val mGameTimerView : GameTimerReadService = ServiceLocator.getService(GameTimerReadService::class.java) as GameTimerReadService
 
     //**************************************** Variables **************************************** //
     private var mRealX: Int = GameMapUtils.gridToPixel(col)

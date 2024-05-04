@@ -1,8 +1,11 @@
 package com.example.towerdefense.model
+import com.example.towerdefense.model.service.GameMapReadService
+import com.example.towerdefense.model.service.GameTimerReadService
+import com.example.towerdefense.model.service.ServiceLocator
 import java.util.*
 import kotlin.concurrent.timerTask
 
-class GameTimer(private val displayTickInterval:Long = 50) : GameTimerViewer {
+class GameTimer(private val displayTickInterval:Long = 50) {
     //**************************************** Variables **************************************** //
     private val mTickRatio = 10
     private var mTickCount = 0
@@ -22,7 +25,9 @@ class GameTimer(private val displayTickInterval:Long = 50) : GameTimerViewer {
     init {
         // Creation of timer
         mTimer = Timer()
+        ServiceLocator.addService(GameTimerReadService(this))
     }
+
     //************************************* Public methods ************************************** //
     /**
      * Should only be called onced, at initialisation, after the listener
@@ -58,11 +63,11 @@ class GameTimer(private val displayTickInterval:Long = 50) : GameTimerViewer {
         mDisplayTickListener = listener
     }
 
-    override fun getTickFraction() : Double {
+    fun getTickFraction() : Double {
         return mTickCount/mTickRatio.toDouble()
     }
 
-    override fun isFirstHalf(): Boolean {
+    fun isFirstHalf(): Boolean {
         return mTickCount/mTickRatio.toDouble() < 0.5
     }
 

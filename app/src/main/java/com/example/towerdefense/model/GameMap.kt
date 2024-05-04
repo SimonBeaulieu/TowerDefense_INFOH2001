@@ -1,6 +1,9 @@
 package com.example.towerdefense.model
 
-class GameMap(val nWave:Int = 12) : GameMapViewer {
+import com.example.towerdefense.model.service.GameMapReadService
+import com.example.towerdefense.model.service.ServiceLocator
+
+class GameMap(val nWave:Int = 12) {
     private val mFirstTile : Pair<Int, Int> = Pair(3,0)
 
     private val mGrid  = MutableList(GameMapUtils.N_COLUMNS) { MutableList(GameMapUtils.N_ROWS) { Tiles.EMPTY.value } }
@@ -15,22 +18,23 @@ class GameMap(val nWave:Int = 12) : GameMapViewer {
     //*************************************** Constructor *************************************** //
     init {
         initGrid()
+        ServiceLocator.addService(GameMapReadService(this))
     }
 
     //************************************* Public methods ************************************** //
-    override fun isEmptyTile(col: Int, row: Int): Boolean {
+    fun isEmptyTile(col: Int, row: Int): Boolean {
         return getTileContent(col, row) == Tiles.EMPTY.value
     }
 
-    override fun isTowerTile(col: Int, row: Int): Boolean {
+    fun isTowerTile(col: Int, row: Int): Boolean {
         return getTileContent(col, row) < Tiles.EMPTY.value
     }
 
-    override fun isRoadTile(col: Int, row: Int): Boolean{
+    fun isRoadTile(col: Int, row: Int): Boolean{
         return getTileContent(col, row) > Tiles.EMPTY.value
     }
 
-    override fun getTileContent(col: Int, row: Int) : Int {
+    fun getTileContent(col: Int, row: Int) : Int {
         if (GameMapUtils.isValidCol(col) && GameMapUtils.isValidRow(row)) {
             return mGrid[col][row]
         } else {
@@ -38,9 +42,9 @@ class GameMap(val nWave:Int = 12) : GameMapViewer {
         }
     }
 
-    override fun getPathEncoding() : List<Int> { return mPathEncoding.toList() }
+    fun getPathEncoding() : List<Int> { return mPathEncoding.toList() }
 
-    override fun getFirstTile() : Pair<Int, Int> { return mFirstTile.copy() }
+    fun getFirstTile() : Pair<Int, Int> { return mFirstTile.copy() }
 
     fun getWave(n:Int): Wave { return this.mWaves[n] }
 

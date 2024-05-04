@@ -5,10 +5,11 @@ import android.os.Looper
 import com.example.towerdefense.MainActivity
 import com.example.towerdefense.model.Game
 import com.example.towerdefense.model.GameMapUtils
-import com.example.towerdefense.model.GameMapViewer
-import com.example.towerdefense.model.References
+import com.example.towerdefense.model.service.GameMapReadService
+import com.example.towerdefense.model.service.ServiceLocator
 import com.example.towerdefense.model.Tiles
 import com.example.towerdefense.model.Tower
+import com.example.towerdefense.model.service.Service
 import com.example.towerdefense.view.GameView
 
 class GameController(private val app: MainActivity) : GameControllerListener {
@@ -16,7 +17,7 @@ class GameController(private val app: MainActivity) : GameControllerListener {
     private var mGame : Game = Game()
     private var mView : GameView = GameView(app, this)
 
-    private val mGameMapViewer = References.getRef(GameMapViewer::class.java)
+    private val mGameMapViewer : GameMapReadService = ServiceLocator.getService(GameMapReadService::class.java) as GameMapReadService
 
     private val handler = Handler(Looper.getMainLooper())
     var enableDisplay = false
@@ -25,7 +26,7 @@ class GameController(private val app: MainActivity) : GameControllerListener {
     init {
         setTilesDimensions()
         mView.updateStats(mGame.getMoney(), mGame.getHitPoints(), mGame.getWave())
-        mView.drawMap(mGameMapViewer)
+        mView.drawMap(mGameMapViewer as GameMapReadService)
         launchDrawingThread()
     }
 
