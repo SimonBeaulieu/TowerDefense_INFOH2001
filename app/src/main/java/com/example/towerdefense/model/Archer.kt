@@ -65,6 +65,10 @@ class Archer(col: Int, row: Int) : Tower(col, row) {
         }
     }
 
+    override fun getTowerName(): String {
+        return "Archer"
+    }
+
     //************************************* Private methods ************************************* //
 
 }

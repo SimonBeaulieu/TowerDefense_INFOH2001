@@ -123,6 +123,9 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
     fun isMaxLevel() : Boolean {
         return mLevel == mMaxLevel
     }
+
+    abstract fun getTowerName() : String
+
     //************************************* Private methods ************************************* //
 
 

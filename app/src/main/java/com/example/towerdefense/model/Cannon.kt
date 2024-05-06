@@ -51,6 +51,9 @@ class Cannon(col: Int, row: Int) : Tower(col, row) {
         }
     }
 
+    override fun getTowerName(): String {
+        return "Cannon"
+    }
 
     //************************************* Private methods ************************************* //
     private fun isInBlastRadius(enemy: AttackListener) : Boolean{
@@ -65,4 +68,5 @@ class Cannon(col: Int, row: Int) : Tower(col, row) {
         }
         return false
     }
+
 }

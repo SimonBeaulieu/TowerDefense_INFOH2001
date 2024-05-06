@@ -58,6 +58,9 @@ class Flamethrower(col: Int, row: Int) : Tower(col, row) {
         }
     }
 
+    override fun getTowerName(): String {
+        return "Flamethrower"
+    }
 
     //************************************* Private methods ************************************* //
 }

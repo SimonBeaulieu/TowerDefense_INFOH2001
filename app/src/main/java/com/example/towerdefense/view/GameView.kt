@@ -214,11 +214,9 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
                 hideTowerRange()
             } else {
                 selectedTower = tower
-                textSelection.text = "Upgrading tower.."
-                textCost.text = "Cost: " + tower.getUpgradeCost().toString()
-                textLevel.text = "Level: " + tower.getLevel()
-                showTowerRange(tower)
+                updateTowerInfo(tower,true)
                 showTowerStats()
+                showTowerRange(tower)
             }
         }
     }
@@ -237,11 +235,8 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     private fun onClickUpgrade(view: View) {
         if (!disableUI && selectedTower != null) {
             mController.upgradeTower(selectedTower!!)
-            selectedTower = null
-            textSelection.text = "Selection: "
-            textLevel.text = "Level: "
-            textCost.text = "Cost: "
-            hideTowerStats()
+            updateTowerInfo(selectedTower!!, true)
+            showTowerRange(selectedTower!!)
         }
     }
 
@@ -295,10 +290,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     fun onClickButtonArcher(view: View) {
         if (!disableUI && !isPaused) {
             toggleTowerButton(buttonArcher)
-
-            textCost.text = "Cost: " + Archer(0, 0).getCost().toString()
-            textSelection.text = "Selection: Archer"
-            textLevel.text = "Level: 1"
+            updateTowerInfo(Archer(0,0), false)
         }
     }
 
@@ -306,9 +298,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     fun onClickButtonCannon(view: View){
         if (!disableUI && !isPaused) {
             toggleTowerButton(buttonCannon)
-            textCost.text = "Cost: " + Cannon(0, 0).getCost().toString()
-            textSelection.text = "Selection: Cannon"
-            textLevel.text = "Level: 1"
+            updateTowerInfo(Cannon(0,0), false)
         }
     }
 
@@ -316,9 +306,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
     fun onClickButtonFlamethrower(view: View){
         if (!disableUI && !isPaused) {
             toggleTowerButton(buttonFlamethrower)
-            textCost.text = "Cost: " + Flamethrower(0, 0).getCost().toString()
-            textSelection.text = "Selection: Flamethrower"
-            textLevel.text = "Level: 1"
+            updateTowerInfo(Flamethrower(0,0), false)
         }
     }
 
@@ -450,5 +438,25 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
         unselectTowers()
         buttonPause.setBackgroundColor(Color.LTGRAY)
         buttonFast.setBackgroundColor(Color.LTGRAY)
+    }
+
+    private fun updateTowerInfo(tower: Tower, upgradeMode: Boolean) {
+        if (upgradeMode) {
+            // Upgrade
+            if (tower.isMaxLevel()) {
+                textSelection.text = tower.getTowerName()
+                textCost.text = ""
+                textLevel.text = "Level: MAX"
+            } else {
+                textSelection.text = "Upgrading " + tower.getTowerName()
+                textCost.text = "Cost: " + tower.getUpgradeCost().toString()
+                textLevel.text = "Level: " + tower.getLevel().toString()
+            }
+        } else {
+            // Buy
+            textSelection.text = "Buying " + tower.getTowerName()
+            textCost.text = "Cost: " + tower.getCost().toString()
+            textLevel.text = "Level: " + tower.getLevel().toString()
+        }
     }
 }
