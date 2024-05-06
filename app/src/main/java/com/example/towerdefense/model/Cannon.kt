@@ -4,11 +4,12 @@ import android.graphics.Color
 
 class Cannon(col: Int, row: Int) : Tower(col, row) {
     //**************************************** Variables **************************************** //
-    private var mBlastRadius : Int = 100
+    private var mBlastRadius : Int = 200
     //*************************************** Constructor *************************************** //
     init {
         mCost = 1000
         mDamage = 5
+        mRange = 300
         mProjectileRadius = 20
 
         mProjectileColor = Color.BLACK
@@ -35,7 +36,7 @@ class Cannon(col: Int, row: Int) : Tower(col, row) {
     }
 
     override fun upgradeStats() {
-        mRange += 50
+        mRange += 100
         mDamage += 2
         mBlastRadius += 25
     }

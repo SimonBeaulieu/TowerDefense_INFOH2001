@@ -8,7 +8,7 @@ class Flamethrower(col: Int, row: Int) : Tower(col, row) {
     //*************************************** Constructor *************************************** //
 
     init{
-        mCost = 600
+        mCost = 1500
         mDamage = 1
         mRange = 150
         mProjectileRadius = 50

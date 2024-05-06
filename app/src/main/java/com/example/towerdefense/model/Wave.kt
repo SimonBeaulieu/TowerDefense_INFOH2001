@@ -1,5 +1,6 @@
 package com.example.towerdefense.model
 
+import kotlin.math.min
 import kotlin.math.pow
 import kotlin.math.round
 
@@ -12,8 +13,8 @@ class Wave(waveNum:Int = 0) {
 
     //*************************************** Constructor *************************************** //
     init {
-        val nEnemies : Int = round(4 * 20.0.pow((waveNum - 1)/10.0)).toInt()
-        val enemiesHitPoints : Int = 5 + waveNum
+        val nEnemies : Int = min(3 * 1.2.pow(waveNum).toInt(), 300)
+        val enemiesHitPoints : Int = min(5 * 1.15.pow(waveNum).toInt(), 1000)
 
         mCompletionReward = waveNum * 50 + 100
 

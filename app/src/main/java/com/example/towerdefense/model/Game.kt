@@ -9,8 +9,8 @@ class Game {
 
     private var mMoney : Int = 1000
         set(value) {
-            if (value >= 9999) {
-                field = 9999
+            if (value >= 99999) {
+                field = 99999
             } else if (value <= 0) {
                 field = 0
             } else {
@@ -40,7 +40,7 @@ class Game {
     init {
         // Create references
         initGameTimer()
-        mGameMap = GameMap(20)
+        mGameMap = GameMap(1000)
 
         // Create objects who requires references
         mGameManager = GameManager()

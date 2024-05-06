@@ -98,7 +98,7 @@ class Projectile(col: Int, row: Int, projectileType: ProjectileType, projectileR
         updatePositionArcher()
         
         if(tickFraction>0.7){
-            mRadius = (100*(tickFraction-0.7)/0.3).toInt()
+            mRadius = (200*(tickFraction-0.7)/0.3).toInt()
             mColor = Color.parseColor("#d45800")
             mAlpha = 128
         }

@@ -111,7 +111,6 @@ class GameManager {
 
             } else {
                 e.advanceMainTick()
-
             }
         }
     }

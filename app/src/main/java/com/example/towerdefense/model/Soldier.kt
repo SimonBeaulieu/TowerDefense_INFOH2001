@@ -6,7 +6,7 @@ class Soldier(col: Int, row: Int, spawnTick: Int, hitPoints: Int) : Enemy(col, r
     //*************************************** Constructor *************************************** //
     init {
         mHitPoints = hitPoints
-        mLoot= 10*mHitPoints
+        mLoot= 25 + 2*mHitPoints
     }
 
     //************************************* Public methods ************************************* //
