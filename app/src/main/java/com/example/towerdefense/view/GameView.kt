@@ -335,6 +335,7 @@ class GameView(private val app : AppCompatActivity, private val mController: Gam
                             mController.addTower(pos.first, pos.second, Tiles.FLAMETHROWER)
                             toggleTowerButton(buttonFlamethrower)
                         } else -> {
+                            selectedTower = null
                             hideTowerStats()
                             hideTowerRange()
                         }
