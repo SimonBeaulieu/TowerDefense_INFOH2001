@@ -1,6 +1,6 @@
 package com.example.towerdefense.model
 
-class Game {
+class Game : GameTimerObserver {
     //**************************************** Variables **************************************** //
     private var mCurrentWave : Wave
     private var mWaveNum = 0
@@ -57,11 +57,8 @@ class Game {
 
     private fun initGameTimer() {
         mGameTimer = GameTimer(mDisplayTickDuration)
-
-        mGameTimer?.setMainTickListener { this.advanceTick() }
-        mGameTimer?.setDisplayTickListener { this.advanceDisplayTick() }
-
-        mGameTimer?.enableDisplay = true
+        mGameTimer?.attachObserver(this)
+        mGameTimer?.enableTicks = false
     }
 
     //************************************* Public methods ************************************* //
@@ -186,5 +183,13 @@ class Game {
             mMoney -= tower.getUpgradeCost()
             tower.upgrade()
         }
+    }
+
+    override fun onNotifyGameTick() {
+        this.advanceTick()
+    }
+
+    override fun onNotifyDisplayTick() {
+        this.advanceDisplayTick()
     }
 }

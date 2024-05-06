@@ -4,21 +4,20 @@ import com.example.towerdefense.model.service.ServiceLocator
 import java.util.*
 import kotlin.concurrent.timerTask
 
-class GameTimer(private val displayTickInterval:Long = 50) {
+class GameTimer(private val displayTickInterval:Long = 50) : GameTimerSubject {
     //**************************************** Variables **************************************** //
+    private val mObservers : MutableList<GameTimerObserver> = mutableListOf()
+
     private val mTickRatio = 10
     private var mTickCount = 0
     private var mAccelerated = false
     private var mTickDuration : Long = displayTickInterval
     private var mNeedRestart : Boolean = false
 
-    var enableDisplay = false
-    var enableTicks = false
+    var enableDisplay = true
+    var enableTicks = true
 
     private var mTimer: Timer? = null
-
-    private var mMainTickListener: (() -> Unit)? = null
-    private var mDisplayTickListener: (() -> Unit)? = null
 
     //*************************************** Constructor *************************************** //
     init {
@@ -28,6 +27,14 @@ class GameTimer(private val displayTickInterval:Long = 50) {
     }
 
     //************************************* Public methods ************************************** //
+    override fun attachObserver(observer:GameTimerObserver) {
+        this.mObservers.add(observer)
+    }
+
+    override fun detachObserver(observer: GameTimerObserver) {
+        this.mObservers.remove(observer)
+    }
+
     /**
      * Should only be called onced, at initialisation, after the listener
      * are setted.
@@ -38,8 +45,8 @@ class GameTimer(private val displayTickInterval:Long = 50) {
         // Executed code when timer period elapse
         mTimer?.purge()
         mTimer?.scheduleAtFixedRate(timerTask {
-            updateMechanics()
-            updateDisplay()
+            gameTick()
+            displayTick()
         }, 0, mTickDuration)
     }
 
@@ -54,14 +61,6 @@ class GameTimer(private val displayTickInterval:Long = 50) {
         mNeedRestart = true
     }
 
-    fun setMainTickListener(listener: () -> Unit){
-        mMainTickListener = listener
-    }
-
-    fun setDisplayTickListener(listener: () -> Unit){
-        mDisplayTickListener = listener
-    }
-
     fun getTickFraction() : Double {
         return mTickCount/mTickRatio.toDouble()
     }
@@ -71,18 +70,18 @@ class GameTimer(private val displayTickInterval:Long = 50) {
     }
 
     //************************************* Private methods ************************************* //
-    private fun updateDisplay() {
+    private fun displayTick() {
         if (enableDisplay) {
-            mDisplayTickListener?.invoke()
+            notifyObserversDisplayTick()
         }
     }
 
-    private fun updateMechanics() {
+    private fun gameTick() {
         if (enableTicks) {
             mTickCount += 1
 
             if (mTickCount >= mTickRatio) {
-                mMainTickListener?.invoke()
+                notifyObserversGameTick()
                 mTickCount = 0
             }
         }
@@ -92,6 +91,18 @@ class GameTimer(private val displayTickInterval:Long = 50) {
             mTimer = Timer()
             start()
             mNeedRestart = false
+        }
+    }
+
+    override fun notifyObserversGameTick() {
+        for (o in this.mObservers) {
+            o.onNotifyGameTick()
+        }
+    }
+
+    override fun notifyObserversDisplayTick() {
+        for (o in this.mObservers) {
+            o.onNotifyDisplayTick()
         }
     }
 }
