@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import com.example.towerdefense.R
@@ -114,12 +115,14 @@ class MainActivity : AppCompatActivity() {
     private fun playMenuMusic() {
         player.setMediaItem(mediaItemMenu)
         player.prepare()
+        player.repeatMode = Player.REPEAT_MODE_ONE
         player.play()
     }
 
     private fun playGameMusic() {
         player.setMediaItem(mediaItemGame)
         player.prepare()
+        player.repeatMode = Player.REPEAT_MODE_ONE
         player.play()
     }
 
