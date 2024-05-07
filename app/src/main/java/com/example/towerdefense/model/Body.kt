@@ -15,10 +15,13 @@ abstract class Body(col: Int = 0, row: Int = 0) {
     private var mGridX: Int = col
     private var mGridY: Int = row
 
+    protected var mAngle : Float = 0.0F
+
     //*************************************** Constructor *************************************** //
 
 
     //************************************* Public methods ************************************* //
+    fun getAngle() : Float { return mAngle }
     fun getRealX(): Int { return mRealX }
     fun getRealY(): Int { return mRealY }
     fun getGridX(): Int { return mGridX }

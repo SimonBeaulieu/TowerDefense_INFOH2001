@@ -7,7 +7,7 @@ class Flamethrower(col: Int, row: Int) : Tower(col, row) {
 
     //*************************************** Constructor *************************************** //
 
-    init{
+    init {
         mCost = 1500
         mDamage = 1
         mRange = 150
@@ -62,5 +62,8 @@ class Flamethrower(col: Int, row: Int) : Tower(col, row) {
         return "Flamethrower"
     }
 
+    override fun aimEnemy(enemy: AttackListener) {
+        mAngle = 0.0F
+    }
     //************************************* Private methods ************************************* //
 }

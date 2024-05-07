@@ -22,6 +22,7 @@ class DrawableBody(private val mBody: Body, private val mView: View) {
             val params = FrameLayout.LayoutParams(GameMapUtils.PX_PER_TILE, GameMapUtils.PX_PER_TILE)
             params.leftMargin = mBody.getRealX()
             params.topMargin = mBody.getRealY()
+            mView.rotation = mBody.getAngle()
 
             // Set layout parameters
             mView.layoutParams = params

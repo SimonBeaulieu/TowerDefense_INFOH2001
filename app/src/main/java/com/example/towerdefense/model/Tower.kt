@@ -1,6 +1,7 @@
 package com.example.towerdefense.model
 
 import android.graphics.Color
+import kotlin.math.atan2
 
 abstract class Tower(col: Int, row: Int) : Body(col, row) {
     //**************************************** Variables **************************************** //
@@ -40,6 +41,7 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
         }
 
         if (mTarget != null && mAttackCoolDown <= 0) {
+            aimEnemy(mTarget!!)
             createProjectiles()
             mAttackCoolDown = mAttackSpdTick
 
@@ -75,6 +77,14 @@ abstract class Tower(col: Int, row: Int) : Body(col, row) {
                 }
             }
         }
+    }
+
+    protected open fun aimEnemy(enemy: AttackListener) {
+        val y2 = enemy.getNextRealPos().first
+        val x2 = enemy.getNextRealPos().second
+        val dx : Double = (y2 - this.getRealX()).toDouble()
+        val dy : Double = (x2- this.getRealY()).toDouble()
+        mAngle = Math.toDegrees(atan2(dy, dx)).toFloat() + 90.0F
     }
 
     protected abstract fun findEnemiesInBlastRadius(enemies: List<AttackListener>)
